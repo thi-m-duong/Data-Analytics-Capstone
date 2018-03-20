@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  DataSource="portuguesebankall" Scope="LOCAL" Role="RAW" Library="MYDATA" Table="PORTUGUESEBANKALL"
+ NCols="21" NObs="41188" NBytes="7341056" Segment="" DataSourceRole="RAW" OutputType="VIEW"
+ ForceRun="N" ComputeStatistics="N" DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC"
+ ApplyIntervalLevelLowerLimit="Y" IntervalLowerLimit="20" ApplyMaxPercentMissing="Y"
+ MaxPercentMissing="50" ApplyMaxClassLevels="Y" MaxClassLevels="20" IdentifyEmptyColumns="Y"
+ VariableValidation="STRICT" NewVariableRole="REJECT" DropMapVariables="Y" DsId="portuguesebankall"
+ DsSampleName="" DsSampleSizeType="" DsSampleSize="" DsCreatedBy="Intern Three" DsCreateDate="1772454681.3"
+ DsModifiedBy="Intern Three" DsModifyDate="1772454681.3" DsScope="LOCAL" Sample="D"
+ SampleSizeType="PERCENT" SampleSizePercent="20" SampleSizeObs="10000" DBPassThrough="Y"
+ RunAction="Train" Component="DataSource" RawCreateTime="1772454746.4" CreateTime="01MAR2016:12:32:26"
+ Description="" Data="MYDATA.PORTUGUESEBANKALL" CMeta="WORK.M3BW4NO8" RunId="aac2c4a5-0043-415a-ac2e-1951d2830a32"
+ RawLastTimeRun="1772454824.4" RawRunTime="8.1290001869" LastTimeRun="01MAR2016:12:33:44"
+ RunTime="0 Hr. 0 Min. 8.13 Sec.">
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES/>
+</_ROOT_>

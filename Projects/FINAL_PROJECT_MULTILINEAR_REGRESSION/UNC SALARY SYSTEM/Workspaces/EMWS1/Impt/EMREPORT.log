@@ -1,0 +1,23 @@
+*------------------------------------------------------------*
+* Report Log
+Date:                April 21, 2016
+Time:                05:40:02
+*------------------------------------------------------------*
+11531  %let _nimpute = 0;
+11532  data EMWS1.Impt_RESULT;
+11533  label NAME = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel,        NOQUOTE))" METHOD = "%sysfunc(sasmsg(sashelp.dmine, rpt_imputemethod_vlabel, NOQUOTE))" IMPUTED = "%sysfunc(sasmsg(sashelp.dmine, rpt_imputedvar_vlabel,   NOQUOTE))" INDICATOR =
+11534     "%sysfunc(sasmsg(sashelp.dmine, rpt_indicatorvar_vlabel, NOQUOTE))" VALUE = "%sysfunc(sasmsg(sashelp.dmine, rpt_imputevalue_vlabel,  NOQUOTE))" ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel,        NOQUOTE))" LEVEL =
+11535     "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel,       NOQUOTE))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel,       NOQUOTE))" TRAIN = "%sysfunc(sasmsg(sashelp.dmine, rpt_missingcount_vlabel, NOQUOTE, TRAIN))";
+11536  set EMWS1.Impt_META(where=(IMPUTED ne '') keep=NAME METHOD IMP VALUE ROLE NMISS LEVEL LABEL rename=(IMP=IMPUTED NMISS=TRAIN)) end=eof;
+11537  if eof then call symput('_nimpute', '1');
+11538  run;
+
+NOTE: Variable INDICATOR is uninitialized.
+NOTE: There were 0 observations read from the data set EMWS1.IMPT_META.
+      WHERE IMPUTED not = ' ';
+NOTE: The data set EMWS1.IMPT_RESULT has 0 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+

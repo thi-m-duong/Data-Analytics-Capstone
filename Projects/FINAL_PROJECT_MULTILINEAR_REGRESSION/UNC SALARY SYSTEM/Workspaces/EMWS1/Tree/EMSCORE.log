@@ -1,0 +1,2003 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                April 21, 2016
+Time:                05:42:31
+*------------------------------------------------------------*
+16567  %let EMEXCEPTIONSTRING=;
+16568  *------------------------------------------------------------*;
+16569  * SCORE: Tree;
+16570  *------------------------------------------------------------*;
+16571  %let EM_ACTION = SCORE;
+16572  %let syscc = 0;
+16573  %macro main;
+16574  
+16575    %if %upcase(&EM_ACTION) = CREATE %then %do;
+16576      filename temp catalog 'sashelp.emmodl.tree_create.source';
+16577      %include temp;
+16578      filename temp;
+16579  
+16580      %em_tree_create;
+16581    %end;
+16582  
+16583     %else
+16584     %if %upcase(&EM_ACTION) = TRAIN %then %do;
+16585  
+16586         filename temp catalog 'sashelp.emmodl.tree_train.source';
+16587         %include temp;
+16588         filename temp;
+16589         %em_tree_train;
+16590     %end;
+16591  
+16592    %else
+16593    %if %upcase(&EM_ACTION) = SCORE %then %do;
+16594      filename temp catalog 'sashelp.emmodl.tree_score.source';
+16595      %include temp;
+16596      filename temp;
+16597  
+16598      %em_tree_score;
+16599  
+16600    %end;
+16601  
+16602    %else
+16603    %if %upcase(&EM_ACTION) = REPORT %then %do;
+16604  
+16605         filename temp catalog 'sashelp.emmodl.tree_report.source';
+16606         %include temp;
+16607         filename temp;
+16608  
+16609         %em_tree_report;
+16610     %end;
+16611  
+16612    %else
+16613    %if %upcase(&EM_ACTION) = OPENINT %then %do;
+16614  
+16615         filename temp catalog 'sashelp.emmodl.tree_actions.source';
+16616         %include temp;
+16617         filename temp;
+16618         %EM_TREE_OPENTREEVIEWER;
+16619  
+16620     %end;
+16621  
+16622    %else
+16623    %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+16624  
+16625         filename temp catalog 'sashelp.emmodl.tree_actions.source';
+16626         %include temp;
+16627         filename temp;
+16628         %EM_TREE_CLOSETREEVIEWER;
+16629  
+16630     %end;
+16631  
+16632  
+16633     %doendm:
+16634  %mend main;
+16635  
+16636  %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMODL.TREE_SCORE.SOURCE.
+16638 +%macro em_tree_score;
+16640 +   /* determine if multiple targets will be processed */
+16641 +   %let em_tree_multipleTargets=N;
+16642 +   %let em_tree_numTarget=1;
+16643 +   %if "&EM_PROPERTY_USEMULTIPLETARGET" eq "Y" %then %do;
+16644 +      /* determine if there are any ordinal target variables - if so, multiple targets are not supported */
+16645 +      %if &EM_NUM_ORDINAL_TARGET gt 0 %then %do;
+16646 +         %let em_tree_multipleTargets=N;
+16647 +      %end;
+16648 +      %else %do;
+16649 +         /* create macro array of targets  */
+16650 +         data _null_;
+16651 +           set &EM_DATA_VARIABLESET(where=(ROLE='TARGET' AND LEVEL^='ORDINAL')) end=eof;
+16652 +           call symput('em_tree_targetVars'!!strip(put(_N_, BEST.)), strip(Name));
+16653 +           if eof then
+16654 +             call symput('em_tree_numTarget', strip(put(_N_, BEST.)));
+16655 +        run;
+16657 +        %if &em_tree_numTarget gt 1 %then %do;
+16658 +           %let em_tree_multipleTargets=Y;
+16659 +        %end;
+16660 +      %end;
+16661 +   %end;
+16663 +   /* build flow and publish scoring code */
+16664 +   %EM_GETNAME(key=TREEFLOW, type=FILE, extension=sas);
+16665 +   %EM_GETNAME(key=TREEPUBLISH, type=FILE, extension=sas);
+16667 +   filename treeflow "&EM_USER_TREEFLOW";
+16668 +   filename treepub "&EM_USER_TREEPUBLISH";
+16670 +   filename flowref  "&EM_FILE_EMFLOWSCORECODE";
+16671 +   filename pubref   "&EM_FILE_EMPUBLISHSCORECODE";
+16673 +   %em_copyfile(infref=treeflow, outfref=flowref);
+16674 +   %em_copyfile(infref=treepub, outfref=pubref);
+16676 +   filename treeflow;
+16677 +   filename treepub;
+16679 +   /* if priors are used, add code to generate unadjusted residuals in export */
+16680 +   %let useAdjPriors = N;
+16681 +   data _null_;
+16682 +     set &EM_DEC_DECMETA(where=(_TYPE_="DECPRIOR"));
+16683 +     if USE="Y" then call symput('useAdjPriors', 'Y');
+16684 +   run;
+16685 +   %if (("&em_tree_multipleTargets" eq "N") AND ("&useAdjPriors" eq "Y")) %then %do;
+16686 +      filename temp catalog 'sashelp.emutil.em_makeunadjustedresidualvars.source';
+16687 +      %include temp;
+16688 +      filename temp;
+16690 +      %EM_GETNAME(key=adjResidualCode, type=FILE, extension=sas);
+16691 +      filename adjref "&EM_USER_adjResidualCode";
+16692 +      %makeUnadjustedResidualVars(target=%EM_TARGET, decmeta=&EM_DEC_DECMETA, fref=adjref);
+16694 +      %em_copyfile(infref=adjref, outfref=flowref, append=Y);
+16696 +      filename adjref;
+16697 +   %end;
+16699 +   /* LEAF */
+16700 +   %if "&EM_PROPERTY_LEAFID" eq "Y" %then %do;
+16701 +      data _null_;
+16702 +        file flowref mod;
+16703 +        put 'drop _LEAF_;';
+16704 +      run;
+16706 +      data _null_;
+16707 +        file pubref mod;
+16708 +        put 'drop _LEAF_;';
+16709 +      run;
+16711 +   %end;
+16713 +   filename flowref;
+16714 +   filename pubref;
+16716 +   /* em_metachange code */
+16717 +   %if "&EM_PROPERTY_LEAFID" eq "Y" %then %do;
+16718 +     %EM_METACHANGE(name=_NODE_, role=&EM_PROPERTY_NODEROLE, LEVEL=NOMINAL);
+16719 +   %end;
+16721 +   /* variable selection based on importance stat    */
+16722 +   %if "&EM_PROPERTY_VARSELECTION" eq "Y" %then %do;
+16723 +     %EM_GETNAME(key=OUTIMPORT, type=DATA);
+16724 +     %let dsid = %sysfunc(open(&EM_USER_OUTIMPORT(where=(IMPORTANCE<0.05))));
+16725 +     %let varnum = %sysfunc(varnum(&dsid, NAME));
+16726 +     %let obs = %sysfunc(fetch(&dsid));
+16727 +     %do %while(&obs=0);
+16728 +       %let temp = %nrbquote(%sysfunc(getvarc(&dsid, &varnum)));
+16729 +       %let varname = %nrbquote(%sysfunc(tranwrd(&temp,  %str(%"),"")));
+16730 +       %EM_METACHANGE(name=&varname, role=REJECTED);
+16731 +       %let obs = %sysfunc(fetch(&dsid));
+16732 +     %end;
+16733 +     %if &dsid %then %let dsid=%sysfunc(close(&dsid));
+16734 +   %end;
+16736 +   /* set Q_ varaibles to role of ASSESS when in the presense of prior probabilities */
+16737 +   %if %sysfunc(exist(&EM_DEC_DECMETA)) %then %do;
+16738 +    %let tree_pred_vars = ;
+16739 +    %let tree_pred_lvl =;
+16740 +    %let numpred= 0;
+16742 +    data _null_;
+16743 +     set &EM_DEC_DECMETA(where=(_TYPE_="PREDICTED")) end=eof;
+16744 +     call symput('tree_pred_vars'!!strip(put(_N_, BEST.)), strip(VARIABLE));
+16745 +     call symput('tree_pred_lvl'!!strip(put(_N_, BEST.)), strip(LEVEL));
+16746 +     if eof then
+16747 +       call symput('numpred', strip(put(_N_, BEST.)));
+16748 +    run;
+16749 +   %end;
+16751 +   %if &numpred ne 0 %then %do;
+16752 +    %do i=1 %to &numpred;
+16753 +      %let qpred = Q%substr(&&tree_pred_vars&i,2);
+16754 +      %EM_METACHANGE(name=&qpred, role=ASSESS);
+16755 +    %end;
+16756 +   %end;
+16758 +   /* determine if multiple targets will be processed */
+16759 +   %let em_tree_multipleTargets=N;
+16760 +   %let em_tree_numTarget=1;
+16761 +   %if "&EM_PROPERTY_USEMULTIPLETARGET" eq "Y" %then %do;
+16762 +      /* determine if there are any ordinal target variables - if so, multiple targets are not supported */
+16763 +      %if &EM_NUM_ORDINAL_TARGET gt 0 %then %do;
+16764 +         %let em_tree_multipleTargets=N;
+16765 +      %end;
+16766 +      %else %do;
+16767 +        data _null_;
+16768 +          set &EM_DATA_VARIABLESET(where=(ROLE='TARGET' AND LEVEL^='ORDINAL')) end=eof;
+16769 +          if eof then
+16770 +            call symput('em_tree_numTarget', strip(put(_N_, BEST.)));
+16771 +        run;
+16773 +        %if &em_tree_numTarget gt 1 %then %do;
+16774 +           %let em_tree_multipleTargets=Y;
+16775 +        %end;
+16776 +     %end;
+16777 +   %end;
+16779 +   /* need to include this code to do the %em_report for OUTIMPORT here instead of in Report code so _loop data set is created when group processing */
+16780 +   %if "&em_tree_multipleTargets" eq "N" %then %do;
+16782 +      /* variable importance */
+16783 +      %EM_GETNAME(key=OUTIMPORT, type=DATA);
+16784 +      %if %sysfunc(exist(&EM_USER_OUTIMPORT)) eq 1 %then %do;
+16786 +         %let validexist=0;
+16787 +         %if (("&EM_IMPORT_VALIDATE" ne "") AND (%sysfunc(exist(&EM_IMPORT_VALIDATE)) or %sysfunc(exist(&EM_IMPORT_VALIDATE,VIEW)))) %then %do;
+16788 +           %let validexist=1;
+16789 +         %end;
+16791 +         /* determine if vars exists - properties could indicate they are they but freeze=Y would mean the node wasn't retrained */
+16792 +         /* and the columns may not be generated                                                                                 */
+16793 +         %let em_tree_cvexists=;
+16794 +         %let em_tree_surrexists=.;
+16795 +         data _null_;
+16796 +            set &EM_USER_OUTIMPORT (obs=2) end=eof;
+16797 +            if eof then do ;
+16798 +               call symput("em_tree_cvexists" , strip(put(cvimportance,best.))) ;
+16799 +               call symput("em_tree_surrexists", strip(put(nsurrogates, best.)));
+16800 +            end;
+16801 +         run;
+16803 +         data &EM_USER_OUTIMPORT;
+16804 +            set &EM_USER_OUTIMPORT;
+16806 +            /* format columns based on Precison value specified */
+16807 +            format importance 15.&EM_PROPERTY_PRECISION
+16808 +                 %if &validexist %then %do;
+16809 +                   vimportance ratio 15.&EM_PROPERTY_PRECISION
+16810 +                 %end;
+16811 +                 %if "&EM_TREE_CVEXISTS" ne "." %then %do;
+16812 +                   cvimportance vimportance ratio 15.&EM_PROPERTY_PRECISION
+16813 +                 %end;
+16814 +            ;
+16815 +            label  NAME       = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel, noquote))"
+16816 +                 LABEL        = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, noquote))"
+16817 +                 NRULES       = "%sysfunc(sasmsg(sashelp.dmine, rpt_nrules_vlabel, noquote))"
+16818 +                 IMPORTANCE   = "%sysfunc(sasmsg(sashelp.dmine, rpt_importance_vlabel, noquote))"
+16819 +                 %if "&em_tree_surrexists" ne "" %then %do;
+16820 +                   NSURROGATES  = "%sysfunc(sasmsg(sashelp.dmine, rpt_nsurrogates_vlabel, noquote))"
+16821 +                 %end;
+16822 +                 %if &validexist %then %do;
+16823 +                   VIMPORTANCE = "%sysfunc(sasmsg(sashelp.dmine, rpt_vimportance_vlabel, noquote))"
+16824 +                   RATIO       = "%sysfunc(sasmsg(sashelp.dmine, rpt_ratio_vlabel, noquote))"
+16825 +                 %end;
+16826 +                 %if "&EM_TREE_CVEXISTS" ne "" %then %do;
+16827 +                   VIMPORTANCE = "%sysfunc(sasmsg(sashelp.dmine, rpt_vimportance_vlabel, noquote))"
+16828 +                   CVIMPORTANCE =  "%sysfunc(sasmsg(sashelp.dmine, rpt_cvimport_vlabel, noquote))"
+16829 +                   CVRULES= "%sysfunc(sasmsg(sashelp.dmine, rpt_cvrules_vlabel, noquote))"
+16830 +                   RATIO = "%sysfunc(sasmsg(sashelp.dmine, rpt_ratio_vlabel, noquote))"
+16831 +                 %end;
+16832 +            ;
+16833 +         run;
+16835 +         %EM_REPORT(key=OUTIMPORT, viewtype=DATA, block=MODEL, description=IMPORTANCE, autodisplay=N);
+16836 +      %end;
+16837 +   %end;
+16839 +   %doendm:
+16840 +%mend em_tree_score;
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+
+NOTE: The file FLOWREF is:
+      Filename=C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMFLOWSCORE.sas,
+      RECFM=V,LRECL=20000,File Size (bytes)=0,
+      Last Modified=21Apr2016:05:42:30,
+      Create Time=21Apr2016:05:42:30
+
+NOTE: 418 records were written to the file FLOWREF.
+      The minimum record length was 1.
+      The maximum record length was 65.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.03 seconds
+      
+
+
+NOTE: The file PUBREF is:
+      Filename=C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMPUBLISHSCORE.sas,
+      RECFM=V,LRECL=20000,File Size (bytes)=0,
+      Last Modified=21Apr2016:05:42:31,
+      Create Time=21Apr2016:05:42:31
+
+NOTE: 413 records were written to the file PUBREF.
+      The minimum record length was 1.
+      The maximum record length was 65.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: Fileref TREEFLOW has been deassigned.
+NOTE: Fileref TREEPUB has been deassigned.
+
+NOTE: There were 0 observations read from the data set EMWS1.IDS_TOTALSAL_DM.
+      WHERE _TYPE_='DECPRIOR';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The file FLOWREF is:
+      Filename=C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMFLOWSCORE.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=15221,
+      Last Modified=21Apr2016:05:42:30,
+      Create Time=21Apr2016:05:42:30
+
+NOTE: 1 record was written to the file FLOWREF.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The file PUBREF is:
+      Filename=C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMPUBLISHSCORE.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=15048,
+      Last Modified=21Apr2016:05:42:31,
+      Create Time=21Apr2016:05:42:31
+
+NOTE: 1 record was written to the file PUBREF.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: Fileref FLOWREF has been deassigned.
+NOTE: Fileref PUBREF has been deassigned.
+
+NOTE: The data set WORK.EM_METACHANGE has 1 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 1 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 2 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 2 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 3 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 3 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 4 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 4 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 5 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: There were 5 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 6 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 6 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 7 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: There were 7 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 8 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: There were 8 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 9 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 9 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 10 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 10 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 11 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: There were 1 observations read from the data set EMWS1.IDS_TOTALSAL_DM.
+      WHERE _TYPE_='PREDICTED';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 11 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 12 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: Variable cvimportance is uninitialized.
+NOTE: Variable nsurrogates is uninitialized.
+NOTE: There were 2 observations read from the data set EMWS1.TREE_OUTIMPORT.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: Variable NSURROGATES is uninitialized.
+NOTE: Variable CVIMPORTANCE is uninitialized.
+NOTE: Variable CVRULES is uninitialized.
+NOTE: There were 12 observations read from the data set EMWS1.TREE_OUTIMPORT.
+NOTE: The data set EMWS1.TREE_OUTIMPORT has 12 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: The data set WORK.EM_USER_REPORT has 132 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+16841  
+16842  *------------------------------------------------------------*;
+16843  * End SCORE: Tree;
+16844  *------------------------------------------------------------*;
+
+16845  proc sort data=WORK.EM_METACHANGE;
+16846  by key uname;
+16847  run;
+
+NOTE: There were 12 observations read from the data set WORK.EM_METACHANGE.
+NOTE: The data set WORK.EM_METACHANGE has 12 observations and 9 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+16848  filename x "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\CDELTA_TRAIN.sas";
+16849  data _null_;
+16850  file x;
+16851  put 'if upcase(NAME) = "AGE" then do;';
+16852  put 'ROLE = "REJECTED";';
+16853  put 'end;';
+16854  put 'else ';
+16855  put 'if upcase(NAME) = "CAMPUS" then do;';
+16856  put 'ROLE = "REJECTED";';
+16857  put 'end;';
+16858  put 'else ';
+16859  put 'if upcase(NAME) = "DEPT" then do;';
+16860  put 'ROLE = "REJECTED";';
+16861  put 'end;';
+16862  put 'else ';
+16863  put 'if upcase(NAME) = "EMPLOYED" then do;';
+16864  put 'ROLE = "REJECTED";';
+16865  put 'end;';
+16866  put 'else ';
+16867  put 'if upcase(NAME) = "EXEMPT2" then do;';
+16868  put 'ROLE = "REJECTED";';
+16869  put 'end;';
+16870  put 'else ';
+16871  put 'if upcase(NAME) = "FTE" then do;';
+16872  put 'ROLE = "REJECTED";';
+16873  put 'end;';
+16874  put 'else ';
+16875  put 'if upcase(NAME) = "GENDER" then do;';
+16876  put 'ROLE = "REJECTED";';
+16877  put 'end;';
+16878  put 'else ';
+16879  put 'if upcase(NAME) = "POSITION" then do;';
+16880  put 'ROLE = "REJECTED";';
+16881  put 'end;';
+16882  put 'else ';
+16883  put 'if upcase(NAME) = "Q_TOTALSAL" then do;';
+16884  put 'ROLE = "ASSESS";';
+16885  put 'end;';
+16886  put 'else ';
+16887  put 'if upcase(NAME) = "STATUS" then do;';
+16888  put 'ROLE = "REJECTED";';
+16889  put 'end;';
+16890  put 'else ';
+16891  put 'if upcase(NAME) = "STSERVYR" then do;';
+16892  put 'ROLE = "REJECTED";';
+16893  put 'end;';
+16894  put 'else ';
+16895  put 'if upcase(NAME) = "_NODE_" then do;';
+16896  put 'ROLE = "SEGMENT";';
+16897  put 'LEVEL = "NOMINAL";';
+16898  put 'end;';
+16899  run;
+
+NOTE: The file X is:
+      Filename=C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\CDELTA_TRAIN.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=21Apr2016:05:42:32,
+      Create Time=20Apr2016:20:49:23
+
+NOTE: 48 records were written to the file X.
+      The minimum record length was 4.
+      The maximum record length was 39.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+16900  filename x;
+NOTE: Fileref X has been deassigned.
+
+16901  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMFLOWSCORE.sas";
+16902  *------------------------------------------------------------*;
+16903  * Tree: Scoring DATA data;
+16904  *------------------------------------------------------------*;
+16905  data EMWS1.Tree_TRAIN
+16906  / view=EMWS1.Tree_TRAIN
+16907  ;
+16908  set EMWS1.Part_TRAIN
+16909  ;
+16910  %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMFLOWSCORE.sas.
+16911 +****************************************************************;
+16912 +******             DECISION TREE SCORING CODE             ******;
+16913 +****************************************************************;
+16914 +
+16915 +******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
+16916 +LENGTH _WARN_  $    4;
+16917 +
+16918 +******              LABELS FOR NEW VARIABLES              ******;
+16919 +label _NODE_ = 'Node' ;
+16920 +label _LEAF_ = 'Leaf' ;
+16921 +label P_totalsal = 'Predicted: totalsal' ;
+16922 +label V_totalsal = 'Validated: totalsal' ;
+16923 +label R_totalsal = 'Residual: totalsal' ;
+16924 +label _WARN_ = 'Warnings' ;
+16925 +
+16926 +
+16927 +
+16928 +******             ASSIGN OBSERVATION TO NODE             ******;
+16929 +IF  NOT MISSING(nonstsal ) AND
+16930 +                115051 <= nonstsal  THEN DO;
+16931 +  IF  NOT MISSING(nonstsal ) AND
+16932 +                257529.5 <= nonstsal  THEN DO;
+16933 +    IF  NOT MISSING(nonstsal ) AND
+16934 +                  372771.5 <= nonstsal  THEN DO;
+16935 +      IF  NOT MISSING(nonstsal ) AND
+16936 +                    512979.5 <= nonstsal  THEN DO;
+16937 +        _NODE_  =                   31;
+16938 +        _LEAF_  =                   44;
+16939 +        P_totalsal  =            582917.75;
+16940 +        V_totalsal  =     596384.333333333;
+16941 +        END;
+16942 +      ELSE DO;
+16943 +        _NODE_  =                   30;
+16944 +        _LEAF_  =                   43;
+16945 +        P_totalsal  =     449206.769230769;
+16946 +        V_totalsal  =            420689.75;
+16947 +        END;
+16948 +      END;
+16949 +    ELSE DO;
+16950 +      IF  NOT MISSING(nonstsal ) AND
+16951 +                    315230.5 <= nonstsal  THEN DO;
+16952 +        _NODE_  =                   29;
+16953 +        _LEAF_  =                   42;
+16954 +        P_totalsal  =            347255.75;
+16955 +        V_totalsal  =               341249;
+16956 +        END;
+16957 +      ELSE DO;
+16958 +        IF  NOT MISSING(statesal ) AND
+16959 +                         70181 <= statesal  THEN DO;
+16960 +          _NODE_  =                   55;
+16961 +          _LEAF_  =                   41;
+16962 +          P_totalsal  =     385892.666666666;
+16963 +          V_totalsal  =               371409;
+16964 +          END;
+16965 +        ELSE DO;
+16966 +          IF  NOT MISSING(nonstsal ) AND
+16967 +                          285730 <= nonstsal  THEN DO;
+16968 +            _NODE_  =                   91;
+16969 +            _LEAF_  =                   40;
+16970 +            P_totalsal  =     305890.966666666;
+16971 +            V_totalsal  =     301179.555555555;
+16972 +            END;
+16973 +          ELSE DO;
+16974 +            _NODE_  =                   90;
+16975 +            _LEAF_  =                   39;
+16976 +            P_totalsal  =     274289.210526315;
+16977 +            V_totalsal  =     277074.631578947;
+16978 +            END;
+16979 +          END;
+16980 +        END;
+16981 +      END;
+16982 +    END;
+16983 +  ELSE DO;
+16984 +    IF  NOT MISSING(nonstsal ) AND
+16985 +                    180203 <= nonstsal  THEN DO;
+16986 +      IF  NOT MISSING(statesal ) AND
+16987 +                     51060.5 <= statesal  THEN DO;
+16988 +        _NODE_  =                   27;
+16989 +        _LEAF_  =                   38;
+16990 +        P_totalsal  =     309176.928571428;
+16991 +        V_totalsal  =     310101.888888888;
+16992 +        END;
+16993 +      ELSE DO;
+16994 +        IF  NOT MISSING(nonstsal ) AND
+16995 +                        223651 <= nonstsal  THEN DO;
+16996 +          IF  NOT MISSING(nonstsal ) AND
+16997 +                        241883.5 <= nonstsal  THEN DO;
+16998 +            _NODE_  =                   89;
+16999 +            _LEAF_  =                   37;
+17000 +            P_totalsal  =     253022.555555555;
+17001 +            V_totalsal  =           250817.875;
+17002 +            END;
+17003 +          ELSE DO;
+17004 +            _NODE_  =                   88;
+17005 +            _LEAF_  =                   36;
+17006 +            P_totalsal  =            235625.56;
+17007 +            V_totalsal  =            239422.15;
+17008 +            END;
+17009 +          END;
+17010 +        ELSE DO;
+17011 +          IF  NOT MISSING(statesal ) AND
+17012 +                           27296 <= statesal  THEN DO;
+17013 +            _NODE_  =                   87;
+17014 +            _LEAF_  =                   35;
+17015 +            P_totalsal  =             237379.8;
+17016 +            V_totalsal  =               220000;
+17017 +            END;
+17018 +          ELSE DO;
+17019 +            _NODE_  =                   86;
+17020 +            _LEAF_  =                   34;
+17021 +            P_totalsal  =     202236.918367347;
+17022 +            V_totalsal  =             200073.6;
+17023 +            END;
+17024 +          END;
+17025 +        END;
+17026 +      END;
+17027 +    ELSE DO;
+17028 +      IF  NOT MISSING(statesal ) AND
+17029 +                     69813.5 <= statesal  THEN DO;
+17030 +        IF  NOT MISSING(statesal ) AND
+17031 +                      118874.5 <= statesal  THEN DO;
+17032 +          _NODE_  =                   51;
+17033 +          _LEAF_  =                   33;
+17034 +          P_totalsal  =            320843.75;
+17035 +          V_totalsal  =             305409.5;
+17036 +          END;
+17037 +        ELSE DO;
+17038 +          _NODE_  =                   50;
+17039 +          _LEAF_  =                   32;
+17040 +          P_totalsal  =      228098.23076923;
+17041 +          V_totalsal  =     237538.666666666;
+17042 +          END;
+17043 +        END;
+17044 +      ELSE DO;
+17045 +        IF  NOT MISSING(nonstsal ) AND
+17046 +          nonstsal  <             140119.5 THEN DO;
+17047 +          IF  NOT MISSING(statesal ) AND
+17048 +                           36550 <= statesal  THEN DO;
+17049 +            _NODE_  =                   83;
+17050 +            _LEAF_  =                   29;
+17051 +            P_totalsal  =     184263.533333333;
+17052 +            V_totalsal  =     171906.142857142;
+17053 +            END;
+17054 +          ELSE DO;
+17055 +            _NODE_  =                   82;
+17056 +            _LEAF_  =                   28;
+17057 +            P_totalsal  =     130354.704347826;
+17058 +            V_totalsal  =     133023.814814814;
+17059 +            END;
+17060 +          END;
+17061 +        ELSE DO;
+17062 +          IF  NOT MISSING(statesal ) AND
+17063 +                         16167.5 <= statesal  THEN DO;
+17064 +            _NODE_  =                   85;
+17065 +            _LEAF_  =                   31;
+17066 +            P_totalsal  =     187574.903225806;
+17067 +            V_totalsal  =     189994.285714285;
+17068 +            END;
+17069 +          ELSE DO;
+17070 +            _NODE_  =                   84;
+17071 +            _LEAF_  =                   30;
+17072 +            P_totalsal  =            161803.34;
+17073 +            V_totalsal  =     161883.142857142;
+17074 +            END;
+17075 +          END;
+17076 +        END;
+17077 +      END;
+17078 +    END;
+17079 +  END;
+17080 +ELSE DO;
+17081 +  IF  NOT MISSING(statesal ) AND
+17082 +                   87510 <= statesal  THEN DO;
+17083 +    IF  NOT MISSING(statesal ) AND
+17084 +                    157105 <= statesal  THEN DO;
+17085 +      IF  NOT MISSING(statesal ) AND
+17086 +                    217772.5 <= statesal  THEN DO;
+17087 +        IF  NOT MISSING(statesal ) AND
+17088 +                      300737.5 <= statesal  THEN DO;
+17089 +          _NODE_  =                   47;
+17090 +          _LEAF_  =                   27;
+17091 +          P_totalsal  =            371259.25;
+17092 +          V_totalsal  =     385116.666666666;
+17093 +          END;
+17094 +        ELSE DO;
+17095 +          _NODE_  =                   46;
+17096 +          _LEAF_  =                   26;
+17097 +          P_totalsal  =     270754.181818181;
+17098 +          V_totalsal  =     292902.833333333;
+17099 +          END;
+17100 +        END;
+17101 +      ELSE DO;
+17102 +        IF  NOT MISSING(nonstsal ) AND
+17103 +                         53207 <= nonstsal  THEN DO;
+17104 +          _NODE_  =                   45;
+17105 +          _LEAF_  =                   25;
+17106 +          P_totalsal  =               259173;
+17107 +          V_totalsal  =     242883.142857142;
+17108 +          END;
+17109 +        ELSE DO;
+17110 +          IF  NOT MISSING(statesal ) AND
+17111 +                        193022.5 <= statesal  THEN DO;
+17112 +            _NODE_  =                   81;
+17113 +            _LEAF_  =                   24;
+17114 +            P_totalsal  =            212712.05;
+17115 +            V_totalsal  =     216177.153846153;
+17116 +            END;
+17117 +          ELSE DO;
+17118 +            _NODE_  =                   80;
+17119 +            _LEAF_  =                   23;
+17120 +            P_totalsal  =     181393.888888888;
+17121 +            V_totalsal  =             186975.5;
+17122 +            END;
+17123 +          END;
+17124 +        END;
+17125 +      END;
+17126 +    ELSE DO;
+17127 +      IF  NOT MISSING(nonstsal ) AND
+17128 +                     23033.5 <= nonstsal  THEN DO;
+17129 +        IF  NOT MISSING(nonstsal ) AND
+17130 +                       75175.5 <= nonstsal  THEN DO;
+17131 +          _NODE_  =                   43;
+17132 +          _LEAF_  =                   22;
+17133 +          P_totalsal  =     209111.866666666;
+17134 +          V_totalsal  =     217810.166666666;
+17135 +          END;
+17136 +        ELSE DO;
+17137 +          IF  NOT MISSING(statesal ) AND
+17138 +                          115253 <= statesal  THEN DO;
+17139 +            _NODE_  =                   79;
+17140 +            _LEAF_  =                   21;
+17141 +            P_totalsal  =     169171.775510204;
+17142 +            V_totalsal  =     176223.142857142;
+17143 +            END;
+17144 +          ELSE DO;
+17145 +            _NODE_  =                   78;
+17146 +            _LEAF_  =                   20;
+17147 +            P_totalsal  =     143113.525423728;
+17148 +            V_totalsal  =     141255.652173913;
+17149 +            END;
+17150 +          END;
+17151 +        END;
+17152 +      ELSE DO;
+17153 +        IF  NOT MISSING(statesal ) AND
+17154 +                      117576.5 <= statesal  THEN DO;
+17155 +          IF  NOT MISSING(statesal ) AND
+17156 +                          136441 <= statesal  THEN DO;
+17157 +            _NODE_  =                   77;
+17158 +            _LEAF_  =                   19;
+17159 +            P_totalsal  =     149342.807017543;
+17160 +            V_totalsal  =     150521.045454545;
+17161 +            END;
+17162 +          ELSE DO;
+17163 +            _NODE_  =                   76;
+17164 +            _LEAF_  =                   18;
+17165 +            P_totalsal  =     131039.036144578;
+17166 +            V_totalsal  =         128212.84375;
+17167 +            END;
+17168 +          END;
+17169 +        ELSE DO;
+17170 +          IF  NOT MISSING(statesal ) AND
+17171 +                        101772.5 <= statesal  THEN DO;
+17172 +            _NODE_  =                   75;
+17173 +            _LEAF_  =                   17;
+17174 +            P_totalsal  =     113273.963503649;
+17175 +            V_totalsal  =     111954.901639344;
+17176 +            END;
+17177 +          ELSE DO;
+17178 +            _NODE_  =                   74;
+17179 +            _LEAF_  =                   16;
+17180 +            P_totalsal  =     95764.0754716981;
+17181 +            V_totalsal  =      95716.012987013;
+17182 +            END;
+17183 +          END;
+17184 +        END;
+17185 +      END;
+17186 +    END;
+17187 +  ELSE DO;
+17188 +    IF  NOT MISSING(nonstsal ) AND
+17189 +                     68358 <= nonstsal  THEN DO;
+17190 +      IF  NOT MISSING(statesal ) AND
+17191 +                       27171 <= statesal  THEN DO;
+17192 +        IF  NOT MISSING(statesal ) AND
+17193 +                       61462.5 <= statesal  THEN DO;
+17194 +          _NODE_  =                   39;
+17195 +          _LEAF_  =                   15;
+17196 +          P_totalsal  =             158219.4;
+17197 +          V_totalsal  =             156590.2;
+17198 +          END;
+17199 +        ELSE DO;
+17200 +          IF  NOT MISSING(nonstsal ) AND
+17201 +            nonstsal  <                88475 THEN DO;
+17202 +            _NODE_  =                   70;
+17203 +            _LEAF_  =                   13;
+17204 +            P_totalsal  =     119892.210526315;
+17205 +            V_totalsal  =     122956.166666666;
+17206 +            END;
+17207 +          ELSE DO;
+17208 +            _NODE_  =                   71;
+17209 +            _LEAF_  =                   14;
+17210 +            P_totalsal  =     143362.045454545;
+17211 +            V_totalsal  =             146798.3;
+17212 +            END;
+17213 +          END;
+17214 +        END;
+17215 +      ELSE DO;
+17216 +        IF  NOT MISSING(nonstsal ) AND
+17217 +                       89303.5 <= nonstsal  THEN DO;
+17218 +          IF  NOT MISSING(nonstsal ) AND
+17219 +                        102882.5 <= nonstsal  THEN DO;
+17220 +            _NODE_  =                   69;
+17221 +            _LEAF_  =                   12;
+17222 +            P_totalsal  =          111508.4125;
+17223 +            V_totalsal  =     113460.117647058;
+17224 +            END;
+17225 +          ELSE DO;
+17226 +            _NODE_  =                   68;
+17227 +            _LEAF_  =                   11;
+17228 +            P_totalsal  =             96066.02;
+17229 +            V_totalsal  =     96570.5555555555;
+17230 +            END;
+17231 +          END;
+17232 +        ELSE DO;
+17233 +          IF  NOT MISSING(nonstsal ) AND
+17234 +                           79396 <= nonstsal  THEN DO;
+17235 +            _NODE_  =                   67;
+17236 +            _LEAF_  =                   10;
+17237 +            P_totalsal  =     84476.4926108374;
+17238 +            V_totalsal  =      84804.922077922;
+17239 +            END;
+17240 +          ELSE DO;
+17241 +            _NODE_  =                   66;
+17242 +            _LEAF_  =                    9;
+17243 +            P_totalsal  =     74945.5723905724;
+17244 +            V_totalsal  =     74261.4083333333;
+17245 +            END;
+17246 +          END;
+17247 +        END;
+17248 +      END;
+17249 +    ELSE DO;
+17250 +      IF  NOT MISSING(statesal ) AND
+17251 +                     51742.5 <= statesal  THEN DO;
+17252 +        IF  NOT MISSING(nonstsal ) AND
+17253 +                       18694.5 <= nonstsal  THEN DO;
+17254 +          IF  NOT MISSING(nonstsal ) AND
+17255 +                           38297 <= nonstsal  THEN DO;
+17256 +            _NODE_  =                   65;
+17257 +            _LEAF_  =                    8;
+17258 +            P_totalsal  =     116668.477272727;
+17259 +            V_totalsal  =     123298.826086956;
+17260 +            END;
+17261 +          ELSE DO;
+17262 +            _NODE_  =                   64;
+17263 +            _LEAF_  =                    7;
+17264 +            P_totalsal  =     96360.9090909091;
+17265 +            V_totalsal  =     101708.111111111;
+17266 +            END;
+17267 +          END;
+17268 +        ELSE DO;
+17269 +          IF  NOT MISSING(statesal ) AND
+17270 +            statesal  <              66247.5 THEN DO;
+17271 +            _NODE_  =                   62;
+17272 +            _LEAF_  =                    5;
+17273 +            P_totalsal  =     60063.9938650306;
+17274 +            V_totalsal  =      59998.981595092;
+17275 +            END;
+17276 +          ELSE DO;
+17277 +            _NODE_  =                   63;
+17278 +            _LEAF_  =                    6;
+17279 +            P_totalsal  =            77416.455;
+17280 +            V_totalsal  =     78184.9333333333;
+17281 +            END;
+17282 +          END;
+17283 +        END;
+17284 +      ELSE DO;
+17285 +        IF  NOT MISSING(nonstsal ) AND
+17286 +                       47236.5 <= nonstsal  THEN DO;
+17287 +          IF  NOT MISSING(statesal ) AND
+17288 +                         12307.5 <= statesal  THEN DO;
+17289 +            _NODE_  =                   61;
+17290 +            _LEAF_  =                    4;
+17291 +            P_totalsal  =     85280.3333333333;
+17292 +            V_totalsal  =     84780.2105263158;
+17293 +            END;
+17294 +          ELSE DO;
+17295 +            _NODE_  =                   60;
+17296 +            _LEAF_  =                    3;
+17297 +            P_totalsal  =     56825.5541535226;
+17298 +            V_totalsal  =     56393.1634146341;
+17299 +            END;
+17300 +          END;
+17301 +        ELSE DO;
+17302 +          IF  NOT MISSING(statesal ) AND
+17303 +                         39899.5 <= statesal  THEN DO;
+17304 +            _NODE_  =                   59;
+17305 +            _LEAF_  =                    2;
+17306 +            P_totalsal  =     48164.7592920354;
+17307 +            V_totalsal  =     48515.8536585365;
+17308 +            END;
+17309 +          ELSE DO;
+17310 +            _NODE_  =                   58;
+17311 +            _LEAF_  =                    1;
+17312 +            P_totalsal  =      36420.600973236;
+17313 +            V_totalsal  =     36209.7162471395;
+17314 +            END;
+17315 +          END;
+17316 +        END;
+17317 +      END;
+17318 +    END;
+17319 +  END;
+17320 +
+17321 +*****  RESIDUALS R_ *************;
+17322 +IF MISSING( totalsal ) THEN R_totalsal  = .;
+17323 +ELSE R_totalsal  = totalsal  - P_totalsal ;
+17324 +
+17325 +****************************************************************;
+17326 +******          END OF DECISION TREE SCORING CODE         ******;
+17327 +****************************************************************;
+17328 +
+17329 +drop _LEAF_;
+NOTE: %INCLUDE (level 1) ending.
+17330  run;
+
+NOTE: DATA STEP view saved on file EMWS1.TREE_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+17331  quit;
+17332  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+17333  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMFLOWSCORE.sas";
+17334  *------------------------------------------------------------*;
+17335  * Tree: Scoring VALIDATE data;
+17336  *------------------------------------------------------------*;
+17337  data EMWS1.Tree_VALIDATE
+17338  / view=EMWS1.Tree_VALIDATE
+17339  ;
+17340  set EMWS1.Part_VALIDATE
+17341  ;
+17342  %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMFLOWSCORE.sas.
+17343 +****************************************************************;
+17344 +******             DECISION TREE SCORING CODE             ******;
+17345 +****************************************************************;
+17346 +
+17347 +******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
+17348 +LENGTH _WARN_  $    4;
+17349 +
+17350 +******              LABELS FOR NEW VARIABLES              ******;
+17351 +label _NODE_ = 'Node' ;
+17352 +label _LEAF_ = 'Leaf' ;
+17353 +label P_totalsal = 'Predicted: totalsal' ;
+17354 +label V_totalsal = 'Validated: totalsal' ;
+17355 +label R_totalsal = 'Residual: totalsal' ;
+17356 +label _WARN_ = 'Warnings' ;
+17357 +
+17358 +
+17359 +
+17360 +******             ASSIGN OBSERVATION TO NODE             ******;
+17361 +IF  NOT MISSING(nonstsal ) AND
+17362 +                115051 <= nonstsal  THEN DO;
+17363 +  IF  NOT MISSING(nonstsal ) AND
+17364 +                257529.5 <= nonstsal  THEN DO;
+17365 +    IF  NOT MISSING(nonstsal ) AND
+17366 +                  372771.5 <= nonstsal  THEN DO;
+17367 +      IF  NOT MISSING(nonstsal ) AND
+17368 +                    512979.5 <= nonstsal  THEN DO;
+17369 +        _NODE_  =                   31;
+17370 +        _LEAF_  =                   44;
+17371 +        P_totalsal  =            582917.75;
+17372 +        V_totalsal  =     596384.333333333;
+17373 +        END;
+17374 +      ELSE DO;
+17375 +        _NODE_  =                   30;
+17376 +        _LEAF_  =                   43;
+17377 +        P_totalsal  =     449206.769230769;
+17378 +        V_totalsal  =            420689.75;
+17379 +        END;
+17380 +      END;
+17381 +    ELSE DO;
+17382 +      IF  NOT MISSING(nonstsal ) AND
+17383 +                    315230.5 <= nonstsal  THEN DO;
+17384 +        _NODE_  =                   29;
+17385 +        _LEAF_  =                   42;
+17386 +        P_totalsal  =            347255.75;
+17387 +        V_totalsal  =               341249;
+17388 +        END;
+17389 +      ELSE DO;
+17390 +        IF  NOT MISSING(statesal ) AND
+17391 +                         70181 <= statesal  THEN DO;
+17392 +          _NODE_  =                   55;
+17393 +          _LEAF_  =                   41;
+17394 +          P_totalsal  =     385892.666666666;
+17395 +          V_totalsal  =               371409;
+17396 +          END;
+17397 +        ELSE DO;
+17398 +          IF  NOT MISSING(nonstsal ) AND
+17399 +                          285730 <= nonstsal  THEN DO;
+17400 +            _NODE_  =                   91;
+17401 +            _LEAF_  =                   40;
+17402 +            P_totalsal  =     305890.966666666;
+17403 +            V_totalsal  =     301179.555555555;
+17404 +            END;
+17405 +          ELSE DO;
+17406 +            _NODE_  =                   90;
+17407 +            _LEAF_  =                   39;
+17408 +            P_totalsal  =     274289.210526315;
+17409 +            V_totalsal  =     277074.631578947;
+17410 +            END;
+17411 +          END;
+17412 +        END;
+17413 +      END;
+17414 +    END;
+17415 +  ELSE DO;
+17416 +    IF  NOT MISSING(nonstsal ) AND
+17417 +                    180203 <= nonstsal  THEN DO;
+17418 +      IF  NOT MISSING(statesal ) AND
+17419 +                     51060.5 <= statesal  THEN DO;
+17420 +        _NODE_  =                   27;
+17421 +        _LEAF_  =                   38;
+17422 +        P_totalsal  =     309176.928571428;
+17423 +        V_totalsal  =     310101.888888888;
+17424 +        END;
+17425 +      ELSE DO;
+17426 +        IF  NOT MISSING(nonstsal ) AND
+17427 +                        223651 <= nonstsal  THEN DO;
+17428 +          IF  NOT MISSING(nonstsal ) AND
+17429 +                        241883.5 <= nonstsal  THEN DO;
+17430 +            _NODE_  =                   89;
+17431 +            _LEAF_  =                   37;
+17432 +            P_totalsal  =     253022.555555555;
+17433 +            V_totalsal  =           250817.875;
+17434 +            END;
+17435 +          ELSE DO;
+17436 +            _NODE_  =                   88;
+17437 +            _LEAF_  =                   36;
+17438 +            P_totalsal  =            235625.56;
+17439 +            V_totalsal  =            239422.15;
+17440 +            END;
+17441 +          END;
+17442 +        ELSE DO;
+17443 +          IF  NOT MISSING(statesal ) AND
+17444 +                           27296 <= statesal  THEN DO;
+17445 +            _NODE_  =                   87;
+17446 +            _LEAF_  =                   35;
+17447 +            P_totalsal  =             237379.8;
+17448 +            V_totalsal  =               220000;
+17449 +            END;
+17450 +          ELSE DO;
+17451 +            _NODE_  =                   86;
+17452 +            _LEAF_  =                   34;
+17453 +            P_totalsal  =     202236.918367347;
+17454 +            V_totalsal  =             200073.6;
+17455 +            END;
+17456 +          END;
+17457 +        END;
+17458 +      END;
+17459 +    ELSE DO;
+17460 +      IF  NOT MISSING(statesal ) AND
+17461 +                     69813.5 <= statesal  THEN DO;
+17462 +        IF  NOT MISSING(statesal ) AND
+17463 +                      118874.5 <= statesal  THEN DO;
+17464 +          _NODE_  =                   51;
+17465 +          _LEAF_  =                   33;
+17466 +          P_totalsal  =            320843.75;
+17467 +          V_totalsal  =             305409.5;
+17468 +          END;
+17469 +        ELSE DO;
+17470 +          _NODE_  =                   50;
+17471 +          _LEAF_  =                   32;
+17472 +          P_totalsal  =      228098.23076923;
+17473 +          V_totalsal  =     237538.666666666;
+17474 +          END;
+17475 +        END;
+17476 +      ELSE DO;
+17477 +        IF  NOT MISSING(nonstsal ) AND
+17478 +          nonstsal  <             140119.5 THEN DO;
+17479 +          IF  NOT MISSING(statesal ) AND
+17480 +                           36550 <= statesal  THEN DO;
+17481 +            _NODE_  =                   83;
+17482 +            _LEAF_  =                   29;
+17483 +            P_totalsal  =     184263.533333333;
+17484 +            V_totalsal  =     171906.142857142;
+17485 +            END;
+17486 +          ELSE DO;
+17487 +            _NODE_  =                   82;
+17488 +            _LEAF_  =                   28;
+17489 +            P_totalsal  =     130354.704347826;
+17490 +            V_totalsal  =     133023.814814814;
+17491 +            END;
+17492 +          END;
+17493 +        ELSE DO;
+17494 +          IF  NOT MISSING(statesal ) AND
+17495 +                         16167.5 <= statesal  THEN DO;
+17496 +            _NODE_  =                   85;
+17497 +            _LEAF_  =                   31;
+17498 +            P_totalsal  =     187574.903225806;
+17499 +            V_totalsal  =     189994.285714285;
+17500 +            END;
+17501 +          ELSE DO;
+17502 +            _NODE_  =                   84;
+17503 +            _LEAF_  =                   30;
+17504 +            P_totalsal  =            161803.34;
+17505 +            V_totalsal  =     161883.142857142;
+17506 +            END;
+17507 +          END;
+17508 +        END;
+17509 +      END;
+17510 +    END;
+17511 +  END;
+17512 +ELSE DO;
+17513 +  IF  NOT MISSING(statesal ) AND
+17514 +                   87510 <= statesal  THEN DO;
+17515 +    IF  NOT MISSING(statesal ) AND
+17516 +                    157105 <= statesal  THEN DO;
+17517 +      IF  NOT MISSING(statesal ) AND
+17518 +                    217772.5 <= statesal  THEN DO;
+17519 +        IF  NOT MISSING(statesal ) AND
+17520 +                      300737.5 <= statesal  THEN DO;
+17521 +          _NODE_  =                   47;
+17522 +          _LEAF_  =                   27;
+17523 +          P_totalsal  =            371259.25;
+17524 +          V_totalsal  =     385116.666666666;
+17525 +          END;
+17526 +        ELSE DO;
+17527 +          _NODE_  =                   46;
+17528 +          _LEAF_  =                   26;
+17529 +          P_totalsal  =     270754.181818181;
+17530 +          V_totalsal  =     292902.833333333;
+17531 +          END;
+17532 +        END;
+17533 +      ELSE DO;
+17534 +        IF  NOT MISSING(nonstsal ) AND
+17535 +                         53207 <= nonstsal  THEN DO;
+17536 +          _NODE_  =                   45;
+17537 +          _LEAF_  =                   25;
+17538 +          P_totalsal  =               259173;
+17539 +          V_totalsal  =     242883.142857142;
+17540 +          END;
+17541 +        ELSE DO;
+17542 +          IF  NOT MISSING(statesal ) AND
+17543 +                        193022.5 <= statesal  THEN DO;
+17544 +            _NODE_  =                   81;
+17545 +            _LEAF_  =                   24;
+17546 +            P_totalsal  =            212712.05;
+17547 +            V_totalsal  =     216177.153846153;
+17548 +            END;
+17549 +          ELSE DO;
+17550 +            _NODE_  =                   80;
+17551 +            _LEAF_  =                   23;
+17552 +            P_totalsal  =     181393.888888888;
+17553 +            V_totalsal  =             186975.5;
+17554 +            END;
+17555 +          END;
+17556 +        END;
+17557 +      END;
+17558 +    ELSE DO;
+17559 +      IF  NOT MISSING(nonstsal ) AND
+17560 +                     23033.5 <= nonstsal  THEN DO;
+17561 +        IF  NOT MISSING(nonstsal ) AND
+17562 +                       75175.5 <= nonstsal  THEN DO;
+17563 +          _NODE_  =                   43;
+17564 +          _LEAF_  =                   22;
+17565 +          P_totalsal  =     209111.866666666;
+17566 +          V_totalsal  =     217810.166666666;
+17567 +          END;
+17568 +        ELSE DO;
+17569 +          IF  NOT MISSING(statesal ) AND
+17570 +                          115253 <= statesal  THEN DO;
+17571 +            _NODE_  =                   79;
+17572 +            _LEAF_  =                   21;
+17573 +            P_totalsal  =     169171.775510204;
+17574 +            V_totalsal  =     176223.142857142;
+17575 +            END;
+17576 +          ELSE DO;
+17577 +            _NODE_  =                   78;
+17578 +            _LEAF_  =                   20;
+17579 +            P_totalsal  =     143113.525423728;
+17580 +            V_totalsal  =     141255.652173913;
+17581 +            END;
+17582 +          END;
+17583 +        END;
+17584 +      ELSE DO;
+17585 +        IF  NOT MISSING(statesal ) AND
+17586 +                      117576.5 <= statesal  THEN DO;
+17587 +          IF  NOT MISSING(statesal ) AND
+17588 +                          136441 <= statesal  THEN DO;
+17589 +            _NODE_  =                   77;
+17590 +            _LEAF_  =                   19;
+17591 +            P_totalsal  =     149342.807017543;
+17592 +            V_totalsal  =     150521.045454545;
+17593 +            END;
+17594 +          ELSE DO;
+17595 +            _NODE_  =                   76;
+17596 +            _LEAF_  =                   18;
+17597 +            P_totalsal  =     131039.036144578;
+17598 +            V_totalsal  =         128212.84375;
+17599 +            END;
+17600 +          END;
+17601 +        ELSE DO;
+17602 +          IF  NOT MISSING(statesal ) AND
+17603 +                        101772.5 <= statesal  THEN DO;
+17604 +            _NODE_  =                   75;
+17605 +            _LEAF_  =                   17;
+17606 +            P_totalsal  =     113273.963503649;
+17607 +            V_totalsal  =     111954.901639344;
+17608 +            END;
+17609 +          ELSE DO;
+17610 +            _NODE_  =                   74;
+17611 +            _LEAF_  =                   16;
+17612 +            P_totalsal  =     95764.0754716981;
+17613 +            V_totalsal  =      95716.012987013;
+17614 +            END;
+17615 +          END;
+17616 +        END;
+17617 +      END;
+17618 +    END;
+17619 +  ELSE DO;
+17620 +    IF  NOT MISSING(nonstsal ) AND
+17621 +                     68358 <= nonstsal  THEN DO;
+17622 +      IF  NOT MISSING(statesal ) AND
+17623 +                       27171 <= statesal  THEN DO;
+17624 +        IF  NOT MISSING(statesal ) AND
+17625 +                       61462.5 <= statesal  THEN DO;
+17626 +          _NODE_  =                   39;
+17627 +          _LEAF_  =                   15;
+17628 +          P_totalsal  =             158219.4;
+17629 +          V_totalsal  =             156590.2;
+17630 +          END;
+17631 +        ELSE DO;
+17632 +          IF  NOT MISSING(nonstsal ) AND
+17633 +            nonstsal  <                88475 THEN DO;
+17634 +            _NODE_  =                   70;
+17635 +            _LEAF_  =                   13;
+17636 +            P_totalsal  =     119892.210526315;
+17637 +            V_totalsal  =     122956.166666666;
+17638 +            END;
+17639 +          ELSE DO;
+17640 +            _NODE_  =                   71;
+17641 +            _LEAF_  =                   14;
+17642 +            P_totalsal  =     143362.045454545;
+17643 +            V_totalsal  =             146798.3;
+17644 +            END;
+17645 +          END;
+17646 +        END;
+17647 +      ELSE DO;
+17648 +        IF  NOT MISSING(nonstsal ) AND
+17649 +                       89303.5 <= nonstsal  THEN DO;
+17650 +          IF  NOT MISSING(nonstsal ) AND
+17651 +                        102882.5 <= nonstsal  THEN DO;
+17652 +            _NODE_  =                   69;
+17653 +            _LEAF_  =                   12;
+17654 +            P_totalsal  =          111508.4125;
+17655 +            V_totalsal  =     113460.117647058;
+17656 +            END;
+17657 +          ELSE DO;
+17658 +            _NODE_  =                   68;
+17659 +            _LEAF_  =                   11;
+17660 +            P_totalsal  =             96066.02;
+17661 +            V_totalsal  =     96570.5555555555;
+17662 +            END;
+17663 +          END;
+17664 +        ELSE DO;
+17665 +          IF  NOT MISSING(nonstsal ) AND
+17666 +                           79396 <= nonstsal  THEN DO;
+17667 +            _NODE_  =                   67;
+17668 +            _LEAF_  =                   10;
+17669 +            P_totalsal  =     84476.4926108374;
+17670 +            V_totalsal  =      84804.922077922;
+17671 +            END;
+17672 +          ELSE DO;
+17673 +            _NODE_  =                   66;
+17674 +            _LEAF_  =                    9;
+17675 +            P_totalsal  =     74945.5723905724;
+17676 +            V_totalsal  =     74261.4083333333;
+17677 +            END;
+17678 +          END;
+17679 +        END;
+17680 +      END;
+17681 +    ELSE DO;
+17682 +      IF  NOT MISSING(statesal ) AND
+17683 +                     51742.5 <= statesal  THEN DO;
+17684 +        IF  NOT MISSING(nonstsal ) AND
+17685 +                       18694.5 <= nonstsal  THEN DO;
+17686 +          IF  NOT MISSING(nonstsal ) AND
+17687 +                           38297 <= nonstsal  THEN DO;
+17688 +            _NODE_  =                   65;
+17689 +            _LEAF_  =                    8;
+17690 +            P_totalsal  =     116668.477272727;
+17691 +            V_totalsal  =     123298.826086956;
+17692 +            END;
+17693 +          ELSE DO;
+17694 +            _NODE_  =                   64;
+17695 +            _LEAF_  =                    7;
+17696 +            P_totalsal  =     96360.9090909091;
+17697 +            V_totalsal  =     101708.111111111;
+17698 +            END;
+17699 +          END;
+17700 +        ELSE DO;
+17701 +          IF  NOT MISSING(statesal ) AND
+17702 +            statesal  <              66247.5 THEN DO;
+17703 +            _NODE_  =                   62;
+17704 +            _LEAF_  =                    5;
+17705 +            P_totalsal  =     60063.9938650306;
+17706 +            V_totalsal  =      59998.981595092;
+17707 +            END;
+17708 +          ELSE DO;
+17709 +            _NODE_  =                   63;
+17710 +            _LEAF_  =                    6;
+17711 +            P_totalsal  =            77416.455;
+17712 +            V_totalsal  =     78184.9333333333;
+17713 +            END;
+17714 +          END;
+17715 +        END;
+17716 +      ELSE DO;
+17717 +        IF  NOT MISSING(nonstsal ) AND
+17718 +                       47236.5 <= nonstsal  THEN DO;
+17719 +          IF  NOT MISSING(statesal ) AND
+17720 +                         12307.5 <= statesal  THEN DO;
+17721 +            _NODE_  =                   61;
+17722 +            _LEAF_  =                    4;
+17723 +            P_totalsal  =     85280.3333333333;
+17724 +            V_totalsal  =     84780.2105263158;
+17725 +            END;
+17726 +          ELSE DO;
+17727 +            _NODE_  =                   60;
+17728 +            _LEAF_  =                    3;
+17729 +            P_totalsal  =     56825.5541535226;
+17730 +            V_totalsal  =     56393.1634146341;
+17731 +            END;
+17732 +          END;
+17733 +        ELSE DO;
+17734 +          IF  NOT MISSING(statesal ) AND
+17735 +                         39899.5 <= statesal  THEN DO;
+17736 +            _NODE_  =                   59;
+17737 +            _LEAF_  =                    2;
+17738 +            P_totalsal  =     48164.7592920354;
+17739 +            V_totalsal  =     48515.8536585365;
+17740 +            END;
+17741 +          ELSE DO;
+17742 +            _NODE_  =                   58;
+17743 +            _LEAF_  =                    1;
+17744 +            P_totalsal  =      36420.600973236;
+17745 +            V_totalsal  =     36209.7162471395;
+17746 +            END;
+17747 +          END;
+17748 +        END;
+17749 +      END;
+17750 +    END;
+17751 +  END;
+17752 +
+17753 +*****  RESIDUALS R_ *************;
+17754 +IF MISSING( totalsal ) THEN R_totalsal  = .;
+17755 +ELSE R_totalsal  = totalsal  - P_totalsal ;
+17756 +
+17757 +****************************************************************;
+17758 +******          END OF DECISION TREE SCORING CODE         ******;
+17759 +****************************************************************;
+17760 +
+17761 +drop _LEAF_;
+NOTE: %INCLUDE (level 1) ending.
+17762  run;
+
+NOTE: DATA STEP view saved on file EMWS1.TREE_VALIDATE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+17763  quit;
+17764  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+17765  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMFLOWSCORE.sas";
+17766  *------------------------------------------------------------*;
+17767  * Tree: Scoring TEST data;
+17768  *------------------------------------------------------------*;
+17769  data EMWS1.Tree_TEST
+17770  / view=EMWS1.Tree_TEST
+17771  ;
+17772  set EMWS1.Part_TEST
+17773  ;
+17774  %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Tree\EMFLOWSCORE.sas.
+17775 +****************************************************************;
+17776 +******             DECISION TREE SCORING CODE             ******;
+17777 +****************************************************************;
+17778 +
+17779 +******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
+17780 +LENGTH _WARN_  $    4;
+17781 +
+17782 +******              LABELS FOR NEW VARIABLES              ******;
+17783 +label _NODE_ = 'Node' ;
+17784 +label _LEAF_ = 'Leaf' ;
+17785 +label P_totalsal = 'Predicted: totalsal' ;
+17786 +label V_totalsal = 'Validated: totalsal' ;
+17787 +label R_totalsal = 'Residual: totalsal' ;
+17788 +label _WARN_ = 'Warnings' ;
+17789 +
+17790 +
+17791 +
+17792 +******             ASSIGN OBSERVATION TO NODE             ******;
+17793 +IF  NOT MISSING(nonstsal ) AND
+17794 +                115051 <= nonstsal  THEN DO;
+17795 +  IF  NOT MISSING(nonstsal ) AND
+17796 +                257529.5 <= nonstsal  THEN DO;
+17797 +    IF  NOT MISSING(nonstsal ) AND
+17798 +                  372771.5 <= nonstsal  THEN DO;
+17799 +      IF  NOT MISSING(nonstsal ) AND
+17800 +                    512979.5 <= nonstsal  THEN DO;
+17801 +        _NODE_  =                   31;
+17802 +        _LEAF_  =                   44;
+17803 +        P_totalsal  =            582917.75;
+17804 +        V_totalsal  =     596384.333333333;
+17805 +        END;
+17806 +      ELSE DO;
+17807 +        _NODE_  =                   30;
+17808 +        _LEAF_  =                   43;
+17809 +        P_totalsal  =     449206.769230769;
+17810 +        V_totalsal  =            420689.75;
+17811 +        END;
+17812 +      END;
+17813 +    ELSE DO;
+17814 +      IF  NOT MISSING(nonstsal ) AND
+17815 +                    315230.5 <= nonstsal  THEN DO;
+17816 +        _NODE_  =                   29;
+17817 +        _LEAF_  =                   42;
+17818 +        P_totalsal  =            347255.75;
+17819 +        V_totalsal  =               341249;
+17820 +        END;
+17821 +      ELSE DO;
+17822 +        IF  NOT MISSING(statesal ) AND
+17823 +                         70181 <= statesal  THEN DO;
+17824 +          _NODE_  =                   55;
+17825 +          _LEAF_  =                   41;
+17826 +          P_totalsal  =     385892.666666666;
+17827 +          V_totalsal  =               371409;
+17828 +          END;
+17829 +        ELSE DO;
+17830 +          IF  NOT MISSING(nonstsal ) AND
+17831 +                          285730 <= nonstsal  THEN DO;
+17832 +            _NODE_  =                   91;
+17833 +            _LEAF_  =                   40;
+17834 +            P_totalsal  =     305890.966666666;
+17835 +            V_totalsal  =     301179.555555555;
+17836 +            END;
+17837 +          ELSE DO;
+17838 +            _NODE_  =                   90;
+17839 +            _LEAF_  =                   39;
+17840 +            P_totalsal  =     274289.210526315;
+17841 +            V_totalsal  =     277074.631578947;
+17842 +            END;
+17843 +          END;
+17844 +        END;
+17845 +      END;
+17846 +    END;
+17847 +  ELSE DO;
+17848 +    IF  NOT MISSING(nonstsal ) AND
+17849 +                    180203 <= nonstsal  THEN DO;
+17850 +      IF  NOT MISSING(statesal ) AND
+17851 +                     51060.5 <= statesal  THEN DO;
+17852 +        _NODE_  =                   27;
+17853 +        _LEAF_  =                   38;
+17854 +        P_totalsal  =     309176.928571428;
+17855 +        V_totalsal  =     310101.888888888;
+17856 +        END;
+17857 +      ELSE DO;
+17858 +        IF  NOT MISSING(nonstsal ) AND
+17859 +                        223651 <= nonstsal  THEN DO;
+17860 +          IF  NOT MISSING(nonstsal ) AND
+17861 +                        241883.5 <= nonstsal  THEN DO;
+17862 +            _NODE_  =                   89;
+17863 +            _LEAF_  =                   37;
+17864 +            P_totalsal  =     253022.555555555;
+17865 +            V_totalsal  =           250817.875;
+17866 +            END;
+17867 +          ELSE DO;
+17868 +            _NODE_  =                   88;
+17869 +            _LEAF_  =                   36;
+17870 +            P_totalsal  =            235625.56;
+17871 +            V_totalsal  =            239422.15;
+17872 +            END;
+17873 +          END;
+17874 +        ELSE DO;
+17875 +          IF  NOT MISSING(statesal ) AND
+17876 +                           27296 <= statesal  THEN DO;
+17877 +            _NODE_  =                   87;
+17878 +            _LEAF_  =                   35;
+17879 +            P_totalsal  =             237379.8;
+17880 +            V_totalsal  =               220000;
+17881 +            END;
+17882 +          ELSE DO;
+17883 +            _NODE_  =                   86;
+17884 +            _LEAF_  =                   34;
+17885 +            P_totalsal  =     202236.918367347;
+17886 +            V_totalsal  =             200073.6;
+17887 +            END;
+17888 +          END;
+17889 +        END;
+17890 +      END;
+17891 +    ELSE DO;
+17892 +      IF  NOT MISSING(statesal ) AND
+17893 +                     69813.5 <= statesal  THEN DO;
+17894 +        IF  NOT MISSING(statesal ) AND
+17895 +                      118874.5 <= statesal  THEN DO;
+17896 +          _NODE_  =                   51;
+17897 +          _LEAF_  =                   33;
+17898 +          P_totalsal  =            320843.75;
+17899 +          V_totalsal  =             305409.5;
+17900 +          END;
+17901 +        ELSE DO;
+17902 +          _NODE_  =                   50;
+17903 +          _LEAF_  =                   32;
+17904 +          P_totalsal  =      228098.23076923;
+17905 +          V_totalsal  =     237538.666666666;
+17906 +          END;
+17907 +        END;
+17908 +      ELSE DO;
+17909 +        IF  NOT MISSING(nonstsal ) AND
+17910 +          nonstsal  <             140119.5 THEN DO;
+17911 +          IF  NOT MISSING(statesal ) AND
+17912 +                           36550 <= statesal  THEN DO;
+17913 +            _NODE_  =                   83;
+17914 +            _LEAF_  =                   29;
+17915 +            P_totalsal  =     184263.533333333;
+17916 +            V_totalsal  =     171906.142857142;
+17917 +            END;
+17918 +          ELSE DO;
+17919 +            _NODE_  =                   82;
+17920 +            _LEAF_  =                   28;
+17921 +            P_totalsal  =     130354.704347826;
+17922 +            V_totalsal  =     133023.814814814;
+17923 +            END;
+17924 +          END;
+17925 +        ELSE DO;
+17926 +          IF  NOT MISSING(statesal ) AND
+17927 +                         16167.5 <= statesal  THEN DO;
+17928 +            _NODE_  =                   85;
+17929 +            _LEAF_  =                   31;
+17930 +            P_totalsal  =     187574.903225806;
+17931 +            V_totalsal  =     189994.285714285;
+17932 +            END;
+17933 +          ELSE DO;
+17934 +            _NODE_  =                   84;
+17935 +            _LEAF_  =                   30;
+17936 +            P_totalsal  =            161803.34;
+17937 +            V_totalsal  =     161883.142857142;
+17938 +            END;
+17939 +          END;
+17940 +        END;
+17941 +      END;
+17942 +    END;
+17943 +  END;
+17944 +ELSE DO;
+17945 +  IF  NOT MISSING(statesal ) AND
+17946 +                   87510 <= statesal  THEN DO;
+17947 +    IF  NOT MISSING(statesal ) AND
+17948 +                    157105 <= statesal  THEN DO;
+17949 +      IF  NOT MISSING(statesal ) AND
+17950 +                    217772.5 <= statesal  THEN DO;
+17951 +        IF  NOT MISSING(statesal ) AND
+17952 +                      300737.5 <= statesal  THEN DO;
+17953 +          _NODE_  =                   47;
+17954 +          _LEAF_  =                   27;
+17955 +          P_totalsal  =            371259.25;
+17956 +          V_totalsal  =     385116.666666666;
+17957 +          END;
+17958 +        ELSE DO;
+17959 +          _NODE_  =                   46;
+17960 +          _LEAF_  =                   26;
+17961 +          P_totalsal  =     270754.181818181;
+17962 +          V_totalsal  =     292902.833333333;
+17963 +          END;
+17964 +        END;
+17965 +      ELSE DO;
+17966 +        IF  NOT MISSING(nonstsal ) AND
+17967 +                         53207 <= nonstsal  THEN DO;
+17968 +          _NODE_  =                   45;
+17969 +          _LEAF_  =                   25;
+17970 +          P_totalsal  =               259173;
+17971 +          V_totalsal  =     242883.142857142;
+17972 +          END;
+17973 +        ELSE DO;
+17974 +          IF  NOT MISSING(statesal ) AND
+17975 +                        193022.5 <= statesal  THEN DO;
+17976 +            _NODE_  =                   81;
+17977 +            _LEAF_  =                   24;
+17978 +            P_totalsal  =            212712.05;
+17979 +            V_totalsal  =     216177.153846153;
+17980 +            END;
+17981 +          ELSE DO;
+17982 +            _NODE_  =                   80;
+17983 +            _LEAF_  =                   23;
+17984 +            P_totalsal  =     181393.888888888;
+17985 +            V_totalsal  =             186975.5;
+17986 +            END;
+17987 +          END;
+17988 +        END;
+17989 +      END;
+17990 +    ELSE DO;
+17991 +      IF  NOT MISSING(nonstsal ) AND
+17992 +                     23033.5 <= nonstsal  THEN DO;
+17993 +        IF  NOT MISSING(nonstsal ) AND
+17994 +                       75175.5 <= nonstsal  THEN DO;
+17995 +          _NODE_  =                   43;
+17996 +          _LEAF_  =                   22;
+17997 +          P_totalsal  =     209111.866666666;
+17998 +          V_totalsal  =     217810.166666666;
+17999 +          END;
+18000 +        ELSE DO;
+18001 +          IF  NOT MISSING(statesal ) AND
+18002 +                          115253 <= statesal  THEN DO;
+18003 +            _NODE_  =                   79;
+18004 +            _LEAF_  =                   21;
+18005 +            P_totalsal  =     169171.775510204;
+18006 +            V_totalsal  =     176223.142857142;
+18007 +            END;
+18008 +          ELSE DO;
+18009 +            _NODE_  =                   78;
+18010 +            _LEAF_  =                   20;
+18011 +            P_totalsal  =     143113.525423728;
+18012 +            V_totalsal  =     141255.652173913;
+18013 +            END;
+18014 +          END;
+18015 +        END;
+18016 +      ELSE DO;
+18017 +        IF  NOT MISSING(statesal ) AND
+18018 +                      117576.5 <= statesal  THEN DO;
+18019 +          IF  NOT MISSING(statesal ) AND
+18020 +                          136441 <= statesal  THEN DO;
+18021 +            _NODE_  =                   77;
+18022 +            _LEAF_  =                   19;
+18023 +            P_totalsal  =     149342.807017543;
+18024 +            V_totalsal  =     150521.045454545;
+18025 +            END;
+18026 +          ELSE DO;
+18027 +            _NODE_  =                   76;
+18028 +            _LEAF_  =                   18;
+18029 +            P_totalsal  =     131039.036144578;
+18030 +            V_totalsal  =         128212.84375;
+18031 +            END;
+18032 +          END;
+18033 +        ELSE DO;
+18034 +          IF  NOT MISSING(statesal ) AND
+18035 +                        101772.5 <= statesal  THEN DO;
+18036 +            _NODE_  =                   75;
+18037 +            _LEAF_  =                   17;
+18038 +            P_totalsal  =     113273.963503649;
+18039 +            V_totalsal  =     111954.901639344;
+18040 +            END;
+18041 +          ELSE DO;
+18042 +            _NODE_  =                   74;
+18043 +            _LEAF_  =                   16;
+18044 +            P_totalsal  =     95764.0754716981;
+18045 +            V_totalsal  =      95716.012987013;
+18046 +            END;
+18047 +          END;
+18048 +        END;
+18049 +      END;
+18050 +    END;
+18051 +  ELSE DO;
+18052 +    IF  NOT MISSING(nonstsal ) AND
+18053 +                     68358 <= nonstsal  THEN DO;
+18054 +      IF  NOT MISSING(statesal ) AND
+18055 +                       27171 <= statesal  THEN DO;
+18056 +        IF  NOT MISSING(statesal ) AND
+18057 +                       61462.5 <= statesal  THEN DO;
+18058 +          _NODE_  =                   39;
+18059 +          _LEAF_  =                   15;
+18060 +          P_totalsal  =             158219.4;
+18061 +          V_totalsal  =             156590.2;
+18062 +          END;
+18063 +        ELSE DO;
+18064 +          IF  NOT MISSING(nonstsal ) AND
+18065 +            nonstsal  <                88475 THEN DO;
+18066 +            _NODE_  =                   70;
+18067 +            _LEAF_  =                   13;
+18068 +            P_totalsal  =     119892.210526315;
+18069 +            V_totalsal  =     122956.166666666;
+18070 +            END;
+18071 +          ELSE DO;
+18072 +            _NODE_  =                   71;
+18073 +            _LEAF_  =                   14;
+18074 +            P_totalsal  =     143362.045454545;
+18075 +            V_totalsal  =             146798.3;
+18076 +            END;
+18077 +          END;
+18078 +        END;
+18079 +      ELSE DO;
+18080 +        IF  NOT MISSING(nonstsal ) AND
+18081 +                       89303.5 <= nonstsal  THEN DO;
+18082 +          IF  NOT MISSING(nonstsal ) AND
+18083 +                        102882.5 <= nonstsal  THEN DO;
+18084 +            _NODE_  =                   69;
+18085 +            _LEAF_  =                   12;
+18086 +            P_totalsal  =          111508.4125;
+18087 +            V_totalsal  =     113460.117647058;
+18088 +            END;
+18089 +          ELSE DO;
+18090 +            _NODE_  =                   68;
+18091 +            _LEAF_  =                   11;
+18092 +            P_totalsal  =             96066.02;
+18093 +            V_totalsal  =     96570.5555555555;
+18094 +            END;
+18095 +          END;
+18096 +        ELSE DO;
+18097 +          IF  NOT MISSING(nonstsal ) AND
+18098 +                           79396 <= nonstsal  THEN DO;
+18099 +            _NODE_  =                   67;
+18100 +            _LEAF_  =                   10;
+18101 +            P_totalsal  =     84476.4926108374;
+18102 +            V_totalsal  =      84804.922077922;
+18103 +            END;
+18104 +          ELSE DO;
+18105 +            _NODE_  =                   66;
+18106 +            _LEAF_  =                    9;
+18107 +            P_totalsal  =     74945.5723905724;
+18108 +            V_totalsal  =     74261.4083333333;
+18109 +            END;
+18110 +          END;
+18111 +        END;
+18112 +      END;
+18113 +    ELSE DO;
+18114 +      IF  NOT MISSING(statesal ) AND
+18115 +                     51742.5 <= statesal  THEN DO;
+18116 +        IF  NOT MISSING(nonstsal ) AND
+18117 +                       18694.5 <= nonstsal  THEN DO;
+18118 +          IF  NOT MISSING(nonstsal ) AND
+18119 +                           38297 <= nonstsal  THEN DO;
+18120 +            _NODE_  =                   65;
+18121 +            _LEAF_  =                    8;
+18122 +            P_totalsal  =     116668.477272727;
+18123 +            V_totalsal  =     123298.826086956;
+18124 +            END;
+18125 +          ELSE DO;
+18126 +            _NODE_  =                   64;
+18127 +            _LEAF_  =                    7;
+18128 +            P_totalsal  =     96360.9090909091;
+18129 +            V_totalsal  =     101708.111111111;
+18130 +            END;
+18131 +          END;
+18132 +        ELSE DO;
+18133 +          IF  NOT MISSING(statesal ) AND
+18134 +            statesal  <              66247.5 THEN DO;
+18135 +            _NODE_  =                   62;
+18136 +            _LEAF_  =                    5;
+18137 +            P_totalsal  =     60063.9938650306;
+18138 +            V_totalsal  =      59998.981595092;
+18139 +            END;
+18140 +          ELSE DO;
+18141 +            _NODE_  =                   63;
+18142 +            _LEAF_  =                    6;
+18143 +            P_totalsal  =            77416.455;
+18144 +            V_totalsal  =     78184.9333333333;
+18145 +            END;
+18146 +          END;
+18147 +        END;
+18148 +      ELSE DO;
+18149 +        IF  NOT MISSING(nonstsal ) AND
+18150 +                       47236.5 <= nonstsal  THEN DO;
+18151 +          IF  NOT MISSING(statesal ) AND
+18152 +                         12307.5 <= statesal  THEN DO;
+18153 +            _NODE_  =                   61;
+18154 +            _LEAF_  =                    4;
+18155 +            P_totalsal  =     85280.3333333333;
+18156 +            V_totalsal  =     84780.2105263158;
+18157 +            END;
+18158 +          ELSE DO;
+18159 +            _NODE_  =                   60;
+18160 +            _LEAF_  =                    3;
+18161 +            P_totalsal  =     56825.5541535226;
+18162 +            V_totalsal  =     56393.1634146341;
+18163 +            END;
+18164 +          END;
+18165 +        ELSE DO;
+18166 +          IF  NOT MISSING(statesal ) AND
+18167 +                         39899.5 <= statesal  THEN DO;
+18168 +            _NODE_  =                   59;
+18169 +            _LEAF_  =                    2;
+18170 +            P_totalsal  =     48164.7592920354;
+18171 +            V_totalsal  =     48515.8536585365;
+18172 +            END;
+18173 +          ELSE DO;
+18174 +            _NODE_  =                   58;
+18175 +            _LEAF_  =                    1;
+18176 +            P_totalsal  =      36420.600973236;
+18177 +            V_totalsal  =     36209.7162471395;
+18178 +            END;
+18179 +          END;
+18180 +        END;
+18181 +      END;
+18182 +    END;
+18183 +  END;
+18184 +
+18185 +*****  RESIDUALS R_ *************;
+18186 +IF MISSING( totalsal ) THEN R_totalsal  = .;
+18187 +ELSE R_totalsal  = totalsal  - P_totalsal ;
+18188 +
+18189 +****************************************************************;
+18190 +******          END OF DECISION TREE SCORING CODE         ******;
+18191 +****************************************************************;
+18192 +
+18193 +drop _LEAF_;
+NOTE: %INCLUDE (level 1) ending.
+18194  run;
+
+NOTE: DATA STEP view saved on file EMWS1.TREE_TEST.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+18195  quit;
+18196  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+NOTE: View EMWS1.TREE_TRAIN.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+18198  proc sort data=WORK.EM_USER_REPORT;
+18199  by ID VIEW;
+18200  run;
+
+NOTE: There were 132 observations read from the data set WORK.EM_USER_REPORT.
+NOTE: The data set WORK.EM_USER_REPORT has 132 observations and 4 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18201  *------------------------------------------------------------*;
+18202  * Tree: Computing metadata for TRAIN data;
+18203  *------------------------------------------------------------*;
+
+NOTE: View EMWS1.TREE_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+18598  data WORK.MODELTEMP_INFO;
+18599  set EMWS1.Tree_EMINFO;
+18600  where DATA='Tree' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+18601  run;
+
+NOTE: There were 0 observations read from the data set EMWS1.TREE_EMINFO.
+      WHERE (DATA='Tree') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.15 seconds
+      cpu time            0.00 seconds
+      
+
+18602  data EMWS1.Tree_EMINFO;
+18603  length TARGET KEY $32 DATA $43;
+18604  input TARGET KEY DATA $;
+18605  cards;
+
+NOTE: The data set EMWS1.TREE_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+18609  run;
+18610  data EMWS1.Tree_EMINFO;
+18611  set EMWS1.Tree_EMINFO WORK.MODELTEMP_INFO;
+18612  run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS1.TREE_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18613  proc sort data = EMWS1.Tree_EMINFO NOTHREADS;
+18614  by TARGET KEY;
+18615  run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE_EMINFO.
+NOTE: The data set EMWS1.TREE_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18616  proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+18617  by TARGET KEY;
+18618  run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18619  proc sort data = EMWS1.Tree_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+18620  by TARGET KEY;
+18621  run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.TREE_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18622  data EMWS1.Tree_EMINFO;
+18623  merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+18624  by TARGET KEY;
+18625  run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.TREE_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.01 seconds
+      
+
+18626  proc datasets lib=work nolist;
+18627  delete TEMP_INFO SORTEDEMINFO;
+18628  run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+18629  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: View EMWS1.TREE_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: View EMWS1.TREE_VALIDATE.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+NOTE: View EMWS1.TREE_TEST.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      

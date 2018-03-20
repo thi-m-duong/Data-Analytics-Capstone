@@ -1,0 +1,82 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                March 01, 2016
+Time:                12:43:38
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          10
+INPUT      NOMINAL           10
+TARGET     NOMINAL            1
+ 
+ 
+ 
+ 
+Partition Summary
+ 
+                                     Number of
+Type             Data Set          Observations
+ 
+DATA        EMWS1.Ids_DATA             41188
+TRAIN       EMWS1.Part_TRAIN           16474
+VALIDATE    EMWS1.Part_VALIDATE        12356
+TEST        EMWS1.Part_TEST            12358
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Summary Statistics for Class Targets
+ 
+Data=DATA
+ 
+            Numeric    Formatted    Frequency
+Variable     Value       Value        Count      Percent     Label
+ 
+RESPOND        .          no          36548      88.7346    RESPOND
+RESPOND        .          yes          4640      11.2654    RESPOND
+ 
+ 
+Data=TEST
+ 
+            Numeric    Formatted    Frequency
+Variable     Value       Value        Count      Percent     Label
+ 
+RESPOND        .          no          10966      88.7360    RESPOND
+RESPOND        .          yes          1392      11.2640    RESPOND
+ 
+ 
+Data=TRAIN
+ 
+            Numeric    Formatted    Frequency
+Variable     Value       Value        Count      Percent     Label
+ 
+RESPOND        .          no          14618      88.7338    RESPOND
+RESPOND        .          yes          1856      11.2662    RESPOND
+ 
+ 
+Data=VALIDATE
+ 
+            Numeric    Formatted    Frequency
+Variable     Value       Value        Count      Percent     Label
+ 
+RESPOND        .          no          10964      88.7342    RESPOND
+RESPOND        .          yes          1392      11.2658    RESPOND

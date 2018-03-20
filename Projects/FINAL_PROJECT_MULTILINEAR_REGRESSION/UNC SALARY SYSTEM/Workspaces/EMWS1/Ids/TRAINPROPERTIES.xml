@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  DataSource="genderuncsystemsalarysearch" Scope="LOCAL" Role="RAW" Library="NEWDATA"
+ Table="GENDER_UNC_SYSTEM_SALARY_SEARCH_" NCols="15" NObs="12287" NBytes="2688000"
+ Segment="" DataSourceRole="RAW" OutputType="VIEW" ForceRun="N" ComputeStatistics="N"
+ DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC" ApplyIntervalLevelLowerLimit="Y"
+ IntervalLowerLimit="20" ApplyMaxPercentMissing="Y" MaxPercentMissing="50" ApplyMaxClassLevels="Y"
+ MaxClassLevels="20" IdentifyEmptyColumns="Y" VariableValidation="STRICT" NewVariableRole="REJECT"
+ DropMapVariables="Y" DsId="genderuncsystemsalarysearch" DsSampleName="" DsSampleSizeType=""
+ DsSampleSize="" DsCreatedBy="Intern Three" DsCreateDate="1776804392.8" DsModifiedBy="Intern Three"
+ DsModifyDate="1776804392.8" DsScope="LOCAL" Sample="D" SampleSizeType="PERCENT" SampleSizePercent="20"
+ SampleSizeObs="10000" DBPassThrough="Y" RunAction="Train" Component="DataSource"
+ RawCreateTime="1776804509.8" CreateTime="20APR2016:20:48:30" Description="" Data="NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_"
+ CMeta="WORK.M0I87G6A" RunId="59744d56-505d-4959-848a-26745e12327d" RawLastTimeRun="1776804537.7"
+ RawRunTime="7.1770000458" LastTimeRun="20APR2016:20:48:58" RunTime="0 Hr. 0 Min. 7.18 Sec."
+>
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES/>
+</_ROOT_>

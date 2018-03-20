@@ -1,0 +1,179 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                March 01, 2016
+Time:                12:46:23
+*------------------------------------------------------------*
+NOTE: This SAS session is using a registry in WORK.  All changes will be lost at the end of this session.
+12988  data work.outkey;
+12989  set EMWS1.AutoNeural_OUTKEY;
+12990  if upcase(ROLE) = 'HIDDEN';
+12991  run;
+
+NOTE: There were 69 observations read from the data set EMWS1.AUTONEURAL_OUTKEY.
+NOTE: The data set WORK.OUTKEY has 4 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12992  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\AutoNeural\EMFLOWSCORE.sas";
+12993  *------------------------------------------------------------*;
+12994  * AutoNeural: Scoring DATA data;
+12995  *------------------------------------------------------------*;
+12996  data EMWS1.AutoNeural_TRAIN
+12997  / view=EMWS1.AutoNeural_TRAIN
+12998  ;
+12999  set EMWS1.Part_TRAIN
+13000  ;
+13001  %inc emflow;
+14058  run;
+
+NOTE: DATA STEP view saved on file EMWS1.AUTONEURAL_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+14059  quit;
+14060  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+14061  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\AutoNeural\EMFLOWSCORE.sas";
+14062  *------------------------------------------------------------*;
+14063  * AutoNeural: Scoring VALIDATE data;
+14064  *------------------------------------------------------------*;
+14065  data EMWS1.AutoNeural_VALIDATE
+14066  / view=EMWS1.AutoNeural_VALIDATE
+14067  ;
+14068  set EMWS1.Part_VALIDATE
+14069  ;
+14070  %inc emflow;
+15127  run;
+
+NOTE: DATA STEP view saved on file EMWS1.AUTONEURAL_VALIDATE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+15128  quit;
+15129  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+15130  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\AutoNeural\EMFLOWSCORE.sas";
+15131  *------------------------------------------------------------*;
+15132  * AutoNeural: Scoring TEST data;
+15133  *------------------------------------------------------------*;
+15134  data EMWS1.AutoNeural_TEST
+15135  / view=EMWS1.AutoNeural_TEST
+15136  ;
+15137  set EMWS1.Part_TEST
+15138  ;
+15139  %inc emflow;
+16196  run;
+
+NOTE: DATA STEP view saved on file EMWS1.AUTONEURAL_TEST.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+16197  quit;
+16198  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+16199  *------------------------------------------------------------*;
+16200  * AutoNeural: Computing metadata for TRAIN data;
+16201  *------------------------------------------------------------*;
+
+NOTE: View EMWS1.AUTONEURAL_TRAIN.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+16546  data EMWS1.AutoNeural_EMINFO;
+16547  length TARGET KEY $32 DATA $43;
+16548  input TARGET KEY DATA $;
+16549  cards;
+
+NOTE: The data set EMWS1.AUTONEURAL_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+16553  run;
+16554  proc sort data = EMWS1.AutoNeural_EMINFO NOTHREADS;
+16555  by TARGET KEY;
+16556  run;
+
+NOTE: There were 3 observations read from the data set EMWS1.AUTONEURAL_EMINFO.
+NOTE: The data set EMWS1.AUTONEURAL_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+16557  proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+16558  by TARGET KEY;
+16559  run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+16560  proc sort data = EMWS1.AutoNeural_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+16561  by TARGET KEY;
+16562  run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.AUTONEURAL_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+16563  data EMWS1.AutoNeural_EMINFO;
+16564  merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+16565  by TARGET KEY;
+16566  run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.AUTONEURAL_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+16567  proc datasets lib=work nolist;
+16568  delete TEMP_INFO SORTEDEMINFO;
+16569  run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+16570  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: View EMWS1.AUTONEURAL_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: View EMWS1.AUTONEURAL_VALIDATE.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: View EMWS1.AUTONEURAL_TEST.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      

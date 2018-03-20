@@ -1,0 +1,82 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                April 21, 2016
+Time:                05:41:40
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+Role         Level         Count
+ 
+ID         NOMINAL           1
+INPUT      BINARY            1
+INPUT      INTERVAL          4
+INPUT      NOMINAL           6
+INPUT      ORDINAL           1
+TARGET     INTERVAL          1
+TIMEID     INTERVAL          1
+ 
+ 
+ 
+ 
+Partition Summary
+ 
+                                     Number of
+Type             Data Set          Observations
+ 
+DATA        EMWS1.Impt_TRAIN           12287
+TRAIN       EMWS1.Part_TRAIN            6616
+VALIDATE    EMWS1.Part_VALIDATE         2835
+TEST        EMWS1.Part_TEST             2836
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Summary Statistics for Interval Targets
+ 
+Data=DATA
+ 
+                                                                           Number of                      Standard
+Variable            Maximum               Mean            Minimum       Observations    Missing          Deviation    Label
+ 
+totalsal             819069    80938.234149915               3000              12287       0       65607.733267928
+ 
+ 
+Data=TEST
+ 
+                                                                           Number of                      Standard
+Variable            Maximum               Mean            Minimum       Observations    Missing          Deviation    Label
+ 
+totalsal             677310    81409.805007052               3500               2836       0         68768.8567511
+ 
+ 
+Data=TRAIN
+ 
+                                                                           Number of                      Standard
+Variable            Maximum               Mean            Minimum       Observations    Missing          Deviation    Label
+ 
+totalsal             819069    80997.318016929               3000               6616       0       64985.781383756
+ 
+ 
+Data=VALIDATE
+ 
+                                                                           Number of                      Standard
+Variable            Maximum               Mean            Minimum       Observations    Missing          Deviation    Label
+ 
+totalsal             621715    80328.613756614               3500               2835       0       63808.039692006

@@ -1,0 +1,343 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                April 21, 2016
+Time:                05:43:08
+*------------------------------------------------------------*
+NOTE: View EMWS1.REG_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: View EMWS1.REG_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+12329  /* Generate assessment metadata, which will be used to generate assessment data step */
+12330  /* code, such as retrieving names of temporary variables and summary variables,      */
+12331  /* labels, etc.  It is used in almost all the assessment computations such as lift,  */
+12332  /* roc, index, scoreDist and could be thought as a global variable in assessment     */
+12333  /* computation.                                                                      */
+12334  data work.ASSESS_27TAN70_assessMeta_f7uyDj;
+12335  length VARIABLE $32 FORMAT $44 TYPE $32 PARENT $32 LEVEL $32 PROPERTY $32 MEASUREMENT $10 LAST_LEVEL $32 GEN_VAR_IN_TEMP_DATA $32 RESULT_MEAN $32 RESULT_MEAN_LABEL $100 RESULT_MIN $32 RESULT_MIN_LABEL $100 MIN_ADJUSTED $32 RESULT_MAX $32
+12335! RESULT_MAX_LABEL
+12336     $100 MAX_ADJUSTED $32 RESULT_COUNT $32 RESULT_COUNT_LABEL $100 TEMPORARY_VARIABLE $32;
+12337  VARIABLE = "totalsal";
+12338  PARENT = "";
+12339  FORMAT = "";
+12340  TYPE = "";
+12341  LEVEL = '';
+12342  PROPERTY = "TARGET";
+12343  MEASUREMENT = "INTERVAL";
+12344  LAST_LEVEL = '';
+12345  GEN_VAR_IN_TEMP_DATA = "totalsal";
+12346  RESULT_MEAN = "_targetMean_";
+12347  RESULT_MEAN_LABEL = "%sysfunc(sasmsg(sashelp.dmine, assmt_trgtMean_vlabel, NOQUOTE))";
+12348  RESULT_MIN = "_targetMin_";
+12349  RESULT_MIN_LABEL = "%sysfunc(sasmsg(sashelp.dmine, assmt_trgtMin_vlabel, NOQUOTE))";
+12350  MIN_ADJUSTED = "totalsal_minAdjusted_COoVhsJcm";
+12351  RESULT_MAX = "_targetMax_";
+12352  RESULT_MAX_LABEL = "%sysfunc(sasmsg(sashelp.dmine, assmt_trgtMax_vlabel, NOQUOTE))";
+12353  MAX_ADJUSTED = "totalsal_maxAdjusted_sS5DuyZfT";
+12354  RESULT_COUNT = "";
+12355  RESULT_COUNT_LABEL = "";
+12356  TEMPORARY_VARIABLE = "totalsal_2xQKdnJxxfSMlrB";
+12357  output;
+12358  VARIABLE = "P_totalsal";
+12359  FORMAT = "";
+12360  TYPE = "";
+12361  PARENT = "";
+12362  LEVEL = "";
+12363  PROPERTY = "PREDICTED";
+12364  MEASUREMENT = "INTERVAL";
+12365  LAST_LEVEL = "";
+12366  GEN_VAR_IN_TEMP_DATA = "P_totalsal";
+12367  RESULT_MEAN = "_meanP_";
+12368  RESULT_MEAN_LABEL = "%sysfunc(sasmsg(sashelp.dmine, assmt_predMean_vlabel, NOQUOTE))";
+12369  RESULT_MIN = "_minP_";
+12370  RESULT_MIN_LABEL = "%sysfunc(sasmsg(sashelp.dmine, assmt_predMin_vlabel, NOQUOTE))";
+12371  MIN_ADJUSTED = "P_totals_minAdjusted_RoCTbVll6";
+12372  RESULT_MIN_LABEL = "%sysfunc(sasmsg(sashelp.dmine, assmt_predMin_vlabel, NOQUOTE))";
+12373  RESULT_MAX = "_maxP_";
+12374  RESULT_MAX_LABEL = "%sysfunc(sasmsg(sashelp.dmine, assmt_predMax_vlabel, NOQUOTE))";
+12375  MAX_ADJUSTED = "max_adjusted";
+12376  RESULT_COUNT = "";
+12377  RESULT_COUNT_LABEL = "";
+12378  TEMPORARY_VARIABLE = "P_totalsal_hVVLjmyGp_eFqJD";
+12379  output;
+12380  run;
+
+NOTE: The data set WORK.ASSESS_27TAN70_ASSESSMETA_F7UYDJ has 2 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12381  /* Generate temporary dataset and obtain summary statistics such as total number of   */
+12382  /* obserations, frequency of target.  However, summary statistics for class reporting */
+12383  /* variabels are not computed here since if there exist class reporting variables,    */
+12384  /* then PROC DMDB will be called. And there is no need to compute interval reporting  */
+12385  /* summary statisitcs, if any.                                                        */
+12386  data work.ASSESS_27TAN70_normSD_cX7uL6(drop=
+12387  _numberOfObservation_
+12388  _intervalTargetMin_ _intervalTargetMax_
+12389  )
+12390  work.ASSESS_27TAN70_meansAndTi_HgcfG5 (keep=
+12391  _numberOfObservation_
+12392  _intervalTargetMin_ _intervalTargetMax_
+12393  );
+12394  set EMWS1.Reg_TRAIN(
+12395  where=(
+12396  (totalsal ^= .)
+12397  and (P_totalsal ^= .)
+12398  )
+12399  ) end=_lastObservation_;
+12400  keep frequency_QBE1s0;
+12401  frequency_QBE1s0 = 1;
+12402  keep totalsal;
+12403  keep P_totalsal;
+12404  output work.ASSESS_27TAN70_normSD_cX7uL6;
+12405  keep _numberOfObservation_;
+12406  retain _numberOfObservation_ 0;
+12407  _numberOfObservation_ + frequency_QBE1s0;
+12408  keep _intervalTargetMin_ _intervalTargetMax_;
+12409  retain _intervalTargetMin_ .;
+12410  retain _intervalTargetMax_ .;
+12411  if (_n_ = 1) then do;
+12412  _intervalTargetMin_ = P_totalsal;
+12413  _intervalTargetMax_ = P_totalsal;
+12414  end;
+12415  else do;
+12416  if (_intervalTargetMin_ > P_totalsal) then do;
+12417  _intervalTargetMin_ = P_totalsal;
+12418  end;
+12419  if (_intervalTargetMax_ < P_totalsal) then do;
+12420  _intervalTargetMax_ = P_totalsal;
+12421  end;
+12422  end;
+12423  if _lastObservation_ then do;
+12424  output work.ASSESS_27TAN70_meansAndTi_HgcfG5;
+12425  end;
+12426  run;
+
+NOTE: View EMWS1.REG_TRAIN.VIEW used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+NOTE: There were 6616 observations read from the data set EMWS1.PART_TRAIN.
+NOTE: There were 6616 observations read from the data set EMWS1.REG_TRAIN.
+      WHERE (totalsal not = .) and (P_totalsal not = .);
+NOTE: The data set WORK.ASSESS_27TAN70_NORMSD_CX7UL6 has 6616 observations and 3 variables.
+NOTE: The data set WORK.ASSESS_27TAN70_MEANSANDTI_HGCFG5 has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+      
+
+12427  data WORK._EMRANK;
+12428  set EMWS1.MdlComp_EMRANK;
+12429  where MODEL = "Reg" and TARGET = "totalsal" and dataRole="TRAIN";
+12430  run;
+
+NOTE: There were 20 observations read from the data set EMWS1.MDLCOMP_EMRANK.
+      WHERE (MODEL='Reg') and (TARGET='totalsal') and (dataRole='TRAIN');
+NOTE: The data set WORK._EMRANK has 20 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12431  data work._augment;
+12432  do BIN= 1 to 20;
+12433  DECILE = BIN*5;
+12434  output;
+12435  end;
+12436  run;
+
+NOTE: The data set WORK._AUGMENT has 20 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+12437  data WORK._EMRANK;
+12438  merge WORK._AUGMENT WORK._EMRANK;
+12439  by BIN;
+12440  run;
+
+NOTE: There were 20 observations read from the data set WORK._AUGMENT.
+NOTE: There were 20 observations read from the data set WORK._EMRANK.
+NOTE: The data set WORK._EMRANK has 20 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12441  data WORK._EMRANK;
+12442  set WORK._EMRANK end=_lastObservation_;
+12443  retain _previousMinP_ _previousMaxP_;
+12444  retain _group_ 1;
+12445  keep bin _cutoff_ _group_;
+12446  if (bin > 1) then do;
+12447  bin = bin - 1;
+12448  _cutoff_ = (_maxP_ + _previousMinP_) / 2;
+12449  if (abs(_previousMaxP_ - _previousMinP_) < 1E-6) then do;
+12450  /* tied */
+12451  _cutoff_ = max((_minP_ + _maxP_)/2, min(_cutoff_, _previousMinP_/*-1E-6*/
+12452  ));
+12453  end;
+12454  else if (abs(_maxP_ - _minP_) < 1E-6) then do;
+12455  /* next tied */
+12456  _cutoff_ = min((_previousMinP_ + _previousMaxP_)/2, max(_cutoff_, _maxP_/*+ 1E-6*/
+12457  ));
+12458  end;
+12459  output;
+12460  *if ( abs((_maxP_ +_minP_)/2 - (_previousMaxP_ + _previousMinP_)/2) > 1E-6) then do;
+12461  * _group_ + 1;
+12462  *end;
+12463  if (_maxP_ le _previousMinP_ - 1E-6) then do;
+12464  _group_ + 1;
+12465  end;
+12466  else if (abs(_maxP_ - _previousMinP_) < 1E-6) then do;
+12467  if (abs(_maxP_ - _minP_) > 1E-6) then do;
+12468  _group_ + 1;
+12469  end;
+12470  end;
+12471  bin + 1;
+12472  /* correct the previous change */
+12473  end;
+12474  if (_lastObservation_) then do;
+12475  _cutoff_ = .;
+12476  output;
+12477  end;
+12478  _previousMinP_ = _minP_;
+12479  _previousMaxP_ = _maxP_;
+12480  run;
+
+NOTE: There were 20 observations read from the data set WORK._EMRANK.
+NOTE: The data set WORK._EMRANK has 20 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12481  data WORK._EMRANK;
+12482  set WORK._EMRANK;
+12483  by _group_;
+12484  retain _start_;
+12485  if (first._group_) then do;
+12486  _start_ = _n_;
+12487  end;
+12488  if (last._group_) then do;
+12489  _end_ = _n_;
+12490  output;
+12491  end;
+12492  run;
+
+NOTE: There were 20 observations read from the data set WORK._EMRANK.
+NOTE: The data set WORK._EMRANK has 20 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: This SAS session is using a registry in WORK.  All changes will be lost at the end of this session.
+12493  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\MdlComp\EMFLOWSCORE.sas";
+12494  *------------------------------------------------------------*;
+12495  * MdlComp: Scoring REG_TRAIN data;
+12496  *------------------------------------------------------------*;
+12497  data EMWS1.MdlComp_TRAIN
+12498  / view=EMWS1.MdlComp_TRAIN
+12499  ;
+12500  set EMWS1.Reg_TRAIN
+12501  ;
+12502  %inc emflow;
+12582  run;
+
+NOTE: DATA STEP view saved on file EMWS1.MDLCOMP_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.REG_TRAIN.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+12583  quit;
+12584  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+12585  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\MdlComp\EMFLOWSCORE.sas";
+12586  *------------------------------------------------------------*;
+12587  * MdlComp: Scoring REG_VALIDATE data;
+12588  *------------------------------------------------------------*;
+12589  data EMWS1.MdlComp_VALIDATE
+12590  / view=EMWS1.MdlComp_VALIDATE
+12591  ;
+12592  set EMWS1.Reg_VALIDATE
+12593  ;
+12594  %inc emflow;
+12674  run;
+
+NOTE: DATA STEP view saved on file EMWS1.MDLCOMP_VALIDATE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.REG_VALIDATE.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+12675  quit;
+12676  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+12677  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\MdlComp\EMFLOWSCORE.sas";
+12678  *------------------------------------------------------------*;
+12679  * MdlComp: Scoring REG_TEST data;
+12680  *------------------------------------------------------------*;
+12681  data EMWS1.MdlComp_TEST
+12682  / view=EMWS1.MdlComp_TEST
+12683  ;
+12684  set EMWS1.Reg_TEST
+12685  ;
+12686  %inc emflow;
+12766  run;
+
+NOTE: DATA STEP view saved on file EMWS1.MDLCOMP_TEST.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.REG_TEST.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+12767  quit;
+12768  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+12769  *------------------------------------------------------------*;
+12770  * MdlComp: Computing metadata for TRAIN data;
+12771  *------------------------------------------------------------*;
+
+NOTE: View EMWS1.MDLCOMP_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+NOTE: View EMWS1.MDLCOMP_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+NOTE: View EMWS1.MDLCOMP_VALIDATE.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      
+NOTE: View EMWS1.MDLCOMP_TEST.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      

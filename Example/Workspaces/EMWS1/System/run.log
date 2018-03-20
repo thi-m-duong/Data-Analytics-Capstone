@@ -1,0 +1,4751 @@
+NOTE: PROCEDURE PRINTTO used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: Traverser invoked.  MPCONNECT command is !sascmdv -nosyntaxcheck -noasynchio -noobjectserver. 
+Traverser: Beginning flow traversal 
+12218      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12219      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12220      put '<Node Id="Ids" Event="Update" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="Ids" Event="Update" Pid="" Gridid=""/>';
+12221      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 48.
+      The maximum record length was 48.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12222      %let emloopmode =;
+*------------------------------------------------------------* 
+* 
+* Ids : Beginning update before running 
+* datetime : 01MAR2016:12:44:18 
+* 
+*------------------------------------------------------------* 
+MPRINT(EM_DIAGRAM):     filename _emtool_ 'C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\Ids\PROPERTIES.xml' encoding="UTF-8" NOBOM;
+12224      %let _HPDMGRIDHOST=;
+12225      %let _HPDMGRIDINSTALLLOC=;
+12226      %let _HPDMGRIDDATASERVER=;
+12227      %hpdm_gridSetOPtions;
+MPRINT(EM_DIAGRAM):   
+MPRINT(HPDM_GRIDSETOPTIONS):   data _null_;
+MPRINT(HPDM_GRIDSETOPTIONS):   length optionString string $2000;
+MPRINT(HPDM_GRIDSETOPTIONS):   optionString = reverse(getoption('SET'));
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDHOST'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   host = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDHOST', strip(host));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDINSTALLLOC'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   install = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDINSTALLLOC', strip(install));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDDATASERVER'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   server = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDDATASERVER', strip(server));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):  ;
+
+*------------------------------------------------------------* 
+* 
+* Ids : End update 
+* datetime : 01MAR2016:12:44:18 
+* 
+*------------------------------------------------------------* 
+12228      %let _emdsep = \;
+12229      %em_getactionstatus(emlib =EMWS1, nodeid=Ids);
+MPRINT(EM_DIAGRAM):   
+MPRINT(EM_GETACTIONSTATUS):   proc display c=sashelp.emutil.getactionstatus.scl;
+MPRINT(EM_GETACTIONSTATUS):   run;
+
+12230      %let em_Train = N;
+12231      %let em_Score = N;
+12232      %let em_Report = N;
+12233      %let em_Run = N;
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_GETACTIONSTATUS):   
+MPRINT(EM_DIAGRAM):  ;
+
+12234      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12235      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12236      put '<Node Id="Ids" Event="Complete" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="Ids" Event="Complete" Pid="" Gridid=""/>';
+12237      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 50.
+      The maximum record length was 50.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12238      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12239      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+Node "Ids" is up to date and doesn't need to run. 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "AUTONEURAL" 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+12240      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12241      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12242      put '<Node Id="Part" Event="Update" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="Part" Event="Update" Pid="" Gridid=""/>';
+12243      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 49.
+      The maximum record length was 49.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+12244      %let emloopmode =;
+*------------------------------------------------------------* 
+* 
+* Part : Beginning update before running 
+* datetime : 01MAR2016:12:44:19 
+* 
+*------------------------------------------------------------* 
+MPRINT(EM_DIAGRAM):     data WORK.Part_FILTERSET;
+MPRINT(EM_DIAGRAM):   length PORT $32 USE $1;
+MPRINT(EM_DIAGRAM):   DROP DELTACODE APPLYDELTA APPLYSCORE IMPORTPORT;
+MPRINT(EM_DIAGRAM):   set EMWS1.Ids_exportSet ;
+MPRINT(EM_DIAGRAM):   PORT = '';
+MPRINT(EM_DIAGRAM):   USE = '';
+MPRINT(EM_DIAGRAM):   where role in( "RAW" "TRAIN" "DOCUMENT" ) and EXPORT = 'Y' ;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\Part\PROPERTIES.xml' encoding="UTF-8" NOBOM;
+12263      %let _HPDMGRIDHOST=;
+12264      %let _HPDMGRIDINSTALLLOC=;
+12265      %let _HPDMGRIDDATASERVER=;
+12266      %hpdm_gridSetOPtions;
+MPRINT(EM_DIAGRAM):   
+MPRINT(HPDM_GRIDSETOPTIONS):   data _null_;
+MPRINT(HPDM_GRIDSETOPTIONS):   length optionString string $2000;
+MPRINT(HPDM_GRIDSETOPTIONS):   optionString = reverse(getoption('SET'));
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDHOST'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   host = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDHOST', strip(host));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDINSTALLLOC'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   install = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDINSTALLLOC', strip(install));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDDATASERVER'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   server = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDDATASERVER', strip(server));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):  ;
+
+*------------------------------------------------------------* 
+* 
+* Part : End update 
+* datetime : 01MAR2016:12:44:19 
+* 
+*------------------------------------------------------------* 
+12267      %let _emdsep = \;
+12268      %em_getactionstatus(emlib =EMWS1, nodeid=Part);
+MPRINT(EM_DIAGRAM):   
+MPRINT(EM_GETACTIONSTATUS):   proc display c=sashelp.emutil.getactionstatus.scl;
+MPRINT(EM_GETACTIONSTATUS):   run;
+
+12269      %let em_Train = N;
+12270      %let em_Score = N;
+12271      %let em_Report = N;
+12272      %let em_Run = N;
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_GETACTIONSTATUS):   
+MPRINT(EM_DIAGRAM):  ;
+
+12273      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12274      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12275      put '<Node Id="Part" Event="Complete" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="Part" Event="Complete" Pid="" Gridid=""/>';
+12276      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 51.
+      The maximum record length was 51.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12277      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12278      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+Node "Part" is up to date and doesn't need to run. 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+12279      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12280      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12281      put '<Node Id="Reg" Event="Update" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="Reg" Event="Update" Pid="" Gridid=""/>';
+12282      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 48.
+      The maximum record length was 48.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12283      %let emloopmode =;
+*------------------------------------------------------------* 
+* 
+* Reg : Beginning update before running 
+* datetime : 01MAR2016:12:44:19 
+* 
+*------------------------------------------------------------* 
+MPRINT(EM_DIAGRAM):     data WORK.Reg_FILTERSET;
+MPRINT(EM_DIAGRAM):   length PORT $32 USE $1;
+MPRINT(EM_DIAGRAM):   DROP DELTACODE APPLYDELTA APPLYSCORE IMPORTPORT;
+MPRINT(EM_DIAGRAM):   set EMWS1.Part_exportSet ;
+MPRINT(EM_DIAGRAM):   PORT = '';
+MPRINT(EM_DIAGRAM):   USE = '';
+MPRINT(EM_DIAGRAM):   where role in( "RAW" "TRAIN" "VALIDATE" "TEST" ) and EXPORT = 'Y' ;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\Reg\PROPERTIES.xml' encoding="UTF-8" NOBOM;
+12303      %let _HPDMGRIDHOST=;
+12304      %let _HPDMGRIDINSTALLLOC=;
+12305      %let _HPDMGRIDDATASERVER=;
+12306      %hpdm_gridSetOPtions;
+MPRINT(EM_DIAGRAM):   
+MPRINT(HPDM_GRIDSETOPTIONS):   data _null_;
+MPRINT(HPDM_GRIDSETOPTIONS):   length optionString string $2000;
+MPRINT(HPDM_GRIDSETOPTIONS):   optionString = reverse(getoption('SET'));
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDHOST'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   host = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDHOST', strip(host));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDINSTALLLOC'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   install = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDINSTALLLOC', strip(install));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDDATASERVER'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   server = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDDATASERVER', strip(server));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):  ;
+
+*------------------------------------------------------------* 
+* 
+* Reg : End update 
+* datetime : 01MAR2016:12:44:19 
+* 
+*------------------------------------------------------------* 
+12307      %let _emdsep = \;
+12308      %em_getactionstatus(emlib =EMWS1, nodeid=Reg);
+MPRINT(EM_DIAGRAM):   
+MPRINT(EM_GETACTIONSTATUS):   proc display c=sashelp.emutil.getactionstatus.scl;
+MPRINT(EM_GETACTIONSTATUS):   run;
+
+12309      %let em_Train = N;
+12310      %let em_Score = N;
+12311      %let em_Report = N;
+12312      %let em_Run = N;
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_GETACTIONSTATUS):   
+MPRINT(EM_DIAGRAM):  ;
+
+12313      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12314      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12315      put '<Node Id="Reg" Event="Complete" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="Reg" Event="Complete" Pid="" Gridid=""/>';
+12316      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 50.
+      The maximum record length was 50.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12317      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12318      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12319      put '<Node Id="AutoNeural" Event="Update" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="AutoNeural" Event="Update" Pid="" Gridid=""/>';
+12320      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 55.
+      The maximum record length was 55.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12321      %let emloopmode =;
+*------------------------------------------------------------* 
+* 
+* AutoNeural : Beginning update before running 
+* datetime : 01MAR2016:12:44:19 
+* 
+*------------------------------------------------------------* 
+MPRINT(EM_DIAGRAM):     data WORK.AutoNeural_FILTERSET;
+MPRINT(EM_DIAGRAM):   length PORT $32 USE $1;
+MPRINT(EM_DIAGRAM):   DROP DELTACODE APPLYDELTA APPLYSCORE IMPORTPORT;
+MPRINT(EM_DIAGRAM):   set EMWS1.Part_exportSet ;
+MPRINT(EM_DIAGRAM):   PORT = '';
+MPRINT(EM_DIAGRAM):   USE = '';
+MPRINT(EM_DIAGRAM):   where role in( "RAW" "TRAIN" "VALIDATE" "TEST" ) and EXPORT = 'Y' ;
+MPRINT(EM_DIAGRAM):   run;
+12340      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12341      set EMWS1.Part_CMeta_TRAIN (obs=1);
+MPRINT(EM_DIAGRAM):   set EMWS1.Part_CMeta_TRAIN (obs=1);
+12342      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12343      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12344      set EMWS1.Part_CMeta_TRAIN (obs=1);
+MPRINT(EM_DIAGRAM):   set EMWS1.Part_CMeta_TRAIN (obs=1);
+12345      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12346      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12347      set EMWS1.Part_CMeta_TRAIN (obs=1);
+MPRINT(EM_DIAGRAM):   set EMWS1.Part_CMeta_TRAIN (obs=1);
+12348      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12349      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+12350      * AutoNeural: Update Variables Set;
+MPRINT(EM_DIAGRAM):   * AutoNeural: Update Variables Set;
+12351      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+12352      data EMWS1.AutoNeural_VariableSet;
+MPRINT(EM_DIAGRAM):    data EMWS1.AutoNeural_VariableSet;
+12353      length USE $1;
+MPRINT(EM_DIAGRAM):   length USE $1;
+12354      label USE = "Use";
+MPRINT(EM_DIAGRAM):   label USE = "Use";
+12355      length REPORT $1;
+MPRINT(EM_DIAGRAM):   length REPORT $1;
+12356      label REPORT = "Report";
+MPRINT(EM_DIAGRAM):   label REPORT = "Report";
+12357      set EMWS1.Part_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):   set EMWS1.Part_CMeta_TRAIN;
+12358      where((ROLE="TARGET" and LEVEL ne "UNARY") or ROLE in("INPUT" "REJECTED" "FREQ"));
+MPRINT(EM_DIAGRAM):   where((ROLE="TARGET" and LEVEL ne "UNARY") or ROLE in("INPUT" "REJECTED" "FREQ"));
+12359      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Variable USE is uninitialized.
+NOTE: There were 21 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+      WHERE ((ROLE='TARGET') and (LEVEL not = 'UNARY')) or ROLE in ('FREQ', 'INPUT', 'REJECTED');
+NOTE: The data set EMWS1.AUTONEURAL_VARIABLESET has 21 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12360      * AutoNeural: End of Update Variables Set;
+MPRINT(EM_DIAGRAM):    * AutoNeural: End of Update Variables Set;
+12361      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\AutoNeural\PROPERTIES.xml' encoding="UTF-8" NOBOM;
+12363      %let _HPDMGRIDHOST=;
+12364      %let _HPDMGRIDINSTALLLOC=;
+12365      %let _HPDMGRIDDATASERVER=;
+12366      %hpdm_gridSetOPtions;
+MPRINT(EM_DIAGRAM):   
+MPRINT(HPDM_GRIDSETOPTIONS):   data _null_;
+MPRINT(HPDM_GRIDSETOPTIONS):   length optionString string $2000;
+MPRINT(HPDM_GRIDSETOPTIONS):   optionString = reverse(getoption('SET'));
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDHOST'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   host = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDHOST', strip(host));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDINSTALLLOC'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   install = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDINSTALLLOC', strip(install));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDDATASERVER'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   server = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDDATASERVER', strip(server));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):  ;
+
+*------------------------------------------------------------* 
+* 
+* AutoNeural : End update 
+* datetime : 01MAR2016:12:44:20 
+* 
+*------------------------------------------------------------* 
+12367      %let _emdsep = \;
+12368      %em_getactionstatus(emlib =EMWS1, nodeid=AutoNeural);
+MPRINT(EM_DIAGRAM):   
+MPRINT(EM_GETACTIONSTATUS):   proc display c=sashelp.emutil.getactionstatus.scl;
+MPRINT(EM_GETACTIONSTATUS):   run;
+
+12369      %let em_Train = Y;
+12370      %let em_Report = Y;
+12371      %let em_Score = Y;
+12372      %let em_Run = Y;
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_GETACTIONSTATUS):   
+MPRINT(EM_DIAGRAM):  ;
+
+12373      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12374      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12375      put '<Node Id="AutoNeural" Event="Run" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="AutoNeural" Event="Run" Pid="" Gridid=""/>';
+12376      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 52.
+      The maximum record length was 52.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12377      options sascmd="!sascmdv -nosyntaxcheck -noasynchio -noobjectserver";
+MPRINT(EM_DIAGRAM):    options sascmd="!sascmdv -nosyntaxcheck -noasynchio -noobjectserver";
+12378      %let SYSCC=0;
+12379      signon C2A6M1JM macvar=C2A6M1JM;
+MPRINT(EM_DIAGRAM):   signon macvar=C2A6M1JM;
+WARNING: TCP Access method tracing is enabled.
+NOTE: Default SASCMD value being used is: "C:\Program Files\SASHome\SASFoundation\9.4\SAS.EXE" -nologo -noterminal -noxcmd -objectserver -objectserverparms "protocol=bridge dnsname=127.0.0.1 jcbp=63462" -sspi -secpackage NTLM  -xcmd.
+NOTE: Remote signon to C2A6M1JM commencing (SAS Release 9.04.01M3P062415).
+NOTE: Unable to open SASUSER.PROFILE. WORK.PROFILE will be opened instead.
+NOTE: All profile changes will be lost at the end of the session.
+NOTE: Copyright (c) 2002-2012 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M3) 
+      Licensed to NORTH CAROLINA STATE UNIVERSITY-SFA-T&R, Site 70085778.
+NOTE: This session is executing on the X64_7HOME  platform.
+
+
+
+NOTE: Updated analytical products:
+      
+      SAS/STAT 14.1
+      SAS/ETS 14.1
+      SAS/IML 14.1
+
+NOTE: Additional host information:
+
+ X64_7HOME WIN 6.1.7601 Service Pack 1 Workstation
+
+NOTE: SAS initialization used:
+      real time           0.47 seconds
+      cpu time            0.17 seconds
+      
+NOTE: Remote signon to C2A6M1JM complete.
+12380      rsubmit C2A6M1JM wait=N persist=N  ;
+MPRINT(EM_DIAGRAM):    rsubmit wait=N persist=N ;
+The SAS System
+
+NOTE: Background remote submit to C2A6M1JM in progress.
+NOTE: Remote submit to C2A6M1JM commencing.
+MPRINT(EM_DIAGRAM):   %global emexceptionstring emloopmode emloopnumber;
+MPRINT(EM_DIAGRAM):   %let EMUSERID = %bquote(Intern Three);
+MPRINT(EM_DIAGRAM):   %let EMLDSPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\DataSources);
+MPRINT(EM_DIAGRAM):   %let EMFLOWMODE = Y;
+MPRINT(EM_DIAGRAM):   %let EMONODE = %bquote(AutoNeural);
+MPRINT(EM_DIAGRAM):   %let EMPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1);
+MPRINT(EM_DIAGRAM):   %let EMWS = EMWS1;
+MPRINT(EM_DIAGRAM):   %let EMNODECLASS = SASHELP.EMMODL.AUTONEURAL.CLASS;
+MPRINT(EM_DIAGRAM):   %let EMSTATUSDIR = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\System);
+MPRINT(EM_DIAGRAM):   %let EM_DEBUG =;
+MPRINT(EM_DIAGRAM):   %let EMPROJECTCODE = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\System\STARTUP.sas);
+MPRINT(EM_DIAGRAM):   %let EMSERVERCODE = %nrstr();
+MPRINT(EM_DIAGRAM):   %let EM_USERID = %bquote(Intern Three);
+MPRINT(EM_DIAGRAM):   %let EM_METAHOST =;
+MPRINT(EM_DIAGRAM):   %let EM_METAPORT =;
+MPRINT(EM_DIAGRAM):   %let EM_JAVAPACKAGE = %bquote();
+MPRINT(EM_DIAGRAM):   %let EMPROJECTPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example);
+MPRINT(EM_DIAGRAM):   %let EMPROJNAME = %nrstr(Example);
+MPRINT(EM_DIAGRAM):   %let EMPROJPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H);
+MPRINT(EM_DIAGRAM):   %let em_Train = Y;
+MPRINT(EM_DIAGRAM):   %let em_Score = Y;
+MPRINT(EM_DIAGRAM):   %let em_Report = Y;
+MPRINT(EM_DIAGRAM):   %let emloopmode =;
+MPRINT(EM_DIAGRAM):   %let emloopnumber =0;
+MPRINT(EM_DIAGRAM):   %let emloopId =AutoNeural;
+MPRINT(EM_DIAGRAM):   %let emexceptionstring=;
+MPRINT(EM_DIAGRAM):   options VBUFSIZE= 64M;
+MPRINT(EM_DIAGRAM):   %em5run();
+MPRINT(EM_DIAGRAM):   %put &&emexceptionstring;
+MPRINT(EM_DIAGRAM):   %sysrput emerror_AutoNeural = &&emexceptionstring;
+MPRINT(EM_DIAGRAM):   %put &&emloopmode;
+MPRINT(EM_DIAGRAM):   %sysrput emloopmode_AutoNeural = &&emloopmode;
+MPRINT(EM_DIAGRAM):   endrsubmit;
+12381      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12382      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12383      put '<Node Id="AutoNeural" Event="Run" Pid=" " Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="AutoNeural" Event="Run" Pid=" " Gridid=""/>';
+12384      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 53.
+      The maximum record length was 53.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12385      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12386      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Node "Reg" is up to date and doesn't need to run. 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12387      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12388      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12389      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12390      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12391      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12392      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12393      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12394      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12395      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12396      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12397      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12398      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12399      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12400      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12401      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12402      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12403      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12404      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12405      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12406      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12407      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12408      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12409      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12410      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12411      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12412      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12413      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12414      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12415      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12416      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12417      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12418      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12419      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12420      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12421      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12422      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12423      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12424      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12425      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12426      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12427      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12428      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12429      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12430      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12431      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12432      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12433      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12434      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12435      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12436      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12437      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12438      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12439      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12440      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12441      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12442      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12443      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12444      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12445      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12446      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12447      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12448      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12449      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12450      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12451      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12452      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12453      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12454      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12455      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12456      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12457      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12458      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12459      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12460      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12461      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12462      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12463      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12464      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12465      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12466      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12467      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12468      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12469      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12470      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12471      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12472      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12473      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12474      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12475      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12476      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12477      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12478      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12479      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12480      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12481      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12482      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12483      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12484      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12485      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12486      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12487      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12488      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12489      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12490      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12491      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12492      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12493      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12494      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12495      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12496      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12497      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12498      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12499      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12500      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12501      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12502      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12503      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12504      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12505      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12506      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12507      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12508      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12509      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12510      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12511      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12512      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12513      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12514      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12515      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12516      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12517      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12518      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12519      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12520      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12521      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12522      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12523      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12524      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12525      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12526      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12527      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12528      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12529      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12530      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12531      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12532      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12533      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12534      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12535      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12536      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12537      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12538      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12539      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12540      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12541      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12542      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12543      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12544      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12545      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12546      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12547      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12548      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12549      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12550      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12551      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12552      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12553      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12554      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12555      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12556      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12557      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12558      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12559      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12560      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12561      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12562      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12563      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12564      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12565      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12566      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12567      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12568      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12569      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12570      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12571      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12572      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12573      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12574      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12575      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12576      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12577      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12578      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12579      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12580      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12581      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12582      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12583      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12584      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12585      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12586      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12587      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12588      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12589      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12590      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12591      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12592      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12593      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12594      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12595      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12596      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12597      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12598      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12599      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12600      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12601      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12602      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12603      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12604      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12605      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12606      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12607      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12608      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12609      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12610      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12611      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12612      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12613      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12614      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12615      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12616      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12617      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12618      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12619      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12620      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12621      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12622      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12623      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12624      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12625      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12626      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12627      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12628      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12629      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12630      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12631      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12632      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12633      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12634      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12635      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12636      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12637      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12638      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12639      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12640      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12641      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12642      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12643      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12644      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12645      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12646      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12647      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12648      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12649      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12650      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12651      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12652      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12653      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12654      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12655      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12656      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12657      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12658      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12659      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12660      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12661      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12662      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12663      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12664      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12665      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12666      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12667      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12668      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12669      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12670      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12671      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12672      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12673      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12674      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12675      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12676      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12677      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12678      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12679      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12680      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12681      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12682      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12683      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12684      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12685      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12686      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12687      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12688      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12689      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12690      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12691      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12692      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12693      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12694      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12695      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12696      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12697      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12698      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12699      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12700      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12701      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12702      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12703      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12704      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12705      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12706      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12707      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12708      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12709      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12710      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12711      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12712      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12713      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12714      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12715      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12716      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12717      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12718      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12719      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12720      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12721      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12722      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12723      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12724      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12725      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12726      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12727      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12728      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12729      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12730      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12731      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12732      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12733      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12734      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12735      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12736      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12737      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12738      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12739      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12740      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12741      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12742      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12743      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12744      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12745      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12746      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12747      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12748      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12749      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12750      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12751      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12752      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12753      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12754      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12755      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12756      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12757      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12758      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12759      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12760      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12761      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12762      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12763      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12764      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12765      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12766      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12767      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12768      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12769      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12770      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12771      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12772      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12773      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12774      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12775      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12776      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12777      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12778      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12779      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12780      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12781      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12782      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12783      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12784      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12785      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12786      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12787      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12788      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12789      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12790      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12791      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12792      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12793      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12794      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12795      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12796      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12797      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12798      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12799      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12800      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12801      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12802      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12803      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12804      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12805      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12806      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12807      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12808      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12809      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12810      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12811      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12812      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12813      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12814      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12815      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12816      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12817      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12818      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12819      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12820      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12821      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12822      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12823      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12824      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12825      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12826      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12827      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12828      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12829      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12830      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12831      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12832      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12833      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12834      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12835      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12836      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12837      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12838      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12839      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12840      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12841      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12842      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12843      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12844      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12845      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12846      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12847      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12848      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12849      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12850      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12851      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12852      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12853      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12854      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12855      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12856      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12857      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12858      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12859      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12860      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12861      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12862      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12863      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12864      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12865      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12866      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12867      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12868      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12869      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12870      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12871      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12872      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12873      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12874      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12875      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12876      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12877      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12878      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12879      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12880      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12881      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12882      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12883      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12884      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12885      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12886      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1     %global emexceptionstring emloopmode emloopnumber;
+2     %let EMUSERID = %bquote(Intern Three);
+3     %let EMLDSPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\DataSources);
+4     %let EMFLOWMODE = Y;
+5     %let EMONODE = %bquote(AutoNeural);
+6     %let EMPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1);
+7     %let EMWS = EMWS1;
+8     %let EMNODECLASS = SASHELP.EMMODL.AUTONEURAL.CLASS;
+9     %let EMSTATUSDIR = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\System);
+10    %let EM_DEBUG =;
+11    %let EMPROJECTCODE = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\System\STARTUP.sas);
+12    %let EMSERVERCODE = %nrstr();
+13    %let EM_USERID = %bquote(Intern Three);
+14    %let EM_METAHOST =;
+15    %let EM_METAPORT =;
+16    %let EM_JAVAPACKAGE = %bquote();
+17    %let EMPROJECTPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example);
+18    %let EMPROJNAME = %nrstr(Example);
+19    %let EMPROJPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H);
+20    %let em_Train = Y;
+21    %let em_Score = Y;
+22    %let em_Report = Y;
+23    %let emloopmode =;
+24    %let emloopnumber =0;
+25    %let emloopId =AutoNeural;
+26    %let emexceptionstring=;
+27    options VBUFSIZE= 64M;
+28    %em5run();
+
+*------------------------------------------------------------* 
+* 
+* AutoNeural : Running 
+* datetime : 01MAR2016:12:44:21 
+* 
+*------------------------------------------------------------* 
+6005   %let SYSCC =0;
+6006   %let EMGROUPMODE =;
+6007   %let EMGROUPID =;
+25943  data EMWS1.AutoNeural_EMTRAINVARIABLE;
+25944  length NAME $64;
+25945  set EMWS1.AutoNeural_VariableSet;
+25946  label NAME = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel, NOQUOTE))" ROLE =
+25946! "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+25946! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER =
+25947     "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL =
+25947! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+25948  label USE = "%sysfunc(sasmsg(sashelp.dmine, META_USE_VLABEL, NOQUOTE))";
+25949  label REPORT = "%sysfunc(sasmsg(sashelp.dmine, META_REPORT_VLABEL, NOQUOTE))";
+25950  drop lowerlimit upperlimit creator--type format--length;
+25951  run;
+
+NOTE: There were 21 observations read from the data set EMWS1.AUTONEURAL_VARIABLESET.
+NOTE: The data set EMWS1.AUTONEURAL_EMTRAINVARIABLE has 21 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+25952  %let emexceptionstring =;
+*------------------------------------------------------------* 
+* 
+* AutoNeural : End run 
+* datetime : 01MAR2016:12:46:28 
+* 
+*------------------------------------------------------------* 
+NOTE: The PROCEDURE DISPLAY printed pages 1-51.
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           2:07.10
+      cpu time            1:57.17
+      
+
+25955   %put &&emexceptionstring;
+ 
+25956   %sysrput emerror_AutoNeural = &&emexceptionstring;
+25957   %put &&emloopmode;
+ 
+25958   %sysrput emloopmode_AutoNeural = &&emloopmode;
+NOTE: Remote submit to C2A6M1JM complete.
+NOTE: Remote signoff from C2A6M1JM commencing.
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           2:07.76
+      cpu time            1:57.37
+      
+NOTE: Remote signoff from C2A6M1JM complete.
+Traverser: WaitingNode "MDLCOMP" 
+traverser_runingNode_note 
+12887      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12888      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Node "AutoNeural" ran. 
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\AutoNeural\TRAINPROPERTIES.xml' encoding="UTF-8" NOBOM;
+Node "AutoNeural" succeeded. 
+12890      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12891      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12892      put '<Node Id="AutoNeural" Event="Complete" Pid="8808" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="AutoNeural" Event="Complete" Pid="8808" Gridid=""/>';
+12893      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 61.
+      The maximum record length was 61.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_readyNode_note 
+NOTE: There are no active tasks/transactions.
+12894      waitfor _all_ C2A6M1JM;
+MPRINT(EM_DIAGRAM):    waitfor _all_ C2A6M1JM;
+12895      signoff C2A6M1JM;
+MPRINT(EM_DIAGRAM):   signoff;
+NOTE: A link to C2A6M1JM does not exist.  SIGNOFF is not necessary.
+12896      data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+12897      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12898      put '<Node Id="MdlComp" Event="Update" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="MdlComp" Event="Update" Pid="" Gridid=""/>';
+12899      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 52.
+      The maximum record length was 52.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12900      %let emloopmode =;
+*------------------------------------------------------------* 
+* 
+* MdlComp : Beginning update before running 
+* datetime : 01MAR2016:12:46:29 
+* 
+*------------------------------------------------------------* 
+MPRINT(EM_DIAGRAM):     data WORK.MdlComp_FILTERSET;
+MPRINT(EM_DIAGRAM):   length PORT $32 USE $1;
+MPRINT(EM_DIAGRAM):   DROP DELTACODE APPLYDELTA APPLYSCORE IMPORTPORT export needupdate;
+MPRINT(EM_DIAGRAM):   set EMWS1.Reg_exportSet EMWS1.AutoNeural_exportSet ;
+MPRINT(EM_DIAGRAM):   where EXPORT = 'Y' ;
+MPRINT(EM_DIAGRAM):   drop export needupdate;
+MPRINT(EM_DIAGRAM):   port = upcase(trim(NODELABEL)!!'_'!!left(NODEPORT));
+MPRINT(EM_DIAGRAM):   USE="Y";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    proc sql;
+MPRINT(EM_DIAGRAM):   create view work._base0NTTSJC as select * from WORK.M1YUFC8Y order by PORT;
+MPRINT(EM_DIAGRAM):   create view work._comp0NTTSJC as select * from WORK.M1NYL9OP order by PORT;
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):    data WORK._DIFF0RG02NJ;
+MPRINT(EM_DIAGRAM):   length _TYPE_ $8;
+MPRINT(EM_DIAGRAM):   retain _TYPE_ 'COMPARE';
+MPRINT(EM_DIAGRAM):   _OBS_=_N_;
+MPRINT(EM_DIAGRAM):   set WORK.M1NYL9OP;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    proc sql;
+MPRINT(EM_DIAGRAM):   create table WORK._TMP13K1MBSO as select * from WORK._DIFF0RG02NJ where PORT in (select PORT from WORK._DIFF0RG02NJ where _type_ = "DIF") order by PORT, _type_;
+MPRINT(EM_DIAGRAM):   proc sql;
+MPRINT(EM_DIAGRAM):   create table WORK.DELTAELEM3QM6EDK as select * from WORK._DIFF0RG02NJ where _type_ = "COMPARE" and PORT not in (select PORT from WORK._DIFF0RG02NJ where _type_ = "DIF");
+MPRINT(EM_DIAGRAM):   create table WORK.DELTDELEM3QM6EDK as select * from WORK._DIFF0RG02NJ where _type_ = "BASE" and PORT not in (select PORT from WORK._DIFF0RG02NJ where _type_ = "DIF");
+MPRINT(EM_DIAGRAM):   data WORK.DELTAELEM3QM6EDK;
+MPRINT(EM_DIAGRAM):   set WORK.DELTAELEM3QM6EDK;
+MPRINT(EM_DIAGRAM):   drop _obs_ _type_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data WORK.DELTDELEM3QM6EDK;
+MPRINT(EM_DIAGRAM):   set WORK.DELTDELEM3QM6EDK;
+MPRINT(EM_DIAGRAM):   drop _obs_ _type_;
+MPRINT(EM_DIAGRAM):   run;
+NOTE: There were 7 observations read from the data set WORK.MDLCOMP_FILTERSET.
+NOTE: The data set EMWS1.MDLCOMP_IMPORTSET has 7 observations and 14 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.REG_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO43HVU0W8 has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.REG_EMINFO.
+      WHERE (TARGET='RESPOND') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO40G1QN5H has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO429BDHZW has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_EMINFO.
+      WHERE (TARGET='RESPOND') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO428NJ0BR has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+12938      data EMWS1.MdlComp_VariableSet;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp_VariableSet;
+12939      length USE $1 NAME $32 ROLE $32 LEVEL $10 EVENT $32 LABEL $200;
+MPRINT(EM_DIAGRAM):   length USE $1 NAME $32 ROLE $32 LEVEL $10 EVENT $32 LABEL $200;
+12940      NAME = "RESPOND";
+MPRINT(EM_DIAGRAM):   NAME = "RESPOND";
+12941      ROLE="TARGET";
+MPRINT(EM_DIAGRAM):   ROLE="TARGET";
+12942      LEVEL = 'NOMINAL';
+MPRINT(EM_DIAGRAM):   LEVEL = 'NOMINAL';
+12943      EVENT = 'YES';
+MPRINT(EM_DIAGRAM):   EVENT = 'YES';
+12944      LABEL = 'RESPOND';
+MPRINT(EM_DIAGRAM):   LABEL = 'RESPOND';
+12945      output;
+MPRINT(EM_DIAGRAM):   output;
+12946      NAME = "RESPOND";
+MPRINT(EM_DIAGRAM):   NAME = "RESPOND";
+12947      ROLE="TARGET";
+MPRINT(EM_DIAGRAM):   ROLE="TARGET";
+12948      LEVEL = 'NOMINAL';
+MPRINT(EM_DIAGRAM):   LEVEL = 'NOMINAL';
+12949      EVENT = 'YES';
+MPRINT(EM_DIAGRAM):   EVENT = 'YES';
+12950      LABEL = 'RESPOND';
+MPRINT(EM_DIAGRAM):   LABEL = 'RESPOND';
+12951      output;
+MPRINT(EM_DIAGRAM):   output;
+12952      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Variable USE is uninitialized.
+NOTE: The data set EMWS1.MDLCOMP_VARIABLESET has 2 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12953      proc sort data=EMWS1.MdlComp_VariableSet nodupkey NOTHREADS;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS1.MdlComp_VariableSet nodupkey NOTHREADS;
+12954      by NAME LEVEL;
+MPRINT(EM_DIAGRAM):   by NAME LEVEL;
+12955      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set EMWS1.MDLCOMP_VARIABLESET.
+NOTE: 1 observations with duplicate key values were deleted.
+NOTE: The data set EMWS1.MDLCOMP_VARIABLESET has 1 observations and 6 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12956      data EMWS1.MdlComp_VariableSet;
+MPRINT(EM_DIAGRAM):   data EMWS1.MdlComp_VariableSet;
+12957      set EMWS1.MdlComp_VariableSet;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp_VariableSet;
+12958      if _N_ = 1 then USE = "Y";
+MPRINT(EM_DIAGRAM):   if _N_ = 1 then USE = "Y";
+12959      else USE = "N";
+MPRINT(EM_DIAGRAM):   else USE = "N";
+12960      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP_VARIABLESET.
+NOTE: The data set EMWS1.MDLCOMP_VARIABLESET has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\MdlComp\PROPERTIES.xml' encoding="UTF-8" NOBOM;
+12962      %let _HPDMGRIDHOST=;
+12963      %let _HPDMGRIDINSTALLLOC=;
+12964      %let _HPDMGRIDDATASERVER=;
+12965      %hpdm_gridSetOPtions;
+MPRINT(EM_DIAGRAM):   
+MPRINT(HPDM_GRIDSETOPTIONS):   data _null_;
+MPRINT(HPDM_GRIDSETOPTIONS):   length optionString string $2000;
+MPRINT(HPDM_GRIDSETOPTIONS):   optionString = reverse(getoption('SET'));
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDHOST'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   host = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDHOST', strip(host));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDINSTALLLOC'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   install = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDINSTALLLOC', strip(install));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   index = index(optionString, reverse('GRIDDATASERVER'));
+MPRINT(HPDM_GRIDSETOPTIONS):   if index then do;
+MPRINT(HPDM_GRIDSETOPTIONS):   string = reverse(substr(optionString, 1, index-4));
+MPRINT(HPDM_GRIDSETOPTIONS):   server = '"'!!strip(tranwrd(scan(string, 1, ']'), '"', ''))!!'"';
+MPRINT(HPDM_GRIDSETOPTIONS):   call symput('_HPDMGRIDDATASERVER', strip(server));
+MPRINT(HPDM_GRIDSETOPTIONS):   end;
+MPRINT(HPDM_GRIDSETOPTIONS):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):  ;
+
+*------------------------------------------------------------* 
+* 
+* MdlComp : End update 
+* datetime : 01MAR2016:12:46:29 
+* 
+*------------------------------------------------------------* 
+12966      %let _emdsep = \;
+12967      %em_getactionstatus(emlib =EMWS1, nodeid=MdlComp);
+MPRINT(EM_DIAGRAM):   
+MPRINT(EM_GETACTIONSTATUS):   proc display c=sashelp.emutil.getactionstatus.scl;
+MPRINT(EM_GETACTIONSTATUS):   run;
+
+12968      %let em_Train = Y;
+12969      %let em_Report = Y;
+12970      %let em_Score = Y;
+12971      %let em_Run = Y;
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_GETACTIONSTATUS):   
+MPRINT(EM_DIAGRAM):  ;
+
+12972      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12973      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12974      put '<Node Id="MdlComp" Event="Run" Pid="" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="MdlComp" Event="Run" Pid="" Gridid=""/>';
+12975      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 49.
+      The maximum record length was 49.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12976      options sascmd="!sascmdv -nosyntaxcheck -noasynchio -noobjectserver";
+MPRINT(EM_DIAGRAM):    options sascmd="!sascmdv -nosyntaxcheck -noasynchio -noobjectserver";
+12977      %let SYSCC=0;
+12978      signon C02D87X3 macvar=C02D87X3;
+MPRINT(EM_DIAGRAM):   signon macvar=C02D87X3;
+NOTE: Default SASCMD value being used is: "C:\Program Files\SASHome\SASFoundation\9.4\SAS.EXE" -nologo -noterminal -noxcmd -objectserver -objectserverparms "protocol=bridge dnsname=127.0.0.1 jcbp=63462" -sspi -secpackage NTLM  -xcmd.
+NOTE: Remote signon to C02D87X3 commencing (SAS Release 9.04.01M3P062415).
+NOTE: Unable to open SASUSER.PROFILE. WORK.PROFILE will be opened instead.
+NOTE: All profile changes will be lost at the end of the session.
+NOTE: Copyright (c) 2002-2012 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M3) 
+      Licensed to NORTH CAROLINA STATE UNIVERSITY-SFA-T&R, Site 70085778.
+NOTE: This session is executing on the X64_7HOME  platform.
+
+
+
+NOTE: Updated analytical products:
+      
+      SAS/STAT 14.1
+      SAS/ETS 14.1
+      SAS/IML 14.1
+
+NOTE: Additional host information:
+
+ X64_7HOME WIN 6.1.7601 Service Pack 1 Workstation
+
+NOTE: SAS initialization used:
+      real time           0.26 seconds
+      cpu time            0.18 seconds
+      
+NOTE: Remote signon to C02D87X3 complete.
+12979      rsubmit C02D87X3 wait=N persist=N  ;
+MPRINT(EM_DIAGRAM):    rsubmit wait=N persist=N ;
+The SAS System
+
+NOTE: Background remote submit to C02D87X3 in progress.
+NOTE: Remote submit to C02D87X3 commencing.
+MPRINT(EM_DIAGRAM):   %global emexceptionstring emloopmode emloopnumber;
+MPRINT(EM_DIAGRAM):   %let EMUSERID = %bquote(Intern Three);
+MPRINT(EM_DIAGRAM):   %let EMLDSPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\DataSources);
+MPRINT(EM_DIAGRAM):   %let EMFLOWMODE = Y;
+MPRINT(EM_DIAGRAM):   %let EMONODE = %bquote(MdlComp);
+MPRINT(EM_DIAGRAM):   %let EMPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1);
+MPRINT(EM_DIAGRAM):   %let EMWS = EMWS1;
+MPRINT(EM_DIAGRAM):   %let EMNODECLASS = SASHELP.EMASSMT.ASSESS.CLASS;
+MPRINT(EM_DIAGRAM):   %let EMSTATUSDIR = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\System);
+MPRINT(EM_DIAGRAM):   %let EM_DEBUG =;
+MPRINT(EM_DIAGRAM):   %let EMPROJECTCODE = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\System\STARTUP.sas);
+MPRINT(EM_DIAGRAM):   %let EMSERVERCODE = %nrstr();
+MPRINT(EM_DIAGRAM):   %let EM_USERID = %bquote(Intern Three);
+MPRINT(EM_DIAGRAM):   %let EM_METAHOST =;
+MPRINT(EM_DIAGRAM):   %let EM_METAPORT =;
+MPRINT(EM_DIAGRAM):   %let EM_JAVAPACKAGE = %bquote();
+MPRINT(EM_DIAGRAM):   %let EMPROJECTPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example);
+MPRINT(EM_DIAGRAM):   %let EMPROJNAME = %nrstr(Example);
+MPRINT(EM_DIAGRAM):   %let EMPROJPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H);
+MPRINT(EM_DIAGRAM):   %let em_Train = Y;
+MPRINT(EM_DIAGRAM):   %let em_Score = Y;
+MPRINT(EM_DIAGRAM):   %let em_Report = Y;
+MPRINT(EM_DIAGRAM):   %let emloopmode =;
+MPRINT(EM_DIAGRAM):   %let emloopnumber =0;
+MPRINT(EM_DIAGRAM):   %let emloopId =MdlComp;
+MPRINT(EM_DIAGRAM):   %let emexceptionstring=;
+MPRINT(EM_DIAGRAM):   options VBUFSIZE= 64M;
+MPRINT(EM_DIAGRAM):   %em5run();
+MPRINT(EM_DIAGRAM):   %put &&emexceptionstring;
+MPRINT(EM_DIAGRAM):   %sysrput emerror_MdlComp = &&emexceptionstring;
+MPRINT(EM_DIAGRAM):   %put &&emloopmode;
+MPRINT(EM_DIAGRAM):   %sysrput emloopmode_MdlComp = &&emloopmode;
+MPRINT(EM_DIAGRAM):   endrsubmit;
+12980      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12981      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+12982      put '<Node Id="MdlComp" Event="Run" Pid=" " Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="MdlComp" Event="Run" Pid=" " Gridid=""/>';
+12983      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 50.
+      The maximum record length was 50.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12984      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12985      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+12986      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12987      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+12988      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12989      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+12990      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12991      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+12992      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12993      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+12994      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12995      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+12996      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12997      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+12998      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+12999      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13000      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13001      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13002      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13003      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13004      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13005      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13006      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13007      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13008      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13009      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13010      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13011      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13012      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13013      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13014      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13015      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13016      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13017      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13018      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13019      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13020      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13021      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13022      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13023      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13024      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13025      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13026      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13027      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13028      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13029      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13030      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13031      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13032      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13033      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13034      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13035      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13036      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13037      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13038      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13039      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13040      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13041      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13042      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13043      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13044      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13045      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13046      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13047      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13048      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13049      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+traverser_runingNode_note 
+13050      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13051      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13052      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13053      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13054      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13055      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13056      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13057      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+traverser_runingNode_note 
+13058      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13059      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1     %global emexceptionstring emloopmode emloopnumber;
+2     %let EMUSERID = %bquote(Intern Three);
+3     %let EMLDSPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\DataSources);
+4     %let EMFLOWMODE = Y;
+5     %let EMONODE = %bquote(MdlComp);
+6     %let EMPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1);
+7     %let EMWS = EMWS1;
+8     %let EMNODECLASS = SASHELP.EMASSMT.ASSESS.CLASS;
+9     %let EMSTATUSDIR = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\System);
+10    %let EM_DEBUG =;
+11    %let EMPROJECTCODE = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\System\STARTUP.sas);
+12    %let EMSERVERCODE = %nrstr();
+13    %let EM_USERID = %bquote(Intern Three);
+14    %let EM_METAHOST =;
+15    %let EM_METAPORT =;
+16    %let EM_JAVAPACKAGE = %bquote();
+17    %let EMPROJECTPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example);
+18    %let EMPROJNAME = %nrstr(Example);
+19    %let EMPROJPATH = %nrstr(C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H);
+20    %let em_Train = Y;
+21    %let em_Score = Y;
+22    %let em_Report = Y;
+23    %let emloopmode =;
+24    %let emloopnumber =0;
+25    %let emloopId =MdlComp;
+26    %let emexceptionstring=;
+27    options VBUFSIZE= 64M;
+28    %em5run();
+
+*------------------------------------------------------------* 
+* 
+* MdlComp : Running 
+* datetime : 01MAR2016:12:46:30 
+* 
+*------------------------------------------------------------* 
+6005   %let SYSCC =0;
+6006   %let EMGROUPMODE =;
+6007   %let EMGROUPID =;
+12791  data work.MdlComp;
+12792  set EMWS1.em_nodeid;
+12793  where
+12794  (NODEID="Reg" and LABEL ne 'Regression')
+12795  OR (NODEID="AutoNeural" and LABEL ne 'AutoNeural')
+12796  ;
+12797  run;
+
+NOTE: There were 0 observations read from the data set EMWS1.EM_NODEID.
+      WHERE ((NODEID='Reg') and (LABEL not = 'Regression')) or ((NODEID='AutoNeural') and 
+      (LABEL not = 'AutoNeural'));
+NOTE: The data set WORK.MDLCOMP has 0 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+13272  data EMWS1.MdlComp_EMTRAINVARIABLE;
+13273  length NAME $64;
+13274  set EMWS1.MdlComp_VariableSet;
+13275  label NAME = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel, NOQUOTE))" ROLE =
+13275! "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+13275! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER =
+13276     "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL =
+13276! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+13277  label USE = "%sysfunc(sasmsg(sashelp.dmine, META_USE_VLABEL, NOQUOTE))";
+13278  run;
+
+NOTE: Variable ORDER is uninitialized.
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP_VARIABLESET.
+NOTE: The data set EMWS1.MDLCOMP_EMTRAINVARIABLE has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+13279  %let emexceptionstring =;
+*------------------------------------------------------------* 
+* 
+* MdlComp : End run 
+* datetime : 01MAR2016:12:46:49 
+* 
+*------------------------------------------------------------* 
+NOTE: The PROCEDURE DISPLAY printed pages 1-4.
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           18.82 seconds
+      cpu time            5.35 seconds
+      
+
+13282   %put &&emexceptionstring;
+ 
+13283   %sysrput emerror_MdlComp = &&emexceptionstring;
+13284   %put &&emloopmode;
+ 
+13285   %sysrput emloopmode_MdlComp = &&emloopmode;
+NOTE: Remote submit to C02D87X3 complete.
+NOTE: Remote signoff from C02D87X3 commencing.
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           19.28 seconds
+      cpu time            5.53 seconds
+      
+NOTE: Remote signoff from C02D87X3 complete.
+traverser_runingNode_note 
+13060      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13061      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Node "MdlComp" ran. 
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\Example\Workspaces\EMWS1\MdlComp\TRAINPROPERTIES.xml' encoding="UTF-8" NOBOM;
+Node "MdlComp" succeeded. 
+13063      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+13064      file emwipmsg;
+MPRINT(EM_DIAGRAM):   file emwipmsg;
+13065      put '<Node Id="MdlComp" Event="Complete" Pid="992" Gridid=""/>';
+MPRINT(EM_DIAGRAM):   put '<Node Id="MdlComp" Event="Complete" Pid="992" Gridid=""/>';
+13066      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file EMWIPMSG is:
+      Local Host Name=InternThree-PC,
+      Local Host IP addr=::1,
+      Peer Hostname Name=InternThree-PC,
+      Peer IP addr=127.0.0.1,Peer Name=N/A,
+      Peer Portno=63461,Lrecl=32767,Recfm=Variable
+
+NOTE: 1 record was written to the file EMWIPMSG.
+      The minimum record length was 57.
+      The maximum record length was 57.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+Traverser: Run Completed 
+NOTE: There are no active tasks/transactions.
+13067      waitfor _all_ C02D87X3;
+MPRINT(EM_DIAGRAM):    waitfor _all_ C02D87X3;
+13068      signoff C02D87X3;
+MPRINT(EM_DIAGRAM):   signoff;
+NOTE: A link to C02D87X3 does not exist.  SIGNOFF is not necessary.
+13069      proc printto;
+MPRINT(EM_DIAGRAM):   proc printto;
+13070      run;
+MPRINT(EM_DIAGRAM):   run;
+

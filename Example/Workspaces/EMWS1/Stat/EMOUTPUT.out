@@ -1,0 +1,334 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                March 01, 2016
+Time:                12:34:07
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          10
+INPUT      NOMINAL           10
+TARGET     NOMINAL            1
+ 
+ 
+ 
+Variable Levels Summary
+(maximum 500 observations printed)
+ 
+                      Frequency
+Variable     Role       Count
+ 
+RESPOND     TARGET        2
+ 
+ 
+ 
+Class Variable Summary Statistics
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN
+ 
+                                Number
+Data     Variable                 of                                         Mode                        Mode2
+Role     Name          Role     Levels    Missing    Mode                 Percentage    Mode2          Percentage
+ 
+TRAIN    CONTACT      INPUT        2         0       cellular               63.47       telephone        36.53
+TRAIN    DEFAULT      INPUT        3         0       no                     79.12       unknown          20.87
+TRAIN    DOW          INPUT        5         0       thu                    20.94       mon              20.67
+TRAIN    EDUCATION    INPUT        8         0       university.degree      29.54       high.school      23.10
+TRAIN    HOUSING      INPUT        3         0       yes                    52.38       no               45.21
+TRAIN    JOB          INPUT       12         0       admin.                 25.30       blue-collar      22.47
+TRAIN    LOAN         INPUT        3         0       no                     82.43       yes              15.17
+TRAIN    MARITAL      INPUT        4         0       married                60.52       single           28.09
+TRAIN    MONTH        INPUT       10         0       may                    33.43       jul              17.42
+TRAIN    POUTCOME     INPUT        3         0       nonexistent            86.34       failure          10.32
+TRAIN    RESPOND      TARGET       2         0       no                     88.73       yes              11.27
+ 
+ 
+ 
+Distribution of Class Target and Segment Variables
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN
+ 
+Data     Variable                        Frequency
+Role       Name       Role     Level         Count    Percent
+ 
+TRAIN    RESPOND     TARGET     no           36548    88.7346
+TRAIN    RESPOND     TARGET     yes           4640    11.2654
+ 
+ 
+ 
+Interval Variable Summary Statistics
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN
+ 
+                                  Standard          Non
+Variable     Role         Mean    Deviation     Missing     Missing     Minimum      Median     Maximum    Skewness    Kurtosis
+ 
+AGE          INPUT    40.01107    10.38906        41178          10          17          38          89    0.762607    0.670378
+CAMPAIGN     INPUT    2.567593    2.770014        41188           0           1           2          56    4.762507     36.9798
+CCI          INPUT    -40.5026    4.628198        41188           0       -50.8       -41.8       -26.9     0.30318    -0.35856
+CPI          INPUT    93.57566     0.57884        41188           0      92.201      93.749      94.767    -0.23089    -0.82804
+DURATION     INPUT     258.285    259.2792        41188           0           0         180        4918    3.263141    20.24794
+EMPVAR       INPUT    0.081886     1.57096        41188           0        -3.4         1.1         1.4     -0.7241    -1.06263
+EURIBOR3M    INPUT    3.621291    1.734447        41188           0       0.634       4.857       5.045    -0.70919     -1.4068
+NREMP        INPUT    5167.036    72.25153        41188           0      4963.6        5191      5228.1    -1.04426    -0.00366
+PDAYS        INPUT    962.4755    186.9109        41188           0           0         999         999    -4.92219    22.22946
+PREVIOUS     INPUT    0.172963    0.494901        41188           0           0           0           7    3.832042    20.10882
+ 
+ 
+ 
+Class Variable Summary Statistics by Class Target
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN Variable Name=CONTACT
+ 
+                       Number
+             Target      of                                Mode                      Mode2
+ Target      Level     Levels    Missing      Mode      Percentage      Mode2      Percentage
+ 
+RESPOND       no          2         0       cellular      60.99       telephone      39.01
+RESPOND       yes         2         0       cellular      83.04       telephone      16.96
+_OVERALL_                 2         0       cellular      63.47       telephone      36.53
+ 
+ 
+Data Role=TRAIN Variable Name=DEFAULT
+ 
+                       Number
+             Target      of                            Mode                    Mode2
+ Target      Level     Levels    Missing    Mode    Percentage     Mode2     Percentage
+ 
+RESPOND       no          3         0        no       77.68       unknown      22.31
+RESPOND       yes         2         0        no       90.45       unknown       9.55
+_OVERALL_                 3         0        no       79.12       unknown      20.87
+ 
+ 
+Data Role=TRAIN Variable Name=DOW
+ 
+                       Number
+             Target      of                            Mode                  Mode2
+ Target      Level     Levels    Missing    Mode    Percentage    Mode2    Percentage
+ 
+RESPOND       no          5         0       mon       20.98        thu       20.73
+RESPOND       yes         5         0       thu       22.52        tue       20.54
+_OVERALL_                 5         0       thu       20.94        mon       20.67
+ 
+ 
+Data Role=TRAIN Variable Name=EDUCATION
+ 
+                       Number
+             Target      of                                         Mode                        Mode2
+ Target      Level     Levels    Missing          Mode           Percentage       Mode2       Percentage
+ 
+RESPOND       no          8         0       university.degree      28.72       high.school      23.21
+RESPOND       yes         8         0       university.degree      35.99       high.school      22.22
+_OVERALL_                 8         0       university.degree      29.54       high.school      23.10
+ 
+ 
+Data Role=TRAIN Variable Name=HOUSING
+ 
+                       Number
+             Target      of                            Mode                  Mode2
+ Target      Level     Levels    Missing    Mode    Percentage    Mode2    Percentage
+ 
+RESPOND       no          3         0       yes       52.18        no        45.41
+RESPOND       yes         3         0       yes       54.03        no        43.66
+_OVERALL_                 3         0       yes       52.38        no        45.21
+ 
+ 
+Data Role=TRAIN Variable Name=JOB
+ 
+                       Number
+             Target      of                              Mode                        Mode2
+ Target      Level     Levels    Missing     Mode     Percentage       Mode2       Percentage
+ 
+RESPOND       no         12         0       admin.      24.82       blue-collar      23.57
+RESPOND       yes        12         0       admin.      29.14       technician       15.73
+_OVERALL_                12         0       admin.      25.30       blue-collar      22.47
+ 
+ 
+Data Role=TRAIN Variable Name=LOAN
+ 
+                       Number
+             Target      of                            Mode                  Mode2
+ Target      Level     Levels    Missing    Mode    Percentage    Mode2    Percentage
+ 
+RESPOND       no          3         0        no       82.36        yes       15.23
+RESPOND       yes         3         0        no       82.97        yes       14.72
+_OVERALL_                 3         0        no       82.43        yes       15.17
+ 
+ 
+Data Role=TRAIN Variable Name=MARITAL
+ 
+                       Number
+             Target      of                               Mode                   Mode2
+ Target      Level     Levels    Missing     Mode      Percentage    Mode2     Percentage
+ 
+RESPOND       no          4         0       married      61.28       single      27.22
+RESPOND       yes         4         0       married      54.57       single      34.91
+_OVERALL_                 4         0       married      60.52       single      28.09
+ 
+ 
+Data Role=TRAIN Variable Name=MONTH
+ 
+                       Number
+             Target      of                            Mode                  Mode2
+ Target      Level     Levels    Missing    Mode    Percentage    Mode2    Percentage
+ 
+RESPOND       no         10         0       may       35.25        jul       17.85
+RESPOND       yes        10         0       may       19.09        aug       14.12
+_OVERALL_                10         0       may       33.43        jul       17.42
+ 
+ 
+Data Role=TRAIN Variable Name=POUTCOME
+ 
+                       Number
+             Target      of                                   Mode                    Mode2
+ Target      Level     Levels    Missing       Mode        Percentage     Mode2     Percentage
+ 
+RESPOND       no          3         0       nonexistent      88.71       failure       9.98
+RESPOND       yes         3         0       nonexistent      67.69       success      19.27
+_OVERALL_                 3         0       nonexistent      86.34       failure      10.32
+ 
+ 
+ 
+Interval Variable Summary Statistics by Class Target
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN Variable=AGE
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role     Label
+ 
+RESPOND       no             38           5       36543          17          88    39.90398    9.879583     0.638023    0.280245    INPUT     AGE
+RESPOND       yes            37           5        4635          17          89    40.85545    13.73255     0.971861    0.551749    INPUT     AGE
+_OVERALL_                    38          10       41178          17          89    40.01107    10.38906     0.762607    0.670378    INPUT     AGE
+ 
+ 
+Data Role=TRAIN Variable=CAMPAIGN
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role      Label
+ 
+RESPOND       no              2           0       36548           1          56    2.633085    2.873438     4.679777    35.21286    INPUT    CAMPAIGN
+RESPOND       yes             2           0        4640           1          23    2.051724    1.666245     3.387153    19.35519    INPUT    CAMPAIGN
+_OVERALL_                     2           0       41188           1          56    2.567593    2.770014     4.762507     36.9798    INPUT    CAMPAIGN
+ 
+ 
+Data Role=TRAIN Variable=CCI
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role     Label
+ 
+RESPOND       no          -41.8           0       36548       -50.8       -26.9    -40.5931    4.391155     0.250342    -0.47939    INPUT     CCI
+RESPOND       yes         -40.4           0        4640       -50.8       -26.9    -39.7898    6.139668     0.259931    -0.78703    INPUT     CCI
+_OVERALL_                 -41.8           0       41188       -50.8       -26.9    -40.5026    4.628198      0.30318    -0.35856    INPUT     CCI
+ 
+ 
+Data Role=TRAIN Variable=CPI
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role     Label
+ 
+RESPOND       no         93.918           0       36548      92.201      94.767    93.60376    0.558993     -0.23802    -0.81922    INPUT     CPI
+RESPOND       yes          93.2           0        4640      92.201      94.767    93.35439    0.676644     0.119767    -1.05431    INPUT     CPI
+_OVERALL_                93.749           0       41188      92.201      94.767    93.57566     0.57884     -0.23089    -0.82804    INPUT     CPI
+ 
+ 
+Data Role=TRAIN Variable=DURATION
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role      Label
+ 
+RESPOND       no            163           0       36548           0        4918    220.8448    207.0963     3.668784    31.21465    INPUT    DURATION
+RESPOND       yes           449           0        4640          37        4199    553.1912    401.1719     1.837301    6.318574    INPUT    DURATION
+_OVERALL_                   180           0       41188           0        4918     258.285    259.2792     3.263141    20.24794    INPUT    DURATION
+ 
+ 
+Data Role=TRAIN Variable=EMPVAR
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role     Label
+ 
+RESPOND       no            1.1           0       36548        -3.4         1.4    0.248875    1.482932      -0.9086    -0.75163    INPUT    EMPVAR
+RESPOND       yes          -1.8           0        4640        -3.4         1.4    -1.23345    1.623626     0.556589    -0.99048    INPUT    EMPVAR
+_OVERALL_                   1.1           0       41188        -3.4         1.4    0.081886     1.57096      -0.7241    -1.06263    INPUT    EMPVAR
+ 
+ 
+Data Role=TRAIN Variable=EURIBOR3M
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role       Label
+ 
+RESPOND       no          4.857           0       36548       0.634       5.045    3.811491    1.638187     -0.94332    -1.00919    INPUT    EURIBOR3M
+RESPOND       yes         1.266           0        4640       0.634       5.045    2.123135    1.742598     0.890782    -1.08895    INPUT    EURIBOR3M
+_OVERALL_                 4.857           0       41188       0.634       5.045    3.621291    1.734447     -0.70919     -1.4068    INPUT    EURIBOR3M
+ 
+ 
+Data Role=TRAIN Variable=NREMP
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role     Label
+ 
+RESPOND       no         5195.8           0       36548      4963.6      5228.1    5176.167    64.57198     -1.20828    0.543104    INPUT    NREMP
+RESPOND       yes        5099.1           0        4640      4963.6      5228.1    5095.116    87.57264      0.27845    -1.20079    INPUT    NREMP
+_OVERALL_                  5191           0       41188      4963.6      5228.1    5167.036    72.25153     -1.04426    -0.00366    INPUT    NREMP
+ 
+ 
+Data Role=TRAIN Variable=PDAYS
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role     Label
+ 
+RESPOND       no            999           0       36548           0         999    984.1139    120.6569      -7.9823    61.72157    INPUT    PDAYS
+RESPOND       yes           999           0        4640           0         999    792.0356    403.4072     -1.43636    0.063273    INPUT    PDAYS
+_OVERALL_                   999           0       41188           0         999    962.4755    186.9109     -4.92219    22.22946    INPUT    PDAYS
+ 
+ 
+Data Role=TRAIN Variable=PREVIOUS
+ 
+             Target                                 Non                                        Standard
+ Target      Level       Median     Missing     Missing     Minimum     Maximum        Mean    Deviation    Skewness    Kurtosis    Role      Label
+ 
+RESPOND       no              0           0       36548           0           7    0.132374    0.409199     4.047547    23.81719    INPUT    PREVIOUS
+RESPOND       yes             0           0        4640           0           6    0.492672    0.860344     2.132789    5.267404    INPUT    PREVIOUS
+_OVERALL_                     0           0       41188           0           7    0.172963    0.494901     3.832042    20.10882    INPUT    PREVIOUS
+ 
+ 
+ 
+Chi-Square Statistics
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN Target=RESPOND
+ 
+Input        Chi-Square    Df      Prob
+ 
+POUTCOME      4230.5238     2    <.0001
+MONTH         3101.1494     9    <.0001
+JOB            961.2424    11    <.0001
+CONTACT        863.2691     1    <.0001
+DEFAULT        406.5775     2    <.0001
+EDUCATION      193.1059     7    <.0001
+MARITAL        122.6552     3    <.0001
+DOW             26.1449     4    <.0001
+HOUSING          5.6845     2    0.0583
+LOAN             1.0940     2    0.5787
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*

@@ -1,0 +1,53 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                March 01, 2016
+Time:                12:33:52
+*------------------------------------------------------------*
+11566  *------------------------------------------------------------*;
+11567  * Ids: Computing metadata for DATA data;
+11568  *------------------------------------------------------------*;
+
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+11569  data EMWS1.Ids_EMINFO;
+11570  length TARGET KEY $32 DATA $43;
+11571  TARGET="";
+11572  KEY="IDSTABLE";
+11573  DATA="MYDATA.PORTUGUESEBANKALL";
+11574  output;
+11575  TARGET="RESPOND";
+11576  KEY="DECDATA";
+11577  DATA="EMWS1.Ids_RESPOND_DD";
+11578  output;
+11579  TARGET="RESPOND";
+11580  KEY="DECMETA";
+11581  DATA="EMWS1.Ids_RESPOND_DM";
+11582  output;
+11583  run;
+
+NOTE: The data set EMWS1.IDS_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+11584  data EMWS1.Ids_CMeta_DATA;
+11585  set EMWS1.Ids_VariableSet;
+11586  drop DROP;
+11587  where DROP='N';
+11588  run;
+
+NOTE: There were 21 observations read from the data set EMWS1.IDS_VARIABLESET.
+      WHERE DROP='N';
+NOTE: The data set EMWS1.IDS_CMETA_DATA has 21 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+

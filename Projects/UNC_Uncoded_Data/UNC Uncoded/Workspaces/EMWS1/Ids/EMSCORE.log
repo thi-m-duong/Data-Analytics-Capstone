@@ -1,0 +1,61 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                April 21, 2016
+Time:                06:07:20
+*------------------------------------------------------------*
+11542  *------------------------------------------------------------*;
+11543  * Ids: Computing metadata for DATA data;
+11544  *------------------------------------------------------------*;
+
+NOTE: Data file UNCODED.UNC_SYSTEM_SALARY2016_FULL_WITH.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: Data file UNCODED.UNC_SYSTEM_SALARY2016_FULL_WITH.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+11545  data EMWS1.Ids_EMINFO;
+11546  length TARGET KEY $32 DATA $43;
+11547  TARGET="";
+11548  KEY="IDSTABLE";
+11549  DATA="UNCODED.UNC_SYSTEM_SALARY2016_FULL_WITH";
+11550  output;
+11551  TARGET="totalsal";
+11552  KEY="DECDATA";
+11553  DATA="EMWS1.Ids_totalsal_DD";
+11554  output;
+11555  TARGET="totalsal";
+11556  KEY="DECMETA";
+11557  DATA="EMWS1.Ids_totalsal_DM";
+11558  output;
+11559  run;
+
+NOTE: The data set EMWS1.IDS_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: Data file UNCODED.UNC_SYSTEM_SALARY2016_FULL_WITH.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+11560  data EMWS1.Ids_CMeta_DATA;
+11561  set EMWS1.Ids_VariableSet;
+11562  drop DROP;
+11563  where DROP='N';
+11564  run;
+
+NOTE: There were 15 observations read from the data set EMWS1.IDS_VARIABLESET.
+      WHERE DROP='N';
+NOTE: The data set EMWS1.IDS_CMETA_DATA has 15 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: Data file UNCODED.UNC_SYSTEM_SALARY2016_FULL_WITH.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.

@@ -1,0 +1,892 @@
+*------------------------------------------------------------*
+ Node = 10
+*------------------------------------------------------------*
+if nonstsal < 319838 AND nonstsal >= 254979
+then 
+ Tree Node Identifier   = 10
+ Number of Observations = 82
+ Predicted: totalsal = 295589.68293
+ 
+*------------------------------------------------------------*
+ Node = 11
+*------------------------------------------------------------*
+if nonstsal >= 319838
+then 
+ Tree Node Identifier   = 11
+ Number of Observations = 50
+ Predicted: totalsal = 430459.4
+ 
+*------------------------------------------------------------*
+ Node = 20
+*------------------------------------------------------------*
+if statesal < 160454 AND statesal >= 128427
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 20
+ Number of Observations = 78
+ Predicted: totalsal = 143790.69231
+ 
+*------------------------------------------------------------*
+ Node = 21
+*------------------------------------------------------------*
+if statesal >= 160454
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 21
+ Number of Observations = 51
+ Predicted: totalsal = 201690.15686
+ 
+*------------------------------------------------------------*
+ Node = 24
+*------------------------------------------------------------*
+if statesal < 85460 AND statesal >= 49065
+AND nonstsal < 26786.5 AND nonstsal >= 7959.5
+then 
+ Tree Node Identifier   = 24
+ Number of Observations = 78
+ Predicted: totalsal = 82830.294872
+ 
+*------------------------------------------------------------*
+ Node = 25
+*------------------------------------------------------------*
+if statesal < 134217 AND statesal >= 85460
+AND nonstsal < 26786.5 AND nonstsal >= 7959.5
+then 
+ Tree Node Identifier   = 25
+ Number of Observations = 78
+ Predicted: totalsal = 125090.74359
+ 
+*------------------------------------------------------------*
+ Node = 26
+*------------------------------------------------------------*
+if statesal >= 134217
+AND nonstsal < 26786.5 AND nonstsal >= 7959.5
+then 
+ Tree Node Identifier   = 26
+ Number of Observations = 41
+ Predicted: totalsal = 200156.39024
+ 
+*------------------------------------------------------------*
+ Node = 28
+*------------------------------------------------------------*
+if statesal < 60796.5 AND statesal >= 27607.5
+AND nonstsal < 51797 AND nonstsal >= 26786.5
+then 
+ Tree Node Identifier   = 28
+ Number of Observations = 78
+ Predicted: totalsal = 80460.769231
+ 
+*------------------------------------------------------------*
+ Node = 29
+*------------------------------------------------------------*
+if statesal < 117809 AND statesal >= 60796.5
+AND nonstsal < 51797 AND nonstsal >= 26786.5
+then 
+ Tree Node Identifier   = 29
+ Number of Observations = 78
+ Predicted: totalsal = 126801.80769
+ 
+*------------------------------------------------------------*
+ Node = 30
+*------------------------------------------------------------*
+if statesal >= 117809
+AND nonstsal < 51797 AND nonstsal >= 26786.5
+then 
+ Tree Node Identifier   = 30
+ Number of Observations = 46
+ Predicted: totalsal = 199768
+ 
+*------------------------------------------------------------*
+ Node = 32
+*------------------------------------------------------------*
+if statesal >= 51837
+AND nonstsal < 70457 AND nonstsal >= 51797
+then 
+ Tree Node Identifier   = 32
+ Number of Observations = 43
+ Predicted: totalsal = 153876.06977
+ 
+*------------------------------------------------------------*
+ Node = 34
+*------------------------------------------------------------*
+if statesal >= 54317.5
+AND nonstsal < 95900.5 AND nonstsal >= 70457
+then 
+ Tree Node Identifier   = 34
+ Number of Observations = 46
+ Predicted: totalsal = 183768.17391
+ 
+*------------------------------------------------------------*
+ Node = 35
+*------------------------------------------------------------*
+if nonstsal < 102849 AND nonstsal >= 95900.5
+then 
+ Tree Node Identifier   = 35
+ Number of Observations = 81
+ Predicted: totalsal = 108507.50617
+ 
+*------------------------------------------------------------*
+ Node = 36
+*------------------------------------------------------------*
+if nonstsal < 115051 AND nonstsal >= 102849 or MISSING
+then 
+ Tree Node Identifier   = 36
+ Number of Observations = 101
+ Predicted: totalsal = 127176
+ 
+*------------------------------------------------------------*
+ Node = 38
+*------------------------------------------------------------*
+if statesal >= 14944
+AND nonstsal < 180090 AND nonstsal >= 115051
+then 
+ Tree Node Identifier   = 38
+ Number of Observations = 81
+ Predicted: totalsal = 201597.46914
+ 
+*------------------------------------------------------------*
+ Node = 39
+*------------------------------------------------------------*
+if nonstsal < 194817 AND nonstsal >= 180090
+then 
+ Tree Node Identifier   = 39
+ Number of Observations = 47
+ Predicted: totalsal = 201038.38298
+ 
+*------------------------------------------------------------*
+ Node = 40
+*------------------------------------------------------------*
+if nonstsal < 209438 AND nonstsal >= 194817
+then 
+ Tree Node Identifier   = 40
+ Number of Observations = 40
+ Predicted: totalsal = 209783.2
+ 
+*------------------------------------------------------------*
+ Node = 41
+*------------------------------------------------------------*
+if nonstsal < 226187 AND nonstsal >= 209438
+then 
+ Tree Node Identifier   = 41
+ Number of Observations = 42
+ Predicted: totalsal = 233720.7619
+ 
+*------------------------------------------------------------*
+ Node = 42
+*------------------------------------------------------------*
+if nonstsal < 254979 AND nonstsal >= 226187 or MISSING
+then 
+ Tree Node Identifier   = 42
+ Number of Observations = 66
+ Predicted: totalsal = 248026.80303
+ 
+*------------------------------------------------------------*
+ Node = 43
+*------------------------------------------------------------*
+if statesal < 14517
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 43
+ Number of Observations = 40
+ Predicted: totalsal = 9340.7
+ 
+*------------------------------------------------------------*
+ Node = 44
+*------------------------------------------------------------*
+if statesal < 23640 AND statesal >= 14517 or MISSING
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 44
+ Number of Observations = 49
+ Predicted: totalsal = 18778.408163
+ 
+*------------------------------------------------------------*
+ Node = 45
+*------------------------------------------------------------*
+if statesal < 27576 AND statesal >= 23640 or MISSING
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 45
+ Number of Observations = 163
+ Predicted: totalsal = 26586.134969
+ 
+*------------------------------------------------------------*
+ Node = 46
+*------------------------------------------------------------*
+if statesal < 29005 AND statesal >= 27576
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 46
+ Number of Observations = 43
+ Predicted: totalsal = 28793.093023
+ 
+*------------------------------------------------------------*
+ Node = 47
+*------------------------------------------------------------*
+if statesal < 32259 AND statesal >= 29005
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 47
+ Number of Observations = 78
+ Predicted: totalsal = 30887.551282
+ 
+*------------------------------------------------------------*
+ Node = 48
+*------------------------------------------------------------*
+if statesal < 35298 AND statesal >= 32259
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 48
+ Number of Observations = 70
+ Predicted: totalsal = 34575.257143
+ 
+*------------------------------------------------------------*
+ Node = 49
+*------------------------------------------------------------*
+if statesal < 37119.5 AND statesal >= 35298
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 49
+ Number of Observations = 82
+ Predicted: totalsal = 36653.853659
+ 
+*------------------------------------------------------------*
+ Node = 50
+*------------------------------------------------------------*
+if statesal < 38254 AND statesal >= 37119.5
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 50
+ Number of Observations = 40
+ Predicted: totalsal = 37993.75
+ 
+*------------------------------------------------------------*
+ Node = 51
+*------------------------------------------------------------*
+if statesal < 39394 AND statesal >= 38254
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 51
+ Number of Observations = 40
+ Predicted: totalsal = 39163.85
+ 
+*------------------------------------------------------------*
+ Node = 52
+*------------------------------------------------------------*
+if statesal < 41017 AND statesal >= 39394 or MISSING
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 52
+ Number of Observations = 87
+ Predicted: totalsal = 40950.321839
+ 
+*------------------------------------------------------------*
+ Node = 53
+*------------------------------------------------------------*
+if statesal < 42620.5 AND statesal >= 41017
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 53
+ Number of Observations = 78
+ Predicted: totalsal = 42441.384615
+ 
+*------------------------------------------------------------*
+ Node = 54
+*------------------------------------------------------------*
+if statesal < 44338 AND statesal >= 42620.5
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 54
+ Number of Observations = 86
+ Predicted: totalsal = 44047.732558
+ 
+*------------------------------------------------------------*
+ Node = 55
+*------------------------------------------------------------*
+if statesal < 45650.5 AND statesal >= 44338
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 55
+ Number of Observations = 74
+ Predicted: totalsal = 45200.540541
+ 
+*------------------------------------------------------------*
+ Node = 56
+*------------------------------------------------------------*
+if statesal < 47405.5 AND statesal >= 45650.5
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 56
+ Number of Observations = 47
+ Predicted: totalsal = 46716.914894
+ 
+*------------------------------------------------------------*
+ Node = 57
+*------------------------------------------------------------*
+if statesal < 49470 AND statesal >= 47405.5 or MISSING
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 57
+ Number of Observations = 81
+ Predicted: totalsal = 48956.703704
+ 
+*------------------------------------------------------------*
+ Node = 58
+*------------------------------------------------------------*
+if statesal < 52034 AND statesal >= 49470
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 58
+ Number of Observations = 79
+ Predicted: totalsal = 51208.189873
+ 
+*------------------------------------------------------------*
+ Node = 59
+*------------------------------------------------------------*
+if statesal < 53886.5 AND statesal >= 52034
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 59
+ Number of Observations = 40
+ Predicted: totalsal = 53774.325
+ 
+*------------------------------------------------------------*
+ Node = 60
+*------------------------------------------------------------*
+if statesal < 57451 AND statesal >= 53886.5
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 60
+ Number of Observations = 78
+ Predicted: totalsal = 56976.448718
+ 
+*------------------------------------------------------------*
+ Node = 61
+*------------------------------------------------------------*
+if statesal < 59016.5 AND statesal >= 57451
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 61
+ Number of Observations = 44
+ Predicted: totalsal = 59281.113636
+ 
+*------------------------------------------------------------*
+ Node = 62
+*------------------------------------------------------------*
+if statesal < 62381.5 AND statesal >= 59016.5
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 62
+ Number of Observations = 64
+ Predicted: totalsal = 60716.953125
+ 
+*------------------------------------------------------------*
+ Node = 63
+*------------------------------------------------------------*
+if statesal < 66339 AND statesal >= 62381.5 or MISSING
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 63
+ Number of Observations = 78
+ Predicted: totalsal = 64567.782051
+ 
+*------------------------------------------------------------*
+ Node = 64
+*------------------------------------------------------------*
+if statesal < 70382.5 AND statesal >= 66339
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 64
+ Number of Observations = 78
+ Predicted: totalsal = 68910.871795
+ 
+*------------------------------------------------------------*
+ Node = 65
+*------------------------------------------------------------*
+if statesal < 72450 AND statesal >= 70382.5
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 65
+ Number of Observations = 40
+ Predicted: totalsal = 71726.2
+ 
+*------------------------------------------------------------*
+ Node = 66
+*------------------------------------------------------------*
+if statesal < 74875 AND statesal >= 72450
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 66
+ Number of Observations = 40
+ Predicted: totalsal = 73999.825
+ 
+*------------------------------------------------------------*
+ Node = 67
+*------------------------------------------------------------*
+if statesal < 76825 AND statesal >= 74875
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 67
+ Number of Observations = 55
+ Predicted: totalsal = 75918.072727
+ 
+*------------------------------------------------------------*
+ Node = 68
+*------------------------------------------------------------*
+if statesal < 81804 AND statesal >= 76825 or MISSING
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 68
+ Number of Observations = 79
+ Predicted: totalsal = 79944.835443
+ 
+*------------------------------------------------------------*
+ Node = 69
+*------------------------------------------------------------*
+if statesal < 85976 AND statesal >= 81804
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 69
+ Number of Observations = 61
+ Predicted: totalsal = 84299.540984
+ 
+*------------------------------------------------------------*
+ Node = 70
+*------------------------------------------------------------*
+if statesal < 89871 AND statesal >= 85976
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 70
+ Number of Observations = 40
+ Predicted: totalsal = 88603.75
+ 
+*------------------------------------------------------------*
+ Node = 71
+*------------------------------------------------------------*
+if statesal < 96287.5 AND statesal >= 89871 or MISSING
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 71
+ Number of Observations = 78
+ Predicted: totalsal = 93173.038462
+ 
+*------------------------------------------------------------*
+ Node = 72
+*------------------------------------------------------------*
+if statesal < 106097 AND statesal >= 96287.5
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 72
+ Number of Observations = 68
+ Predicted: totalsal = 101598.91176
+ 
+*------------------------------------------------------------*
+ Node = 73
+*------------------------------------------------------------*
+if statesal < 116080 AND statesal >= 106097 or MISSING
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 73
+ Number of Observations = 74
+ Predicted: totalsal = 111279.36486
+ 
+*------------------------------------------------------------*
+ Node = 74
+*------------------------------------------------------------*
+if statesal < 128427 AND statesal >= 116080
+AND nonstsal < 7959.5 or MISSING
+then 
+ Tree Node Identifier   = 74
+ Number of Observations = 43
+ Predicted: totalsal = 123124.83721
+ 
+*------------------------------------------------------------*
+ Node = 75
+*------------------------------------------------------------*
+if statesal < 15906
+AND nonstsal < 25367 AND nonstsal >= 7959.5
+then 
+ Tree Node Identifier   = 75
+ Number of Observations = 41
+ Predicted: totalsal = 23068.414634
+ 
+*------------------------------------------------------------*
+ Node = 76
+*------------------------------------------------------------*
+if statesal < 15906
+AND nonstsal < 26786.5 AND nonstsal >= 25367 or MISSING
+then 
+ Tree Node Identifier   = 76
+ Number of Observations = 43
+ Predicted: totalsal = 27334.534884
+ 
+*------------------------------------------------------------*
+ Node = 77
+*------------------------------------------------------------*
+if statesal < 36361 AND statesal >= 15906 or MISSING
+AND nonstsal < 26786.5 AND nonstsal >= 7959.5
+then 
+ Tree Node Identifier   = 77
+ Number of Observations = 75
+ Predicted: totalsal = 44565.906667
+ 
+*------------------------------------------------------------*
+ Node = 78
+*------------------------------------------------------------*
+if statesal < 49065 AND statesal >= 36361
+AND nonstsal < 26786.5 AND nonstsal >= 7959.5
+then 
+ Tree Node Identifier   = 78
+ Number of Observations = 42
+ Predicted: totalsal = 58524.285714
+ 
+*------------------------------------------------------------*
+ Node = 79
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 30002.5 AND nonstsal >= 26786.5
+then 
+ Tree Node Identifier   = 79
+ Number of Observations = 94
+ Predicted: totalsal = 29660.340426
+ 
+*------------------------------------------------------------*
+ Node = 80
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 32912.5 AND nonstsal >= 30002.5
+then 
+ Tree Node Identifier   = 80
+ Number of Observations = 119
+ Predicted: totalsal = 32646.882353
+ 
+*------------------------------------------------------------*
+ Node = 81
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 35442 AND nonstsal >= 32912.5
+then 
+ Tree Node Identifier   = 81
+ Number of Observations = 158
+ Predicted: totalsal = 34749.993671
+ 
+*------------------------------------------------------------*
+ Node = 82
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 38155.5 AND nonstsal >= 35442
+then 
+ Tree Node Identifier   = 82
+ Number of Observations = 205
+ Predicted: totalsal = 37205.936585
+ 
+*------------------------------------------------------------*
+ Node = 83
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 39506.5 AND nonstsal >= 38155.5
+then 
+ Tree Node Identifier   = 83
+ Number of Observations = 78
+ Predicted: totalsal = 39013.628205
+ 
+*------------------------------------------------------------*
+ Node = 84
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 42793 AND nonstsal >= 39506.5 or MISSING
+then 
+ Tree Node Identifier   = 84
+ Number of Observations = 252
+ Predicted: totalsal = 41779.194444
+ 
+*------------------------------------------------------------*
+ Node = 86
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 47558 AND nonstsal >= 45730.5
+then 
+ Tree Node Identifier   = 86
+ Number of Observations = 125
+ Predicted: totalsal = 46831.256
+ 
+*------------------------------------------------------------*
+ Node = 87
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 50208.5 AND nonstsal >= 47558
+then 
+ Tree Node Identifier   = 87
+ Number of Observations = 156
+ Predicted: totalsal = 49519.083333
+ 
+*------------------------------------------------------------*
+ Node = 88
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 51797 AND nonstsal >= 50208.5
+then 
+ Tree Node Identifier   = 88
+ Number of Observations = 103
+ Predicted: totalsal = 51346.893204
+ 
+*------------------------------------------------------------*
+ Node = 90
+*------------------------------------------------------------*
+if statesal < 51837 AND statesal >= 10205
+AND nonstsal < 70457 AND nonstsal >= 51797
+then 
+ Tree Node Identifier   = 90
+ Number of Observations = 41
+ Predicted: totalsal = 89068.195122
+ 
+*------------------------------------------------------------*
+ Node = 92
+*------------------------------------------------------------*
+if statesal < 54317.5 AND statesal >= 10823
+AND nonstsal < 95900.5 AND nonstsal >= 70457
+then 
+ Tree Node Identifier   = 92
+ Number of Observations = 40
+ Predicted: totalsal = 110741.7
+ 
+*------------------------------------------------------------*
+ Node = 93
+*------------------------------------------------------------*
+if statesal < 14944 or MISSING
+AND nonstsal < 127468 AND nonstsal >= 115051
+then 
+ Tree Node Identifier   = 93
+ Number of Observations = 53
+ Predicted: totalsal = 122518.03774
+ 
+*------------------------------------------------------------*
+ Node = 94
+*------------------------------------------------------------*
+if statesal < 14944 or MISSING
+AND nonstsal < 147145 AND nonstsal >= 127468 or MISSING
+then 
+ Tree Node Identifier   = 94
+ Number of Observations = 78
+ Predicted: totalsal = 138160.10256
+ 
+*------------------------------------------------------------*
+ Node = 95
+*------------------------------------------------------------*
+if statesal < 14944 or MISSING
+AND nonstsal < 168131 AND nonstsal >= 147145
+then 
+ Tree Node Identifier   = 95
+ Number of Observations = 78
+ Predicted: totalsal = 158757.91026
+ 
+*------------------------------------------------------------*
+ Node = 96
+*------------------------------------------------------------*
+if statesal < 14944 or MISSING
+AND nonstsal < 180090 AND nonstsal >= 168131
+then 
+ Tree Node Identifier   = 96
+ Number of Observations = 41
+ Predicted: totalsal = 175840.43902
+ 
+*------------------------------------------------------------*
+ Node = 97
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 44018.5 AND nonstsal >= 42793
+then 
+ Tree Node Identifier   = 97
+ Number of Observations = 85
+ Predicted: totalsal = 43731.505882
+ 
+*------------------------------------------------------------*
+ Node = 98
+*------------------------------------------------------------*
+if statesal < 27607.5 or MISSING
+AND nonstsal < 45730.5 AND nonstsal >= 44018.5 or MISSING
+then 
+ Tree Node Identifier   = 98
+ Number of Observations = 122
+ Predicted: totalsal = 45077.778689
+ 
+*------------------------------------------------------------*
+ Node = 99
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 52996 AND nonstsal >= 51797
+then 
+ Tree Node Identifier   = 99
+ Number of Observations = 74
+ Predicted: totalsal = 52729.891892
+ 
+*------------------------------------------------------------*
+ Node = 100
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 54987.5 AND nonstsal >= 52996
+then 
+ Tree Node Identifier   = 100
+ Number of Observations = 79
+ Predicted: totalsal = 53967
+ 
+*------------------------------------------------------------*
+ Node = 101
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 56486 AND nonstsal >= 54987.5
+then 
+ Tree Node Identifier   = 101
+ Number of Observations = 80
+ Predicted: totalsal = 55653.4375
+ 
+*------------------------------------------------------------*
+ Node = 102
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 58607.5 AND nonstsal >= 56486
+then 
+ Tree Node Identifier   = 102
+ Number of Observations = 78
+ Predicted: totalsal = 57490.961538
+ 
+*------------------------------------------------------------*
+ Node = 103
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 60581 AND nonstsal >= 58607.5
+then 
+ Tree Node Identifier   = 103
+ Number of Observations = 78
+ Predicted: totalsal = 59667.397436
+ 
+*------------------------------------------------------------*
+ Node = 105
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 65655 AND nonstsal >= 63456.5
+then 
+ Tree Node Identifier   = 105
+ Number of Observations = 78
+ Predicted: totalsal = 64527.935897
+ 
+*------------------------------------------------------------*
+ Node = 106
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 67531 AND nonstsal >= 65655
+then 
+ Tree Node Identifier   = 106
+ Number of Observations = 79
+ Predicted: totalsal = 66650.987342
+ 
+*------------------------------------------------------------*
+ Node = 107
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 70457 AND nonstsal >= 67531
+then 
+ Tree Node Identifier   = 107
+ Number of Observations = 85
+ Predicted: totalsal = 69505.223529
+ 
+*------------------------------------------------------------*
+ Node = 108
+*------------------------------------------------------------*
+if statesal < 10823 or MISSING
+AND nonstsal < 72600 AND nonstsal >= 70457
+then 
+ Tree Node Identifier   = 108
+ Number of Observations = 53
+ Predicted: totalsal = 72030.075472
+ 
+*------------------------------------------------------------*
+ Node = 109
+*------------------------------------------------------------*
+if statesal < 10823 or MISSING
+AND nonstsal < 75556 AND nonstsal >= 72600 or MISSING
+then 
+ Tree Node Identifier   = 109
+ Number of Observations = 78
+ Predicted: totalsal = 74443.371795
+ 
+*------------------------------------------------------------*
+ Node = 110
+*------------------------------------------------------------*
+if statesal < 10823 or MISSING
+AND nonstsal < 78992 AND nonstsal >= 75556
+then 
+ Tree Node Identifier   = 110
+ Number of Observations = 78
+ Predicted: totalsal = 77606.128205
+ 
+*------------------------------------------------------------*
+ Node = 111
+*------------------------------------------------------------*
+if statesal < 10823 or MISSING
+AND nonstsal < 80506 AND nonstsal >= 78992
+then 
+ Tree Node Identifier   = 111
+ Number of Observations = 40
+ Predicted: totalsal = 80025.825
+ 
+*------------------------------------------------------------*
+ Node = 112
+*------------------------------------------------------------*
+if statesal < 10823 or MISSING
+AND nonstsal < 83768.5 AND nonstsal >= 80506
+then 
+ Tree Node Identifier   = 112
+ Number of Observations = 78
+ Predicted: totalsal = 82305.5
+ 
+*------------------------------------------------------------*
+ Node = 113
+*------------------------------------------------------------*
+if statesal < 10823 or MISSING
+AND nonstsal < 88770 AND nonstsal >= 83768.5
+then 
+ Tree Node Identifier   = 113
+ Number of Observations = 78
+ Predicted: totalsal = 86396.24359
+ 
+*------------------------------------------------------------*
+ Node = 114
+*------------------------------------------------------------*
+if statesal < 10823 or MISSING
+AND nonstsal < 92549.5 AND nonstsal >= 88770
+then 
+ Tree Node Identifier   = 114
+ Number of Observations = 78
+ Predicted: totalsal = 90686.961538
+ 
+*------------------------------------------------------------*
+ Node = 115
+*------------------------------------------------------------*
+if statesal < 10823 or MISSING
+AND nonstsal < 95900.5 AND nonstsal >= 92549.5
+then 
+ Tree Node Identifier   = 115
+ Number of Observations = 52
+ Predicted: totalsal = 94544.384615
+ 
+*------------------------------------------------------------*
+ Node = 116
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 61572 AND nonstsal >= 60581
+then 
+ Tree Node Identifier   = 116
+ Number of Observations = 45
+ Predicted: totalsal = 61170.111111
+ 
+*------------------------------------------------------------*
+ Node = 117
+*------------------------------------------------------------*
+if statesal < 10205 or MISSING
+AND nonstsal < 63456.5 AND nonstsal >= 61572 or MISSING
+then 
+ Tree Node Identifier   = 117
+ Number of Observations = 72
+ Predicted: totalsal = 62624.694444
+ 

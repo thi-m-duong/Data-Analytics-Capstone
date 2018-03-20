@@ -1,0 +1,28 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+          Measurement    Frequency
+Role         Level         Count
+
+ID         INTERVAL          1    
+ID         NOMINAL           1    
+INPUT      BINARY            1    
+INPUT      INTERVAL          4    
+INPUT      NOMINAL           6    
+INPUT      ORDINAL           1    
+TARGET     INTERVAL          1    
+TIMEID     INTERVAL          1    
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Predicted and decision variables
+
+Type          Variable            Label
+
+TARGET       totalsal                         
+PREDICTED    P_totalsal    Predicted: totalsal
+RESIDUAL     R_totalsal    Residual: totalsal 

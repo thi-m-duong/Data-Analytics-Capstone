@@ -1,0 +1,571 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                April 20, 2016
+Time:                20:49:04
+Site:                70085778
+Platform:            X64_7HOME
+Maintenance Release: 9.04.01M3P062415
+EM Version:          14.1
+* 
+*------------------------------------------------------------*
+* Training Log
+Date:                April 20, 2016
+Time:                20:49:00
+*------------------------------------------------------------*
+10866  proc freq data=EMWS1.Ids_VariableSet noprint;
+10867  table ROLE*LEVEL/out=WORK.IdsMETA;
+10868  run;
+ 
+NOTE: There were 15 observations read from the data set EMWS1.IDS_VARIABLESET.
+NOTE: The data set WORK.IDSMETA has 7 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.15 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10869  proc print data=WORK.IdsMETA label noobs;
+10870  var ROLE LEVEL COUNT;
+10871  label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+10872  title9 ' ';
+10873  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+10874  run;
+ 
+NOTE: There were 7 observations read from the data set WORK.IDSMETA.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.17 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10875  title10;
+ 
+10876  data _null_;
+10877  rc = libref("NEWDATA");
+10878  call symput('_librc', strip(put(rc, best.)));
+10879  run;
+ 
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10880  %let _engineTable =;
+10881  data _null_;
+10882  dsid = open("NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_");
+10883  if dsid then do;
+10884  call symput('_engineTable', attrc(dsid, 'ENGINE'));
+10885  dsid = close(dsid);
+10886  end;
+10887  run;
+ 
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10888  %let _lasrFile=;
+10889  %let _sasiolaFile=;
+10890  data null_;
+10891  length lasrfile sasiolaFile $2000;
+10892  LASRFile = pathname("EMWS1")!!"\"!!"HPDM\"!!"hpdmlasr";
+10893  SASIOLAFile = pathname("EMWS1")!!"\"!!"HPDM\"!!'sasiola.sas';
+10894  call symput('_lasrFile', strip(lasrfile));
+10895  call symput('_sasiolaFile', strip(sasiolafile));
+10896  run;
+ 
+NOTE: The data set WORK.NULL_ has 1 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10897  %let _UseGrid = 0;
+10898  %hpdm_performance(data=NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_, isGrid=_UseGrid);
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+PERFORMANCE  DETAILS
+10899  %put &_UseGrid;
+0
+10900  %let em_idskey =;
+10901  data _null_;
+10902  set EMWS1.Ids_VariableSet;
+10903  where ROLE = 'KEY';
+10904  call symput('em_idskey', strip(tranwrd(name, '"', '""')));
+10905  run;
+ 
+NOTE: There were 0 observations read from the data set EMWS1.IDS_VARIABLESET.
+      WHERE ROLE='KEY';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10906  %let emexceptionstring=;
+10907  %EmAdviseColumns(NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_, adviseMode=BASIC, applyIntervalLevelLowerLimit=N, applyMaxPercentMissing=N, applyMaxClassLevels=N, identifyEmptyColumns=N, maxLevelDetection=0, outdata=EMWS1.Ids_EMCMETADEFAULT,
+10907! newdataflag=N);
+ 
+10908  %let SYSCC = 0;
+10909  %let _dsidTable = 0;
+10910  %let _engineTable =;
+10911  data _null_;
+10912  dsid = open('NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_');
+10913  call symput('_dsidTable', strip(put(dsid, best.)));
+10914  if dsid then do;
+10915  call symput('_engineTable', attrc(dsid, 'ENGINE'));
+10916  dsid = close(dsid);
+10917  end;
+10918  run;
+ 
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10919  options fmterr;
+10920  data _metaTestView;
+10921  set NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_;
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+10922  if _N_=1 then do;
+10923  output;
+10924  stop;
+10925  end;
+10926  run;
+ 
+NOTE: There were 1 observations read from the data set NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.
+NOTE: The data set WORK._METATESTVIEW has 1 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10927  proc contents data=NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_
+10928  out=WORK.M0UI4Y12 noprint;
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+10929  run;
+ 
+NOTE: The data set WORK.M0UI4Y12 has 15 observations and 41 variables.
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10930  data WORK.M0UI4Y12;
+10931  length NAME $ 64 TYPE $ 1 LABEL $ 200 FORMAT $ 36 INFORMAT $36 INDEX $ 1 INDEXTYPE $ 9;
+10932  label NAME =;
+10933  set WORK.M0UI4Y12(keep=name type length label format formatl formatd informat informl informd idxusage rename=(type=itype));
+10934  if itype = 1 then type = 'N';
+10935  else type = 'C';
+10936  if formatl > 0 then do;
+10937  if format ne '' then do;
+10938  if type='N' then format = strip(format)!!strip(put(formatl, best12.))!!'.'!!strip(put(formatd, best12.));
+10939  else format = strip(format)!!strip(put(formatl, best12.))!!'.';
+10940  end;
+10941  else format = strip(put(formatl, best12.))!!'.'!!strip(put(formatd, best12.));
+10942  end;
+10943  else if format ne '' then format = strip(format)!!'.';
+10944  if informl > 0 then do;
+10945  if informat ne ' ' then do;
+10946  if type='N' then informat = strip(informat)!!strip(put(informl, best12.))!!'.'!!strip(put(informd, best12.));
+10947  else informat = strip(informat)!!strip(put(informl, best12.))!!'.';
+10948  end;
+10949  else informat = strip(put(informl, best12.))!!'.'!!strip(put(informd, best12.));
+10950  end;
+10951  else if informat ne '' then informat = strip(informat)!!'.';
+10952  if idxusage = 'NONE' then index ="N";
+10953  else index = "Y";
+10954  indextype = idxusage;
+10955  drop idxusage itype formatl formatd informl informd;
+10956  run;
+ 
+NOTE: There were 15 observations read from the data set WORK.M0UI4Y12.
+NOTE: The data set WORK.M0UI4Y12 has 15 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10957  data WORK.M0JUT091;
+10958  length UNAME $64;
+10959  set WORK.M0JUT091;
+10960  UNAME = upcase(NAME);
+10961  run;
+ 
+NOTE: There were 15 observations read from the data set WORK.M0JUT091.
+NOTE: The data set WORK.M0JUT091 has 15 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10962  data WORK.M0UI4Y12;
+10963  length UNAME $64;
+10964  set WORK.M0UI4Y12;
+10965  UNAME = upcase(NAME);
+10966  run;
+ 
+NOTE: There were 15 observations read from the data set WORK.M0UI4Y12.
+NOTE: The data set WORK.M0UI4Y12 has 15 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10978  data WORK.M0JUT091;
+10979  drop UNAME;
+10980  set WORK.M0JUT091;
+10981  run;
+ 
+NOTE: There were 15 observations read from the data set WORK.M0JUT091.
+NOTE: The data set WORK.M0JUT091 has 15 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.32 seconds
+      cpu time            0.20 seconds
+ 
+ 
+ 
+11232  %EmAdviseTable(NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_, outdata=EMWS1.Ids_EMTMETADEFAULT, newdataflag=N);
+ 
+11233  %let SYSCC = 0;
+11234  data EMWS1.Ids_EMTMETADEFAULT;
+11235  set EMWS1.Ids_EMTMETADEFAULT;
+11236  length LIBNAME $8;
+11237  LIBNAME = "NEWDATA";
+11238  run;
+ 
+NOTE: There were 1 observations read from the data set EMWS1.IDS_EMTMETADEFAULT.
+NOTE: The data set EMWS1.IDS_EMTMETADEFAULT has 1 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.07 seconds
+ 
+ 
+ 
+11267  data EMWS1.Ids_EMCMETADEFAULT;
+11268  set EMWS1.Ids_EMCMETADEFAULT;
+11269  label DROP = "%sysfunc(sasmsg(sashelp.dmine, meta_drop_vlabel, NOQUOTE))";
+11270  if DROP='' then DROP='N';
+11271  if type='C' and level='INTERVAL' then level='NOMINAL';
+11272  if type='C' and role='FREQ' then role='INPUT';
+11273  run;
+ 
+NOTE: There were 15 observations read from the data set EMWS1.IDS_EMCMETADEFAULT.
+NOTE: The data set EMWS1.IDS_EMCMETADEFAULT has 15 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11274  proc sort data=EMWS1.Ids_EMCMETADEFAULT;
+11275  by NAME;
+11276  run;
+ 
+NOTE: There were 15 observations read from the data set EMWS1.IDS_EMCMETADEFAULT.
+NOTE: The data set EMWS1.IDS_EMCMETADEFAULT has 15 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11277  proc sort data=EMWS1.Ids_VariableSet;
+11278  by NAME;
+11279  run;
+ 
+NOTE: There were 15 observations read from the data set EMWS1.IDS_VARIABLESET.
+NOTE: The data set EMWS1.IDS_VARIABLESET has 15 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11280  data EMWS1.Ids_VariableSet;
+11281  merge EMWS1.Ids_EMCMETADEFAULT(in=_a) EMWS1.Ids_VariableSet(keep=NAME ROLE LEVEL ORDER DROP TYPE LOWERLIMIT UPPERLIMIT rename=(TYPE=OLDTYPE) in=_b);
+11282  by NAME;
+11283  if ^_a and _b then delete;
+11284  if type='C' and level='INTERVAL' then level='NOMINAL';
+11285  if type='C' and role='FREQ' then role='INPUT';
+11286  if (type ne oldtype) and (_a and _b) then do;
+11287  if type ='N' then level='INTERVAL';
+11288  end;
+11289  drop oldtype;
+11290  run;
+ 
+NOTE: There were 15 observations read from the data set EMWS1.IDS_EMCMETADEFAULT.
+NOTE: There were 15 observations read from the data set EMWS1.IDS_VARIABLESET.
+NOTE: The data set EMWS1.IDS_VARIABLESET has 15 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11291  data EMWS1.Ids_CMeta_DATA;
+11292  set WORK.M2_3HV13;
+11293  drop DROP;
+11294  where DROP='N';
+11295  run;
+ 
+NOTE: There were 15 observations read from the data set WORK.M2_3HV13.
+      WHERE DROP='N';
+NOTE: The data set EMWS1.IDS_CMETA_DATA has 15 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+*------------------------------------------------------------*
+Ids: Using "NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_" data source
+*------------------------------------------------------------*
+11296  *------------------------------------------------------------*;
+11297  * Ids: Creating DATA data;
+11298  *------------------------------------------------------------*;
+11299  data EMWS1.Ids_DATA (label="")
+11300  / view=EMWS1.Ids_DATA
+11301  ;
+11302  set NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_;
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+11303  run;
+ 
+NOTE: DATA STEP view saved on file EMWS1.IDS_DATA.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.11 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11304  data WORK.IDSOUTPUT;
+11305  length ATTRIBUTE $20 LABEL $50 VALUE $50;
+11306  label LABEL= "%sysfunc(sasmsg(sashelp.dmine, rpt_attribute_vlabel,   NOQUOTE))";
+11307  label VALUE= "%sysfunc(sasmsg(sashelp.dmine, rpt_value_vlabel,       NOQUOTE))";
+11308  ATTRIBUTE = 'OUTPUT';
+11309  LABEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_labeloutput_value , NOQUOTE))";
+11310  VALUE = "EMWS1.Ids_DATA";
+11311  output;
+11312  ATTRIBUTE = 'OUTPUTTYPE';
+11313  LABEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_labeloutputtype_value, NOQUOTE))";
+11314  VALUE = "View";
+11315  output;
+11316  ATTRIBUTE = 'DROPVARS';
+11317  LABEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_labeldropvars_value, NOQUOTE))";
+11318  VALUE = "0";
+11319  output;
+11320  ATTRIBUTE = 'ROLE';
+11321  LABEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_labelrole_value , NOQUOTE))";
+11322  VALUE = "Raw";
+11323  output;
+11324  run;
+ 
+NOTE: The data set WORK.IDSOUTPUT has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11325  proc print data=WORK.IDSOUTPUT noobs label;
+11326  var label value;
+11327  title9 ' ';
+11328  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_outTableAttr_title, NOQUOTE))";
+11329  run;
+ 
+NOTE: There were 4 observations read from the data set WORK.IDSOUTPUT.
+NOTE: The PROCEDURE PRINT printed page 2.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11330  title10;
+ 
+11331  proc contents noprint data=NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_ out=WORK.IDSCONTENT(drop=NAME TYPE LENGTH VARNUM LABEL FORMAT FORMATL FORMATD INFORMAT INFORML INFORMD JUST NPOS);
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+11332  run;
+ 
+NOTE: The data set WORK.IDSCONTENT has 15 observations and 28 variables.
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.13 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11333  data WORK.IDSCONTENT;
+11334  set WORK.IDSCONTENT end=eof;
+11335  if eof then do;
+11336  NVARS = _n_;
+11337  output;
+11338  end;
+11339  run;
+ 
+NOTE: There were 15 observations read from the data set WORK.IDSCONTENT.
+NOTE: The data set WORK.IDSCONTENT has 1 observations and 29 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11340  data WORK.IDSOUTPUT(keep=ATTRIBUTE LABEL VALUE);
+11341  length ATTRIBUTE $20 LABEL $50 VALUE $80;
+11342  label LABEL= "%sysfunc(sasmsg(sashelp.dmine, rpt_attribute_vlabel,   NOQUOTE))";
+11343  label VALUE= "%sysfunc(sasmsg(sashelp.dmine, rpt_value_vlabel,       NOQUOTE))";
+11344  ;
+11345  dsid = open("WORK.IDSCONTENT");
+11346  rc = fetch(dsid);
+11347  nvars = attrn(dsid, 'NVARS');
+11348  nobs = attrn(dsid, 'NOBS');
+11349  ATTRIBUTE = 'DATASOURCE';
+11350  LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_datasource_vlabel, NOQUOTE))";
+11351  VALUE="genderuncsystemsalarysearch";
+11352  output;
+11353  ATTRIBUTE = '';
+11354  LABEL = '';
+11355  VALUE='';
+11356  output;
+11357  do i=1 to nvars;
+11358  ATTRIBUTE = varname(dsid, i);
+11359  LABEL = varlabel(dsid, i);
+11360  if vartype(dsid,i)='C' then do;
+11361  VALUE = getvarc(dsid, i);
+11362  end;
+11363  else do;
+11364  NVALUE = getvarn(dsid, i);
+11365  if ATTRIBUTE in('CRDATE', 'MODATE') then VALUE = left(put(NVALUE, NLDATM20.));
+11366  else VALUE = left(put(NVALUE, BEST12.));
+11367  end;
+11368  if ATTRIBUTE = 'NVARS' then do;
+11369  LABEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_labelvariables_value, NOQUOTE))";
+11370  end;
+11371  output;
+11372  end;
+11373  dsid=close(dsid);
+11374  run;
+ 
+NOTE: The data set WORK.IDSOUTPUT has 31 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11375  proc print data=WORK.IDSOUTPUT noobs label;
+11376  var label value;
+11377  title9 ' ';
+11378  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_inTableAttr_title, NOQUOTE))";
+11379  run;
+ 
+NOTE: There were 31 observations read from the data set WORK.IDSOUTPUT.
+NOTE: The PROCEDURE PRINT printed page 3.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+WORK_TPTRAIN WORK.WORK_TPTRAIN
+WORK_TPTRAIN WORK.WORK_TPTRAIN WORK WORK_TPTRAIN
+WORK.WORK_TPTRAIN WORK.WORK_TPTRAIN
+WORK.WORK_TPTRAIN WORK.WORK_TPTRAIN WORK WORK_TPTRAIN
+>>>>>>>>>>>>>> TARGET(   NAME='totalsal'
+                         ROLE='TARGET'
+                         LEVEL='INTERVAL'
+                         ORDER=''
+                         CREATOR=''
+                         FORMATTYPE='QUANTITY'
+                         FAMILY=''
+                         LOWERLIMIT=.
+                         UPPERLIMIT=.
+                         REPORT='N'
+                         DISTRIBUTION=''
+                         COMMENT=''
+                         PRICE=.
+                         TYPE='N'
+                         LABEL=''
+                         FORMAT='BEST15.0'
+                         INFORMAT='BEST15.0'
+                         INDEX='N'
+                         INDEXTYPE='NONE'
+                         LENGTH=8
+                         DROP='N'
+                      )[11769]
+PERFORMANCE  DETAILS
+WORK.EM_DMDB WORK.EM_DMDB
+WORK.EM_DMDB WORK.EM_DMDB WORK EM_DMDB
+*------------------------------------------------------------*
+* Score Log
+Date:                April 20, 2016
+Time:                20:49:04
+*------------------------------------------------------------*
+11542  *------------------------------------------------------------*;
+11543  * Ids: Computing metadata for DATA data;
+11544  *------------------------------------------------------------*;
+ 
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+ 
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+11545  data EMWS1.Ids_EMINFO;
+11546  length TARGET KEY $32 DATA $43;
+11547  TARGET="";
+11548  KEY="IDSTABLE";
+11549  DATA="NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_";
+11550  output;
+11551  TARGET="totalsal";
+11552  KEY="DECDATA";
+11553  DATA="EMWS1.Ids_totalsal_DD";
+11554  output;
+11555  TARGET="totalsal";
+11556  KEY="DECMETA";
+11557  DATA="EMWS1.Ids_totalsal_DM";
+11558  output;
+11559  run;
+ 
+NOTE: The data set EMWS1.IDS_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+ 
+11560  data EMWS1.Ids_CMeta_DATA;
+11561  set EMWS1.Ids_VariableSet;
+11562  drop DROP;
+11563  where DROP='N';
+11564  run;
+ 
+NOTE: There were 15 observations read from the data set EMWS1.IDS_VARIABLESET.
+      WHERE DROP='N';
+NOTE: The data set EMWS1.IDS_CMETA_DATA has 15 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources
+      and might reduce performance.
+*------------------------------------------------------------*
+* Report Log
+Date:                April 20, 2016
+Time:                20:49:04
+*------------------------------------------------------------*

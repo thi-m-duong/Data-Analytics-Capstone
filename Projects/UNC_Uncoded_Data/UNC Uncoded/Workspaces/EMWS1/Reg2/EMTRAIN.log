@@ -1,0 +1,174 @@
+*------------------------------------------------------------*
+* Training Log
+Date:                April 21, 2016
+Time:                06:15:34
+*------------------------------------------------------------*
+10866  proc freq data=EMWS1.Reg2_VariableSet noprint;
+10867  table ROLE*LEVEL/out=WORK.Reg2META;
+10868  run;
+
+NOTE: There were 13 observations read from the data set EMWS1.REG2_VARIABLESET.
+NOTE: The data set WORK.REG2META has 4 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.11 seconds
+      cpu time            0.03 seconds
+      
+
+10869  proc print data=WORK.Reg2META label noobs;
+10870  var ROLE LEVEL COUNT;
+10871  label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+10872  title9 ' ';
+10873  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+10874  run;
+
+NOTE: There were 4 observations read from the data set WORK.REG2META.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+10875  title10;
+
+10876  %let EMNORLEN = %DMNORLEN;
+EMWS1.Part_TRAIN EMWS1.Part_TRAIN 
+EMWS1.Part_TRAIN EMWS1.Part_TRAIN EMWS1 Part_TRAIN 
+EMWS1.Part_TRAIN EMWS1.Part_TRAIN 
+EMWS1.Part_TRAIN EMWS1.Part_TRAIN EMWS1 Part_TRAIN 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+"No decisions defined for target "totalsal"." 
+10877  proc print data = EMWS1.Ids_totalsal_DM noobs label;
+10878  var _type_ variable label;
+10879  where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+10880  label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))" VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+10881  title9 ' ';
+10882  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+10883  run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_TOTALSAL_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 2.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10884  title10;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_TOTALSAL_DD.
+NOTE: The data set WORK.TOTALSAL has 3 observations and 1 variables.
+NOTE: There were 3 observations read from the data set EMWS1.IDS_TOTALSAL_DD.
+NOTE: The data set WORK.TOTALSAL has 3 observations and 1 variables.
+10894  *------------------------------------------------------------*;
+10895  * Reg2: Create decision matrix;
+10896  *------------------------------------------------------------*;
+10897  data WORK.totalsal(label="totalsal");
+10898    length   totalsal                             8
+10899             ;
+10900  
+10901   totalsal=3000;
+10902  output;
+10903   totalsal=819069;
+10904  output;
+10905   totalsal=411034.5;
+10906  output;
+10907  ;
+10908  run;
+
+NOTE: The data set WORK.TOTALSAL has 3 observations and 1 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10909  proc datasets lib=work nolist;
+10910  modify totalsal(type=PROFIT label=totalsal);
+10911  run;
+
+NOTE: MODIFY was successful for WORK.TOTALSAL.DATA.
+10912  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10913  data EM_DMREG / view=EM_DMREG;
+10914  set EMWS1.Part_TRAIN(keep=
+10915  Gender age campus dept employed exempt2 fte nonstsal position statesal status
+10916  stservyr totalsal);
+10917  run;
+
+NOTE: DATA STEP view saved on file WORK.EM_DMREG.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10918  *------------------------------------------------------------* ;
+10919  * Reg2: DMDBClass Macro ;
+10920  *------------------------------------------------------------* ;
+10921  %macro DMDBClass;
+10922      Gender(ASC) campus(ASC) dept(ASC) employed(ASC) exempt2(ASC) fte(ASC)
+10923     position(ASC) status(ASC)
+10924  %mend DMDBClass;
+10925  *------------------------------------------------------------* ;
+10926  * Reg2: DMDBVar Macro ;
+10927  *------------------------------------------------------------* ;
+10928  %macro DMDBVar;
+10929      age nonstsal statesal stservyr totalsal
+10930  %mend DMDBVar;
+10931  *------------------------------------------------------------*;
+10932  * Reg2: Create DMDB;
+10933  *------------------------------------------------------------*;
+10934  proc dmdb batch data=WORK.EM_DMREG
+10935  dmdbcat=WORK.Reg2_DMDB
+10936  maxlevel = 513
+10937  ;
+10938  class %DMDBClass;
+10939  var %DMDBVar;
+10940  target
+10941  totalsal
+10942  ;
+10943  run;
+
+NOTE: Records processed = 4915   Memory used = 511K.
+NOTE: View WORK.EM_DMREG.VIEW used (Total process time):
+      real time           0.16 seconds
+      cpu time            0.03 seconds
+      
+NOTE: There were 4915 observations read from the data set EMWS1.PART_TRAIN.
+NOTE: There were 4915 observations read from the data set WORK.EM_DMREG.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.21 seconds
+      cpu time            0.03 seconds
+      
+
+10944  quit;
+10945  *--- end code ---*;
+
+  
+  
+ERROR: Number of class levels for  position exceeds limit. 
+NOTE: The class levels limit is set by the macro variable EM_TRAIN_MAXLEVELS: 512 
+  
+NOTE: Apply the following actions where appropriate: 
+NOTE: * Change the measurement level of numeric class variables to interval 
+NOTE: * Reject class variables with excessive numbers of categories 
+NOTE: * Group class variables into fewer categories. 
+  
+  
+*------------------------------------------------------------* 
+* 
+* ERROR: DMDBFACTORY.EXCEEDMAXLEVEL_err 
+* Please report unresolved problems to Technical Support. 
+* 
+*------------------------------------------------------------* 

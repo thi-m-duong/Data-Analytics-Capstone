@@ -1,0 +1,41 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                April 21, 2016
+Time:                06:15:11
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      BINARY            2
+INPUT      INTERVAL          4
+INPUT      NOMINAL           6
+TARGET     INTERVAL          1
+ 
+ 
+ 
+ 
+Predicted and decision variables
+ 
+Type          Variable            Label
+ 
+TARGET       totalsal
+PREDICTED    P_totalsal    Predicted: totalsal
+RESIDUAL     R_totalsal    Residual: totalsal
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*

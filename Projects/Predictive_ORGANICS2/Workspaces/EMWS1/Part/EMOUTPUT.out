@@ -1,0 +1,85 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                March 18, 2016
+Time:                18:47:22
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+            Measurement    Frequency
+Role           Level         Count
+ 
+ID           NOMINAL           1
+INPUT        INTERVAL          4
+INPUT        NOMINAL           5
+REJECTED     INTERVAL          1
+REJECTED     NOMINAL           1
+TARGET       BINARY            1
+ 
+ 
+ 
+ 
+Partition Summary
+ 
+                                     Number of
+Type             Data Set          Observations
+ 
+DATA        EMWS1.Ids2_DATA            22223
+TRAIN       EMWS1.Part_TRAIN            8889
+VALIDATE    EMWS1.Part_VALIDATE         6667
+TEST        EMWS1.Part_TEST             6667
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Summary Statistics for Class Targets
+ 
+Data=DATA
+ 
+             Numeric    Formatted    Frequency
+Variable      Value       Value        Count      Percent               Label
+ 
+TargetBuy       0           0          16718      75.2284    Organics Purchase Indicator
+TargetBuy       1           1           5505      24.7716    Organics Purchase Indicator
+ 
+ 
+Data=TEST
+ 
+             Numeric    Formatted    Frequency
+Variable      Value       Value        Count      Percent               Label
+ 
+TargetBuy       0           0           5016      75.2362    Organics Purchase Indicator
+TargetBuy       1           1           1651      24.7638    Organics Purchase Indicator
+ 
+ 
+Data=TRAIN
+ 
+             Numeric    Formatted    Frequency
+Variable      Value       Value        Count      Percent               Label
+ 
+TargetBuy       0           0           6687      75.2278    Organics Purchase Indicator
+TargetBuy       1           1           2202      24.7722    Organics Purchase Indicator
+ 
+ 
+Data=VALIDATE
+ 
+             Numeric    Formatted    Frequency
+Variable      Value       Value        Count      Percent               Label
+ 
+TargetBuy       0           0           5015      75.2212    Organics Purchase Indicator
+TargetBuy       1           1           1652      24.7788    Organics Purchase Indicator

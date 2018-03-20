@@ -1,0 +1,110 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+          Measurement    Frequency
+ Role        Level         Count
+
+TARGET     INTERVAL          1    
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+
+
+
+
+
+
+Fit Statistics
+Model Selection based on Valid: Average Squared Error (_VASE_)
+
+                                                   Valid:             Train:
+                                                   Average           Average
+Selected    Model                                  Squared           Squared
+ Model      Node     Model Description              Error              Error
+
+   Y        Reg      Logistic Regression          3324161.37            0.00
+            Reg2     Linear Regression            3324161.37            0.00
+            Tree     Decision Tree (default)    118911001.45    116194613.03
+            Tree2    Decision Tree (Int')       118911001.45    116194613.03
+            Tree5    B2 D10 L50                 230549436.33    246637701.86
+            Tree4    B4 L50                     273298412.98    296412144.19
+            Tree3    B10 D40 L40                311642890.46    307399349.05
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+
+
+
+
+
+
+Fit Statistics Table
+Target: totalsal
+
+Data Role=Train
+
+Statistics                                                   Reg           Reg2               Tree              Tree2           Tree5           Tree4           Tree3
+
+Train: Akaike's Information Criterion                  -57721.52      -57721.52                .                  .               .               .               .  
+Train: Average Squared Error                                0.00           0.00       116194613.03       116194613.03    246637701.86    296412144.19    307399349.05
+Train: Average Error Function                               0.00           0.00                .                  .               .               .               .  
+Selection Criterion: Valid: Average Squared Error     3324161.37     3324161.37       118911001.45       118911001.45    230549436.33    273298412.98    311642890.46
+Train: Degrees of Freedom for Error                      6260.00        6260.00                .                  .               .               .               .  
+Train: Model Degrees of Freedom                           356.00         356.00                .                  .               .               .               .  
+Train: Total Degrees of Freedom                          6616.00        6616.00            6616.00            6616.00         6616.00         6616.00         6616.00
+Train: Divisor for ASE                                   6616.00        6616.00            6616.00            6616.00         6616.00         6616.00         6616.00
+Train: Error Function                                       0.97           0.97                .                  .               .               .               .  
+Train: Final Prediction Error                               0.00           0.00                .                  .               .               .               .  
+Train: Maximum Absolute Error                               0.97           0.97          369862.23          369862.23       388609.60       429390.20       388609.60
+Train: Mean Square Error                                    0.00           0.00                .                  .               .               .               .  
+Train: Sum of Frequencies                                6616.00        6616.00            6616.00            6616.00         6616.00         6616.00         6616.00
+Train: Number of Estimate Weights                         356.00         356.00                .                  .               .               .               .  
+Train: Root Average Sum of Squares                          0.01           0.01           10779.36           10779.36        15704.70        17216.62        17532.81
+Train: Root Final Prediction Error                          0.01           0.01                .                  .               .               .               .  
+Train: Root Mean Squared Error                              0.01           0.01                .                  .               .               .               .  
+Train: Schwarz's Bayesian Criterion                    -55301.70      -55301.70                .                  .               .               .               .  
+Train: Sum of Squared Errors                                0.97           0.97    768743559791.43    768743559791.43     1.631755E12    1.9610627E12    2.0337541E12
+Train: Sum of Case Weights Times Freq                    6616.00        6616.00                .                  .               .               .               .  
+
+
+Data Role=Valid
+
+Statistics                                         Reg             Reg2               Tree              Tree2              Tree5              Tree4              Tree3
+
+Valid: Average Squared Error                3324161.37       3324161.37       118911001.45       118911001.45       230549436.33       273298412.98       311642890.46
+Valid: Average Error Function               3324161.37       3324161.37                .                  .                  .                  .                  .  
+Valid: Divisor for VASE                        2835.00          2835.00            2835.00            2835.00            2835.00            2835.00            2835.00
+Valid: Error Function                    9423997473.70    9423997473.70                .                  .                  .                  .                  .  
+Valid: Maximum Absolute Error                 68997.32         68997.32          120245.82          120245.82          207714.26          232036.20          224843.61
+Valid: Mean Square Error                    3324161.37       3324161.37                .                  .                  .                  .                  .  
+Valid: Sum of Frequencies                      2835.00          2835.00            2835.00            2835.00            2835.00            2835.00            2835.00
+Valid: Root Average Squared Error              1823.23          1823.23           10904.63           10904.63           15183.85           16531.74           17653.41
+Valid: Root Mean Square Error                  1823.23          1823.23                .                  .                  .                  .                  .  
+Valid: Sum of Square Errors              9423997473.70    9423997473.70    337112689111.05    337112689111.05    653607652002.34    774801000810.71    883507594450.19
+Valid: Sum of Case Weights Times Freq          2835.00          2835.00                .                  .                  .                  .                  .  
+
+
+Data Role=Test
+
+Statistics                                        Reg             Reg2               Tree              Tree2           Tree5           Tree4           Tree3
+
+Test: Lower 95% Conf. Limit for TASE       1079988.44       1079988.44                .                  .               .               .               .  
+Test: Upper 95% Conf. Limit for TASE       5933687.37       5933687.37                .                  .               .               .               .  
+Test: Average Squared Error                3017804.99       3017804.99       165620650.06       165620650.06    358044376.04    409849733.07    410972198.82
+Test: Average Error Function               3017804.99       3017804.99                .                  .               .               .               .  
+Test: Divisor for TASE                        2836.00          2836.00            2836.00            2836.00         2836.00         2836.00         2836.00
+Test: Error Function                    8558494952.66    8558494952.66                .                  .               .               .               .  
+Test: Maximum Absolute Error                 46457.32         46457.32          228103.23          228103.23       317867.26       295421.23       318309.84
+Test: Mean Square Error                    3017804.99       3017804.99                .                  .               .               .               .  
+Test: Sum of Frequencies                      2836.00          2836.00            2836.00            2836.00         2836.00         2836.00         2836.00
+Test: Root Average Squared Error              1737.18          1737.18           12869.37           12869.37        18922.06        20244.75        20272.45
+Test: Root Mean Square Error                  1737.18          1737.18                .                  .               .               .               .  
+Test: Sum of Square Errors              8558494952.66    8558494952.66    469700163581.62    469700163581.62    1.0154139E12    1.1623338E12    1.1655172E12
+Test: Sum of Case Weights Times Freq          2836.00          2836.00            2836.00            2836.00         2836.00         2836.00         2836.00

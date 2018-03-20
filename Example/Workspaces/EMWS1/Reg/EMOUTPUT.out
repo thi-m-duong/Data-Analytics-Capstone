@@ -1,0 +1,481 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                March 01, 2016
+Time:                12:43:56
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          10
+INPUT      NOMINAL           10
+TARGET     NOMINAL            1
+ 
+ 
+ 
+ 
+Model Events
+ 
+                                   Number
+                    Measurement      of
+Target     Event       Level       Levels      Order        Label
+ 
+RESPOND     YES       NOMINAL         2      Descending    RESPOND
+ 
+ 
+ 
+ 
+Predicted and decision variables
+ 
+Type         Variable        Label
+ 
+TARGET       RESPOND         RESPOND
+PREDICTED    P_RESPONDyes    Predicted: RESPOND=yes
+RESIDUAL     R_RESPONDyes    Residual: RESPOND=yes
+PREDICTED    P_RESPONDno     Predicted: RESPOND=no
+RESIDUAL     R_RESPONDno     Residual: RESPOND=no
+FROM         F_RESPOND       From: RESPOND
+INTO         I_RESPOND       Into: RESPOND
+ 
+ 
+ 
+ 
+ 
+The DMREG Procedure
+ 
+                Model Information
+ 
+Training Data Set              WORK.EM_DMREG.VIEW
+DMDB Catalog                   WORK.REG_DMDB
+Target Variable                RESPOND (RESPOND)
+Target Measurement Level       Nominal
+Number of Target Categories    2
+Error                          MBernoulli
+Link Function                  Logit
+Number of Model Parameters     54
+Number of Observations         16470
+ 
+ 
+          Target Profile
+ 
+ Ordered                     Total
+   Value     RESPOND     Frequency
+ 
+       1     yes              1856
+       2     no              14614
+ 
+ 
+ 
+ 
+ 
+The DMREG Procedure
+ 
+Dual Quasi-Newton Optimization
+ 
+Dual Broyden - Fletcher - Goldfarb - Shanno Update (DBFGS)
+ 
+Parameter Estimates              52
+ 
+                                             Optimization Start
+ 
+Active Constraints                                  0  Objective Function                       5799.1231666
+Max Abs Gradient Element                 1277.5939153
+ 
+ 
+                                                                 Objective     Max Abs                Slope of
+                     Function         Active        Objective     Function    Gradient       Step       Search
+Iter     Restarts       Calls    Constraints         Function       Change     Element       Size    Direction
+ 
+   1            0           5              0             3847       1951.7       959.3      0.799      -5927.3
+   2            0           7              0             3483        364.4       282.7      1.000       -578.3
+   3            0           9              0             3418      65.2326       128.7      1.000       -135.5
+   4            0          11              0             3389      29.1362     36.4126      1.000      -54.039
+   5            0          13              0             3383       5.9211     18.4875      1.000      -11.203
+   6            0          16              0             3382       0.6962      2.4437      0.845       -1.752
+   7            0          19              0             3382       0.0719      1.6551      1.000       -0.148
+   8            0          22              0             3382       0.0301      1.4385      1.429      -0.0421
+   9            0          25              0             3382      0.00604      0.5723      1.083      -0.0111
+  10            0          28              0             3382      0.00152      0.2377      1.150      -0.0026
+ 
+                                            Optimization Results
+ 
+Iterations                                         10  Function Calls                                     30
+Gradient Calls                                     13  Active Constraints                                  0
+Objective Function                       3381.9275306  Max Abs Gradient Element                 0.2377248874
+Slope of Search Direction                -0.002644989
+ 
+Convergence criterion (GCONV=1E-6) satisfied.
+ 
+NOTE: At least one element of the gradient is greater than 1e-3.
+ 
+ 
+ 
+     Likelihood Ratio Test for Global Null Hypothesis: BETA=0
+ 
+     -2 Log Likelihood          Likelihood
+  Intercept     Intercept &          Ratio
+       Only      Covariates     Chi-Square       DF     Pr > ChiSq
+ 
+  11598.246        6763.855      4834.3913       51         <.0001
+ 
+ 
+         Type 3 Analysis of Effects
+ 
+                           Wald
+Effect         DF    Chi-Square    Pr > ChiSq
+ 
+AGE             1        0.0496        0.8238
+CAMPAIGN        1        1.4356        0.2309
+CCI             1        1.2766        0.2585
+CONTACT         1       33.7491        <.0001
+CPI             1      119.9281        <.0001
+DEFAULT         2        8.4191        0.0149
+DOW             4       17.5677        0.0015
+DURATION        1     1582.4573        <.0001
+EDUCATION       7        7.7993        0.3506
+EMPVAR          1       88.3406        <.0001
+EURIBOR3M       1       16.2331        <.0001
+HOUSING         2        2.8466        0.2409
+JOB            11       27.1538        0.0044
+LOAN            1        1.2400        0.2655
+MARITAL         3        0.8227        0.8440
+MONTH           9      271.1876        <.0001
+NREMP           0        0.0000         .
+PDAYS           1        9.6438        0.0019
+POUTCOME        2       14.0092        0.0009
+PREVIOUS        1        4.2305        0.0397
+ 
+ 
+                                           Analysis of Maximum Likelihood Estimates
+ 
+                                                              Standard          Wald                  Standardized
+Parameter                        RESPOND    DF    Estimate       Error    Chi-Square    Pr > ChiSq        Estimate    Exp(Est)
+ 
+Intercept                        yes         1      -179.4     17.0709        110.50        <.0001                       0.000
+AGE                              yes         1    -0.00086     0.00387          0.05        0.8238        -0.00496       0.999
+CAMPAIGN                         yes         1     -0.0210      0.0175          1.44        0.2309         -0.0319       0.979
+CCI                              yes         1     0.00966     0.00855          1.28        0.2585          0.0249       1.010
+CONTACT   cellular               yes         1      0.3441      0.0592         33.75        <.0001                       1.411
+CPI                              yes         1      1.8659      0.1704        119.93        <.0001          0.5967       6.462
+DEFAULT   no                     yes         1      0.4814      4.6389          0.01        0.9174                       1.618
+DEFAULT   unknown                yes         1      0.1734      4.6392          0.00        0.9702                       1.189
+DOW       fri                    yes         1     -0.1052      0.0685          2.36        0.1247                       0.900
+DOW       mon                    yes         1     -0.2146      0.0651         10.86        0.0010                       0.807
+DOW       thu                    yes         1      0.0600      0.0617          0.95        0.3305                       1.062
+DOW       tue                    yes         1      0.1277      0.0640          3.98        0.0461                       1.136
+DURATION                         yes         1     0.00481    0.000121       1582.46        <.0001          0.6708       1.005
+EDUCATION basic.4y               yes         1     -0.0141      0.1664          0.01        0.9323                       0.986
+EDUCATION basic.6y               yes         1     -0.0893      0.1886          0.22        0.6361                       0.915
+EDUCATION basic.9y               yes         1     -0.1920      0.1594          1.45        0.2283                       0.825
+EDUCATION high.school            yes         1    -0.00327      0.1483          0.00        0.9824                       0.997
+EDUCATION illiterate             yes         1      0.7527      0.8949          0.71        0.4003                       2.123
+EDUCATION professional.course    yes         1     -0.2537      0.1629          2.43        0.1193                       0.776
+EDUCATION university.degree      yes         1    -0.00563      0.1484          0.00        0.9697                       0.994
+EMPVAR                           yes         1     -1.6821      0.1790         88.34        <.0001         -1.4691       0.186
+EURIBOR3M                        yes         1      0.5456      0.1354         16.23        <.0001          0.5264       1.726
+HOUSING   no                     yes         1      0.1434      0.0872          2.70        0.1001                       1.154
+HOUSING   unknown                yes         1     -0.2214      0.1603          1.91        0.1672                       0.801
+JOB       admin.                 yes         1     -0.1182      0.0824          2.06        0.1515                       0.889
+JOB       blue-collar            yes         1     -0.1536      0.1014          2.29        0.1300                       0.858
+JOB       entrepreneur           yes         1     -0.3042      0.1774          2.94        0.0864                       0.738
+JOB       housemaid              yes         1     -0.2486      0.2120          1.37        0.2411                       0.780
+JOB       management             yes         1     -0.2410      0.1289          3.50        0.0615                       0.786
+JOB       retired                yes         1      0.2185      0.1472          2.20        0.1379                       1.244
+JOB       self-employed          yes         1      0.1449      0.1615          0.80        0.3696                       1.156
+JOB       services               yes         1     -0.1562      0.1218          1.64        0.1997                       0.855
+JOB       student                yes         1      0.1885      0.1570          1.44        0.2298                       1.207
+JOB       technician             yes         1      0.1811      0.0987          3.37        0.0664                       1.199
+JOB       unemployed             yes         1     -0.2157      0.1879          1.32        0.2508                       0.806
+LOAN      no                     yes         1      0.0520      0.0467          1.24        0.2655                       1.053
+LOAN      unknown                yes         0           0           .           .           .                   .        .
+MARITAL   divorced               yes         1      0.1568      0.1961          0.64        0.4240                       1.170
+MARITAL   married                yes         1      0.0836      0.1849          0.20        0.6512                       1.087
+MARITAL   single                 yes         1      0.0753      0.1885          0.16        0.6895                       1.078
+MONTH     apr                    yes         1     -0.0492      0.1063          0.21        0.6434                       0.952
+MONTH     aug                    yes         1      0.4832      0.1233         15.35        <.0001                       1.621
+MONTH     dec                    yes         1      0.1765      0.2482          0.51        0.4771                       1.193
+MONTH     jul                    yes         1     -0.1140      0.1058          1.16        0.2816                       0.892
+MONTH     jun                    yes         1     -0.6469      0.1281         25.50        <.0001                       0.524
+MONTH     mar                    yes         1      1.8664      0.1541        146.63        <.0001                       6.465
+MONTH     may                    yes         1     -0.7129      0.0917         60.40        <.0001                       0.490
+MONTH     nov                    yes         1     -0.7153      0.1223         34.23        <.0001                       0.489
+MONTH     oct                    yes         1     -0.2382      0.1478          2.60        0.1071                       0.788
+NREMP                            yes         0           0           .           .           .                   .        .
+PDAYS                            yes         1    -0.00112    0.000361          9.64        0.0019         -0.1135       0.999
+POUTCOME  failure                yes         1     -0.4824      0.1348         12.81        0.0003                       0.617
+POUTCOME  nonexistent            yes         1     -0.0669      0.1390          0.23        0.6306                       0.935
+PREVIOUS                         yes         1     -0.1930      0.0938          4.23        0.0397         -0.0535       0.824
+ 
+ 
+                           Odds Ratio Estimates
+ 
+                                                                      Point
+Effect                                                  RESPOND    Estimate
+ 
+AGE                                                     yes           0.999
+CAMPAIGN                                                yes           0.979
+CCI                                                     yes           1.010
+CONTACT   cellular vs telephone                         yes           1.990
+CPI                                                     yes           6.462
+DEFAULT   no vs yes                                     yes           3.115
+DEFAULT   unknown vs yes                                yes           2.289
+DOW       fri vs wed                                    yes           0.789
+DOW       mon vs wed                                    yes           0.707
+DOW       thu vs wed                                    yes           0.930
+DOW       tue vs wed                                    yes           0.996
+DURATION                                                yes           1.005
+EDUCATION basic.4y vs unknown                           yes           1.198
+EDUCATION basic.6y vs unknown                           yes           1.111
+EDUCATION basic.9y vs unknown                           yes           1.003
+EDUCATION high.school vs unknown                        yes           1.211
+EDUCATION illiterate vs unknown                         yes           2.579
+EDUCATION professional.course vs unknown                yes           0.943
+EDUCATION university.degree vs unknown                  yes           1.208
+EMPVAR                                                  yes           0.186
+EURIBOR3M                                               yes           1.726
+HOUSING   no vs yes                                     yes           1.068
+HOUSING   unknown vs yes                                yes           0.741
+JOB       admin. vs unknown                             yes           0.439
+JOB       blue-collar vs unknown                        yes           0.424
+JOB       entrepreneur vs unknown                       yes           0.365
+JOB       housemaid vs unknown                          yes           0.386
+JOB       management vs unknown                         yes           0.389
+JOB       retired vs unknown                            yes           0.615
+JOB       self-employed vs unknown                      yes           0.571
+JOB       services vs unknown                           yes           0.423
+JOB       student vs unknown                            yes           0.597
+JOB       technician vs unknown                         yes           0.593
+JOB       unemployed vs unknown                         yes           0.398
+LOAN      no vs yes                                     yes           1.110
+LOAN      unknown vs yes                                yes            .
+MARITAL   divorced vs unknown                           yes           1.604
+MARITAL   married vs unknown                            yes           1.491
+MARITAL   single vs unknown                             yes           1.478
+MONTH     apr vs sep                                    yes           1.000
+MONTH     aug vs sep                                    yes           1.704
+MONTH     dec vs sep                                    yes           1.254
+MONTH     jul vs sep                                    yes           0.938
+MONTH     jun vs sep                                    yes           0.550
+MONTH     mar vs sep                                    yes           6.794
+MONTH     may vs sep                                    yes           0.515
+MONTH     nov vs sep                                    yes           0.514
+MONTH     oct vs sep                                    yes           0.828
+NREMP                                                   yes            .
+PDAYS                                                   yes           0.999
+POUTCOME  failure vs success                            yes           0.356
+POUTCOME  nonexistent vs success                        yes           0.540
+PREVIOUS                                                yes           0.824
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Fit Statistics
+ 
+Target=RESPOND Target Label=RESPOND
+ 
+   Fit
+Statistics    Statistics Label                     Train    Validation        Test
+ 
+ _AIC_        Akaike's Information Criterion     6868.81          .            .
+ _ASE_        Average Squared Error                 0.06         0.06         0.06
+ _AVERR_      Average Error Function                0.21         0.21         0.21
+ _DFE_        Degrees of Freedom for Error      16422.00          .            .
+ _DFM_        Model Degrees of Freedom             52.00          .            .
+ _DFT_        Total Degrees of Freedom          16474.00          .            .
+ _DIV_        Divisor for ASE                   32948.00     24712.00     24716.00
+ _ERR_        Error Function                     6764.81      5268.55      5180.39
+ _FPE_        Final Prediction Error                0.06          .            .
+ _MAX_        Maximum Absolute Error                1.00         1.00         1.00
+ _MSE_        Mean Square Error                     0.06         0.06         0.06
+ _NOBS_       Sum of Frequencies                16474.00     12356.00     12358.00
+ _NW_         Number of Estimate Weights           52.00          .            .
+ _RASE_       Root Average Sum of Squares           0.25         0.25         0.25
+ _RFPE_       Root Final Prediction Error           0.25          .            .
+ _RMSE_       Root Mean Squared Error               0.25         0.25         0.25
+ _SBC_        Schwarz's Bayesian Criterion       7269.71          .            .
+ _SSE_        Sum of Squared Errors              2041.77      1590.26      1556.50
+ _SUMW_       Sum of Case Weights Times Freq    32948.00     24712.00     24716.00
+ _MISC_       Misclassification Rate                0.09         0.09         0.09
+ 
+ 
+ 
+ 
+Classification Table
+ 
+Data Role=TRAIN Target Variable=RESPOND Target Label=RESPOND
+ 
+                       Target        Outcome     Frequency       Total
+Target    Outcome    Percentage    Percentage      Count      Percentage
+ 
+ NO         NO         93.0919       97.2568       14217        86.2996
+ YES        NO          6.9081       56.8427        1055         6.4040
+ NO         YES        33.3611        2.7432         401         2.4341
+ YES        YES        66.6389       43.1573         801         4.8622
+ 
+ 
+Data Role=VALIDATE Target Variable=RESPOND Target Label=RESPOND
+ 
+                       Target        Outcome     Frequency       Total
+Target    Outcome    Percentage    Percentage      Count      Percentage
+ 
+ NO         NO         92.7120       97.3459       10673        86.3791
+ YES        NO          7.2880       60.2730         839         6.7902
+ NO         YES        34.4787        2.6541         291         2.3551
+ YES        YES        65.5213       39.7270         553         4.4756
+ 
+ 
+ 
+ 
+Event Classification Table
+ 
+Data Role=TRAIN Target=RESPOND Target Label=RESPOND
+ 
+  False       True        False       True
+Negative    Negative    Positive    Positive
+ 
+  1055        14217        401         801
+ 
+ 
+Data Role=VALIDATE Target=RESPOND Target Label=RESPOND
+ 
+  False       True        False       True
+Negative    Negative    Positive    Positive
+ 
+   839        10673        291         553
+ 
+ 
+ 
+ 
+Assessment Score Rankings
+ 
+Data Role=TRAIN Target Variable=RESPOND Target Label=RESPOND
+ 
+                                                                                    Mean
+                            Cumulative       %      Cumulative     Number of     Posterior
+Depth      Gain     Lift       Lift      Response   % Response   Observations   Probability
+ 
+   5    526.927   6.26927     6.26927     70.6311     70.6311         824         0.81288
+  10    452.600   4.78274     5.52600     53.8835     62.2573         824         0.49186
+  15    389.405   3.63014     4.89405     40.8981     55.1375         824         0.29395
+  20    317.809   2.02759     4.17809     22.8433     47.0713         823         0.18695
+  25    265.688   1.57270     3.65688     17.7184     41.1993         824         0.12052
+  30    217.477   0.76481     3.17477      8.6165     35.7678         824         0.07831
+  35    178.628   0.45297     2.78628      5.1033     31.3909         823         0.05434
+  40    146.483   0.21544     2.46483      2.4272     27.7693         824         0.04003
+  45    120.286   0.10772     2.20286      1.2136     24.8179         824         0.03125
+  50     98.707   0.04314     1.98707      0.4860     22.3868         823         0.02491
+  55     80.833   0.02154     1.80833      0.2427     20.3730         824         0.02072
+  60     66.208   0.05386     1.66208      0.6068     18.7253         824         0.01782
+  65     53.502   0.01077     1.53502      0.1214     17.2939         824         0.01555
+  70     42.547   0.00000     1.42547      0.0000     16.0597         823         0.01358
+  75     33.041   0.00000     1.33041      0.0000     14.9887         824         0.01195
+  80     24.790   0.01077     1.24790      0.1214     14.0592         824         0.01056
+  85     17.519   0.01079     1.17519      0.1215     13.2400         823         0.00921
+  90     10.988   0.00000     1.10988      0.0000     12.5042         824         0.00793
+  95      5.258   0.02154     1.05258      0.2427     11.8587         824         0.00654
+ 100      0.000   0.00000     1.00000      0.0000     11.2662         823         0.00460
+ 
+ 
+Data Role=VALIDATE Target Variable=RESPOND Target Label=RESPOND
+ 
+                                                                                    Mean
+                            Cumulative       %      Cumulative     Number of     Posterior
+Depth      Gain     Lift       Lift      Response   % Response   Observations   Probability
+ 
+   5    503.253   6.03253     6.03253     67.9612     67.9612         618         0.80393
+  10    440.773   4.78293     5.40773     53.8835     60.9223         618         0.47442
+  15    376.857   3.49025     4.76857     39.3204     53.7217         618         0.27993
+  20    310.787   2.12575     4.10787     23.9482     46.2783         618         0.16959
+  25    260.345   1.58251     3.60345     17.8282     40.5957         617         0.10937
+  30    215.596   0.91924     3.15596     10.3560     35.5544         618         0.07211
+  35    177.273   0.47398     2.77273      5.3398     31.2370         618         0.05031
+  40    146.199   0.28726     2.46199      3.2362     27.7362         618         0.03759
+  45    120.115   0.11491     2.20115      1.2945     24.7977         618         0.02932
+  50     98.276   0.01439     1.98276      0.1621     22.3373         617         0.02386
+  55     80.507   0.02873     1.80507      0.3236     20.3355         618         0.02017
+  60     65.580   0.01436     1.65580      0.1618     18.6539         618         0.01740
+  65     52.951   0.01436     1.52951      0.1618     17.2311         618         0.01519
+  70     42.228   0.02873     1.42228      0.3236     16.0231         618         0.01335
+  75     32.854   0.01439     1.32854      0.1621     14.9671         617         0.01179
+  80     24.638   0.01436     1.24638      0.1618     14.0415         618         0.01042
+  85     17.305   0.00000     1.17305      0.0000     13.2153         618         0.00917
+  90     10.945   0.02873     1.10945      0.3236     12.4989         618         0.00791
+  95      5.180   0.01436     1.05180      0.1618     11.8494         618         0.00646
+ 100      0.000   0.01439     1.00000      0.1621     11.2658         617         0.00451
+ 
+ 
+ 
+ 
+Assessment Score Distribution
+ 
+Data Role=TRAIN Target Variable=RESPOND Target Label=RESPOND
+ 
+ Posterior     Number                     Mean
+Probability      of      Number of     Posterior
+   Range       Events    Nonevents    Probability    Percentage
+ 
+ 0.95-1.00        88          35        0.97951         0.7466
+ 0.90-0.95        71          18        0.92437         0.5402
+ 0.85-0.90        71          30        0.87429         0.6131
+ 0.80-0.85        81          35        0.82710         0.7041
+ 0.75-0.80        86          28        0.77450         0.6920
+ 0.70-0.75        85          39        0.72420         0.7527
+ 0.65-0.70        78          42        0.67450         0.7284
+ 0.60-0.65        79          49        0.62409         0.7770
+ 0.55-0.60        82          65        0.57395         0.8923
+ 0.50-0.55        80          60        0.52516         0.8498
+ 0.45-0.50        78          74        0.47406         0.9227
+ 0.40-0.45        85          71        0.42398         0.9469
+ 0.35-0.40        94         125        0.37493         1.3294
+ 0.30-0.35       131         148        0.32567         1.6936
+ 0.25-0.30       119         206        0.27296         1.9728
+ 0.20-0.25       115         292        0.22501         2.4706
+ 0.15-0.20       122         411        0.17378         3.2354
+ 0.10-0.15       144         641        0.12307         4.7651
+ 0.05-0.10       107        1373        0.07046         8.9839
+ 0.00-0.05        60       10876        0.01717        66.3834
+ 
+ 
+Data Role=VALIDATE Target Variable=RESPOND Target Label=RESPOND
+ 
+ Posterior     Number                     Mean
+Probability      of      Number of     Posterior
+   Range       Events    Nonevents    Probability    Percentage
+ 
+ 0.95-1.00        72          28        0.97925         0.8093
+ 0.90-0.95        45          17        0.92433         0.5018
+ 0.85-0.90        46          13        0.87547         0.4775
+ 0.80-0.85        54          32        0.82333         0.6960
+ 0.75-0.80        47          28        0.77479         0.6070
+ 0.70-0.75        59          23        0.72808         0.6636
+ 0.65-0.70        66          26        0.67558         0.7446
+ 0.60-0.65        51          43        0.62311         0.7608
+ 0.55-0.60        51          42        0.57530         0.7527
+ 0.50-0.55        62          39        0.52134         0.8174
+ 0.45-0.50        76          52        0.47177         1.0359
+ 0.40-0.45        66          81        0.42666         1.1897
+ 0.35-0.40        79          73        0.37478         1.2302
+ 0.30-0.35        83         102        0.32319         1.4972
+ 0.25-0.30        77         132        0.27483         1.6915
+ 0.20-0.25        81         188        0.22233         2.1771
+ 0.15-0.20        94         292        0.17294         3.1240
+ 0.10-0.15       118         447        0.12381         4.5727
+ 0.05-0.10       108        1014        0.07132         9.0806
+ 0.00-0.05        57        8292        0.01709        67.5704

@@ -1,0 +1,74 @@
+*------------------------------------------------------------*
+ Node = 57
+*------------------------------------------------------------*
+if Age >= 44.5 or MISSING
+then 
+ Tree Node Identifier   = 57
+ Number of Observations = 6739
+ Predicted: TargetBuy=1 = 0.16
+ Predicted: TargetBuy=0 = 0.84
+ 
+*------------------------------------------------------------*
+ Node = 94
+*------------------------------------------------------------*
+if Gender IS ONE OF: U, M or MISSING
+AND Age < 44.5
+then 
+ Tree Node Identifier   = 94
+ Number of Observations = 778
+ Predicted: TargetBuy=1 = 0.34
+ Predicted: TargetBuy=0 = 0.66
+ 
+*------------------------------------------------------------*
+ Node = 120
+*------------------------------------------------------------*
+if Gender IS ONE OF: F
+AND Age < 44.5
+AND Affluence Grade < 10.5
+then 
+ Tree Node Identifier   = 120
+ Number of Observations = 794
+ Predicted: TargetBuy=1 = 0.50
+ Predicted: TargetBuy=0 = 0.50
+ 
+*------------------------------------------------------------*
+ Node = 140
+*------------------------------------------------------------*
+if Television Region IS ONE OF: MIDLANDS, EAST, S & S EAST, YORKSHIRE, N WEST, BORDER
+AND Gender IS ONE OF: F
+AND Age < 44.5
+AND Affluence Grade >= 10.5 or MISSING
+then 
+ Tree Node Identifier   = 140
+ Number of Observations = 261
+ Predicted: TargetBuy=1 = 0.74
+ Predicted: TargetBuy=0 = 0.26
+ 
+*------------------------------------------------------------*
+ Node = 160
+*------------------------------------------------------------*
+if Television Region IS ONE OF: WALES & WEST, LONDON, C SCOTLAND, ULSTER, N EAST, S WEST or MISSING
+AND Geographic Region IS ONE OF: MIDLANDS, SOUTH EAST, SCOTTISH, SOUTH WEST
+AND Gender IS ONE OF: F
+AND Age < 44.5
+AND Affluence Grade >= 10.5 or MISSING
+then 
+ Tree Node Identifier   = 160
+ Number of Observations = 292
+ Predicted: TargetBuy=1 = 0.84
+ Predicted: TargetBuy=0 = 0.16
+ 
+*------------------------------------------------------------*
+ Node = 161
+*------------------------------------------------------------*
+if Television Region IS ONE OF: WALES & WEST, LONDON, C SCOTLAND, ULSTER, N EAST, S WEST or MISSING
+AND Geographic Region IS ONE OF: NORTH or MISSING
+AND Gender IS ONE OF: F
+AND Age < 44.5
+AND Affluence Grade >= 10.5 or MISSING
+then 
+ Tree Node Identifier   = 161
+ Number of Observations = 25
+ Predicted: TargetBuy=1 = 0.96
+ Predicted: TargetBuy=0 = 0.04
+ 

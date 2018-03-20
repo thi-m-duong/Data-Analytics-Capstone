@@ -1,0 +1,42 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+            Measurement    Frequency
+Role           Level         Count
+
+ID           INTERVAL          1    
+ID           NOMINAL           1    
+INPUT        INTERVAL          4    
+INPUT        NOMINAL           5    
+REJECTED     INTERVAL          1    
+REJECTED     NOMINAL           1    
+TARGET       BINARY            1    
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Model Events
+
+                                     Number
+                      Measurement      of
+ Target      Event       Level       Levels      Order                  Label
+
+TargetBuy      1        BINARY          2      Descending    Organics Purchase Indicator
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Predicted and decision variables
+
+Type           Variable      Label
+
+TARGET       TargetBuy       Organics Purchase Indicator
+PREDICTED    P_TargetBuy1    Predicted: TargetBuy=1     
+RESIDUAL     R_TargetBuy1    Residual: TargetBuy=1      
+PREDICTED    P_TargetBuy0    Predicted: TargetBuy=0     
+RESIDUAL     R_TargetBuy0    Residual: TargetBuy=0      
+FROM         F_TargetBuy     From: TargetBuy            
+INTO         I_TargetBuy     Into: TargetBuy            

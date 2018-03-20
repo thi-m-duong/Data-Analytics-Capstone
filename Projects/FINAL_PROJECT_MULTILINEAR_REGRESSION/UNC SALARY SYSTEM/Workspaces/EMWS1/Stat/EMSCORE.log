@@ -1,0 +1,46 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                April 21, 2016
+Time:                05:40:21
+*------------------------------------------------------------*
+11469  *------------------------------------------------------------*;
+11470  * Stat: Scoring DATA data;
+11471  *------------------------------------------------------------*;
+11472  data EMWS1.Stat_TRAIN
+11473  / view=EMWS1.Stat_TRAIN
+11474  ;
+11475  set EMWS1.Ids_DATA
+11476  ;
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+11477  run;
+
+NOTE: DATA STEP view saved on file EMWS1.STAT_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      
+
+11478  quit;
+
+11479  *------------------------------------------------------------*;
+11480  * Stat: Computing metadata for TRAIN data;
+11481  *------------------------------------------------------------*;
+
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+NOTE: View EMWS1.STAT_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+NOTE: View EMWS1.STAT_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      

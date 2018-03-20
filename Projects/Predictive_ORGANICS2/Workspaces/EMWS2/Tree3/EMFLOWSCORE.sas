@@ -1,0 +1,337 @@
+****************************************************************;
+******             DECISION TREE SCORING CODE             ******;
+****************************************************************;
+ 
+******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
+LENGTH F_TargetBuy  $   12;
+LENGTH I_TargetBuy  $   12;
+LENGTH _WARN_  $    4;
+ 
+******              LABELS FOR NEW VARIABLES              ******;
+label _NODE_ = 'Node' ;
+label _LEAF_ = 'Leaf' ;
+label P_TargetBuy0 = 'Predicted: TargetBuy=0' ;
+label P_TargetBuy1 = 'Predicted: TargetBuy=1' ;
+label Q_TargetBuy0 = 'Unadjusted P: TargetBuy=0' ;
+label Q_TargetBuy1 = 'Unadjusted P: TargetBuy=1' ;
+label V_TargetBuy0 = 'Validated: TargetBuy=0' ;
+label V_TargetBuy1 = 'Validated: TargetBuy=1' ;
+label R_TargetBuy0 = 'Residual: TargetBuy=0' ;
+label R_TargetBuy1 = 'Residual: TargetBuy=1' ;
+label F_TargetBuy = 'From: TargetBuy' ;
+label I_TargetBuy = 'Into: TargetBuy' ;
+label U_TargetBuy = 'Unnormalized Into: TargetBuy' ;
+label _WARN_ = 'Warnings' ;
+ 
+ 
+******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
+LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
+_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
+LENGTH _ARBFMT_1 $      1; DROP _ARBFMT_1;
+_ARBFMT_1 = ' '; /* Initialize to avoid warning. */
+ 
+ 
+_ARBFMT_12 = PUT( TargetBuy , BEST12.);
+ %DMNORMCP( _ARBFMT_12, F_TargetBuy );
+ 
+******             ASSIGN OBSERVATION TO NODE             ******;
+IF  NOT MISSING(DemAge ) AND
+  DemAge  <                 39.5 THEN DO;
+  IF  NOT MISSING(DemAffl ) AND
+    DemAffl  <                  6.5 THEN DO;
+    _NODE_  =                    6;
+    _LEAF_  =                    1;
+    P_TargetBuy0  =      0.6593886462882;
+    P_TargetBuy1  =     0.34061135371179;
+    Q_TargetBuy0  =      0.6593886462882;
+    Q_TargetBuy1  =     0.34061135371179;
+    V_TargetBuy0  =     0.66009852216748;
+    V_TargetBuy1  =     0.33990147783251;
+    I_TargetBuy  = '0' ;
+    U_TargetBuy  =                    0;
+    END;
+  ELSE IF  NOT MISSING(DemAffl ) AND
+                     6.5 <= DemAffl  AND
+    DemAffl  <                  9.5 THEN DO;
+    _ARBFMT_1 = PUT( DemGender , $1.);
+     %DMNORMIP( _ARBFMT_1);
+    IF _ARBFMT_1 IN ('F' ) THEN DO;
+      _NODE_  =                   21;
+      _LEAF_  =                    2;
+      P_TargetBuy0  =     0.38405797101449;
+      P_TargetBuy1  =      0.6159420289855;
+      Q_TargetBuy0  =     0.38405797101449;
+      Q_TargetBuy1  =      0.6159420289855;
+      V_TargetBuy0  =     0.41121495327102;
+      V_TargetBuy1  =     0.58878504672897;
+      I_TargetBuy  = '1' ;
+      U_TargetBuy  =                    1;
+      END;
+    ELSE IF _ARBFMT_1 IN ('M' ) THEN DO;
+      _NODE_  =                   22;
+      _LEAF_  =                    3;
+      P_TargetBuy0  =     0.58878504672897;
+      P_TargetBuy1  =     0.41121495327102;
+      Q_TargetBuy0  =     0.58878504672897;
+      Q_TargetBuy1  =     0.41121495327102;
+      V_TargetBuy0  =     0.59210526315789;
+      V_TargetBuy1  =      0.4078947368421;
+      I_TargetBuy  = '0' ;
+      U_TargetBuy  =                    0;
+      END;
+    ELSE DO;
+      _NODE_  =                   23;
+      _LEAF_  =                    4;
+      P_TargetBuy0  =     0.81395348837209;
+      P_TargetBuy1  =      0.1860465116279;
+      Q_TargetBuy0  =     0.81395348837209;
+      Q_TargetBuy1  =      0.1860465116279;
+      V_TargetBuy0  =     0.88679245283018;
+      V_TargetBuy1  =     0.11320754716981;
+      I_TargetBuy  = '0' ;
+      U_TargetBuy  =                    0;
+      END;
+    END;
+  ELSE IF  NOT MISSING(DemAffl ) AND
+                    14.5 <= DemAffl  THEN DO;
+    _NODE_  =                    9;
+    _LEAF_  =                    8;
+    P_TargetBuy0  =     0.06521739130434;
+    P_TargetBuy1  =     0.93478260869565;
+    Q_TargetBuy0  =     0.06521739130434;
+    Q_TargetBuy1  =     0.93478260869565;
+    V_TargetBuy0  =     0.03597122302158;
+    V_TargetBuy1  =     0.96402877697841;
+    I_TargetBuy  = '1' ;
+    U_TargetBuy  =                    1;
+    END;
+  ELSE DO;
+    _ARBFMT_1 = PUT( DemGender , $1.);
+     %DMNORMIP( _ARBFMT_1);
+    IF _ARBFMT_1 IN ('M' ) THEN DO;
+      _NODE_  =                   25;
+      _LEAF_  =                    6;
+      P_TargetBuy0  =     0.41666666666666;
+      P_TargetBuy1  =     0.58333333333333;
+      Q_TargetBuy0  =     0.41666666666666;
+      Q_TargetBuy1  =     0.58333333333333;
+      V_TargetBuy0  =     0.55813953488372;
+      V_TargetBuy1  =     0.44186046511627;
+      I_TargetBuy  = '1' ;
+      U_TargetBuy  =                    1;
+      END;
+    ELSE IF _ARBFMT_1 IN ('F' ) THEN DO;
+      _NODE_  =                   26;
+      _LEAF_  =                    7;
+      P_TargetBuy0  =     0.21629213483146;
+      P_TargetBuy1  =     0.78370786516853;
+      Q_TargetBuy0  =     0.21629213483146;
+      Q_TargetBuy1  =     0.78370786516853;
+      V_TargetBuy0  =     0.19636363636363;
+      V_TargetBuy1  =     0.80363636363636;
+      I_TargetBuy  = '1' ;
+      U_TargetBuy  =                    1;
+      END;
+    ELSE DO;
+      _NODE_  =                   24;
+      _LEAF_  =                    5;
+      P_TargetBuy0  =     0.61224489795918;
+      P_TargetBuy1  =     0.38775510204081;
+      Q_TargetBuy0  =     0.61224489795918;
+      Q_TargetBuy1  =     0.38775510204081;
+      V_TargetBuy0  =     0.57894736842105;
+      V_TargetBuy1  =     0.42105263157894;
+      I_TargetBuy  = '0' ;
+      U_TargetBuy  =                    0;
+      END;
+    END;
+  END;
+ELSE IF  NOT MISSING(DemAge ) AND
+                  39.5 <= DemAge  AND
+  DemAge  <                 44.5 THEN DO;
+  IF  NOT MISSING(DemAffl ) AND
+    DemAffl  <                  6.5 THEN DO;
+    _NODE_  =                   10;
+    _LEAF_  =                    9;
+    P_TargetBuy0  =     0.80346820809248;
+    P_TargetBuy1  =     0.19653179190751;
+    Q_TargetBuy0  =     0.80346820809248;
+    Q_TargetBuy1  =     0.19653179190751;
+    V_TargetBuy0  =     0.78030303030303;
+    V_TargetBuy1  =     0.21969696969696;
+    I_TargetBuy  = '0' ;
+    U_TargetBuy  =                    0;
+    END;
+  ELSE IF  NOT MISSING(DemAffl ) AND
+                     6.5 <= DemAffl  AND
+    DemAffl  <                  9.5 THEN DO;
+    _NODE_  =                   11;
+    _LEAF_  =                   10;
+    P_TargetBuy0  =     0.67537313432835;
+    P_TargetBuy1  =     0.32462686567164;
+    Q_TargetBuy0  =     0.67537313432835;
+    Q_TargetBuy1  =     0.32462686567164;
+    V_TargetBuy0  =     0.68556701030927;
+    V_TargetBuy1  =     0.31443298969072;
+    I_TargetBuy  = '0' ;
+    U_TargetBuy  =                    0;
+    END;
+  ELSE IF  NOT MISSING(DemAffl ) AND
+                    11.5 <= DemAffl  THEN DO;
+    _NODE_  =                   13;
+    _LEAF_  =                   13;
+    P_TargetBuy0  =     0.29050279329608;
+    P_TargetBuy1  =     0.70949720670391;
+    Q_TargetBuy0  =     0.29050279329608;
+    Q_TargetBuy1  =     0.70949720670391;
+    V_TargetBuy0  =     0.37007874015748;
+    V_TargetBuy1  =     0.62992125984251;
+    I_TargetBuy  = '1' ;
+    U_TargetBuy  =                    1;
+    END;
+  ELSE DO;
+    _ARBFMT_1 = PUT( DemGender , $1.);
+     %DMNORMIP( _ARBFMT_1);
+    IF _ARBFMT_1 IN ('F' ) THEN DO;
+      _NODE_  =                   31;
+      _LEAF_  =                   11;
+      P_TargetBuy0  =     0.45762711864406;
+      P_TargetBuy1  =     0.54237288135593;
+      Q_TargetBuy0  =     0.45762711864406;
+      Q_TargetBuy1  =     0.54237288135593;
+      V_TargetBuy0  =     0.33783783783783;
+      V_TargetBuy1  =     0.66216216216216;
+      I_TargetBuy  = '1' ;
+      U_TargetBuy  =                    1;
+      END;
+    ELSE DO;
+      _NODE_  =                   32;
+      _LEAF_  =                   12;
+      P_TargetBuy0  =     0.71428571428571;
+      P_TargetBuy1  =     0.28571428571428;
+      Q_TargetBuy0  =     0.71428571428571;
+      Q_TargetBuy1  =     0.28571428571428;
+      V_TargetBuy0  =     0.68115942028985;
+      V_TargetBuy1  =     0.31884057971014;
+      I_TargetBuy  = '0' ;
+      U_TargetBuy  =                    0;
+      END;
+    END;
+  END;
+ELSE IF  NOT MISSING(DemAge ) AND
+                  44.5 <= DemAge  AND
+  DemAge  <                 76.5 THEN DO;
+  IF  NOT MISSING(DemAffl ) AND
+    DemAffl  <                  8.5 THEN DO;
+    _NODE_  =                   14;
+    _LEAF_  =                   14;
+    P_TargetBuy0  =     0.91972700682482;
+    P_TargetBuy1  =     0.08027299317517;
+    Q_TargetBuy0  =     0.91972700682482;
+    Q_TargetBuy1  =     0.08027299317517;
+    V_TargetBuy0  =     0.93264481365065;
+    V_TargetBuy1  =     0.06735518634934;
+    I_TargetBuy  = '0' ;
+    U_TargetBuy  =                    0;
+    END;
+  ELSE IF  NOT MISSING(DemAffl ) AND
+                    12.5 <= DemAffl  AND
+    DemAffl  <                 16.5 THEN DO;
+    _NODE_  =                   16;
+    _LEAF_  =                   16;
+    P_TargetBuy0  =     0.63956043956043;
+    P_TargetBuy1  =     0.36043956043956;
+    Q_TargetBuy0  =     0.63956043956043;
+    Q_TargetBuy1  =     0.36043956043956;
+    V_TargetBuy0  =     0.63513513513513;
+    V_TargetBuy1  =     0.36486486486486;
+    I_TargetBuy  = '0' ;
+    U_TargetBuy  =                    0;
+    END;
+  ELSE IF  NOT MISSING(DemAffl ) AND
+                    16.5 <= DemAffl  THEN DO;
+    _NODE_  =                   17;
+    _LEAF_  =                   17;
+    P_TargetBuy0  =     0.22784810126582;
+    P_TargetBuy1  =     0.77215189873417;
+    Q_TargetBuy0  =     0.22784810126582;
+    Q_TargetBuy1  =     0.77215189873417;
+    V_TargetBuy0  =     0.28571428571428;
+    V_TargetBuy1  =     0.71428571428571;
+    I_TargetBuy  = '1' ;
+    U_TargetBuy  =                    1;
+    END;
+  ELSE DO;
+    _NODE_  =                   15;
+    _LEAF_  =                   15;
+    P_TargetBuy0  =     0.82864674868189;
+    P_TargetBuy1  =      0.1713532513181;
+    Q_TargetBuy0  =     0.82864674868189;
+    Q_TargetBuy1  =      0.1713532513181;
+    V_TargetBuy0  =     0.83093525179856;
+    V_TargetBuy1  =     0.16906474820143;
+    I_TargetBuy  = '0' ;
+    U_TargetBuy  =                    0;
+    END;
+  END;
+ELSE DO;
+  IF  NOT MISSING(DemAffl ) AND
+    DemAffl  <                 10.5 THEN DO;
+    _NODE_  =                   18;
+    _LEAF_  =                   18;
+    P_TargetBuy0  =     0.82315112540192;
+    P_TargetBuy1  =     0.17684887459807;
+    Q_TargetBuy0  =     0.82315112540192;
+    Q_TargetBuy1  =     0.17684887459807;
+    V_TargetBuy0  =     0.82857142857142;
+    V_TargetBuy1  =     0.17142857142857;
+    I_TargetBuy  = '0' ;
+    U_TargetBuy  =                    0;
+    END;
+  ELSE IF  NOT MISSING(DemAffl ) AND
+                    13.5 <= DemAffl  THEN DO;
+    _NODE_  =                   20;
+    _LEAF_  =                   20;
+    P_TargetBuy0  =                 0.36;
+    P_TargetBuy1  =                 0.64;
+    Q_TargetBuy0  =                 0.36;
+    Q_TargetBuy1  =                 0.64;
+    V_TargetBuy0  =     0.46511627906976;
+    V_TargetBuy1  =     0.53488372093023;
+    I_TargetBuy  = '1' ;
+    U_TargetBuy  =                    1;
+    END;
+  ELSE DO;
+    _NODE_  =                   19;
+    _LEAF_  =                   19;
+    P_TargetBuy0  =     0.61111111111111;
+    P_TargetBuy1  =     0.38888888888888;
+    Q_TargetBuy0  =     0.61111111111111;
+    Q_TargetBuy1  =     0.38888888888888;
+    V_TargetBuy0  =     0.64596273291925;
+    V_TargetBuy1  =     0.35403726708074;
+    I_TargetBuy  = '0' ;
+    U_TargetBuy  =                    0;
+    END;
+  END;
+ 
+*****  RESIDUALS R_ *************;
+IF  F_TargetBuy  NE '0'
+AND F_TargetBuy  NE '1'  THEN DO;
+        R_TargetBuy0  = .;
+        R_TargetBuy1  = .;
+ END;
+ ELSE DO;
+       R_TargetBuy0  =  -P_TargetBuy0 ;
+       R_TargetBuy1  =  -P_TargetBuy1 ;
+       SELECT( F_TargetBuy  );
+          WHEN( '0'  ) R_TargetBuy0  = R_TargetBuy0  +1;
+          WHEN( '1'  ) R_TargetBuy1  = R_TargetBuy1  +1;
+       END;
+ END;
+ 
+****************************************************************;
+******          END OF DECISION TREE SCORING CODE         ******;
+****************************************************************;
+ 
+drop _LEAF_;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  NumberOfReportedLevels="1E-6" NormalizeReportingVariables="Y" DecileBin="20" LiftEpsilon="1E-6"
+ ProfitEpsilon="1E-6" RoiEpsilon="1E-6" ScoreDistBin="20" RocChart="Y" RocEpsilon="0.01"
+ AssessAllTargetLevels="N" SelectionData="DEFAULT" HPCriteria="DEFAULT" SelectionTable="TRAIN"
+ SelectionCriteria="DEFAULT" SelectionDepth="10" NumberofBins="20" RecomputeAssess="N"
+ TargetName="totalsal" ModelId="Reg" ModelDescription="Logistic Regression" ModelCriteria="Valid: Average Squared Error"
+ ForceRun="N" RunAction="Train" Component="ModelCompare" RawCreateTime="1776812211.5"
+ CreateTime="20APR2016:22:56:52" RunId="4c203382-7f40-4574-9a59-00814d79e353" StatisticUsed="_VASE_"
+ TargetLabel="">
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES/>
+</_ROOT_>

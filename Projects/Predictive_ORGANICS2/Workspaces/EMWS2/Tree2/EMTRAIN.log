@@ -1,0 +1,180 @@
+NOTE: PROCEDURE PRINTTO used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: 1629276 kilobytes of physical memory.
+NOTE: The subtree sequence contains 6 subtrees. The largest has 11 nodes and 6 leaves.
+NOTE: Will use 8889 out of 8889 training cases.
+NOTE: Using memory pool with 158930944 bytes.
+NOTE: The subtree sequence contains 6 subtrees. The largest has 11 nodes and 6 leaves.
+NOTE: Using subtree with 11 nodes and 6 leaves.
+NOTE: Created macro variable NLEAVES equal to 6.
+NOTE: The data set EMWS2.TREE2_OUTIMPORT has 9 observations and 6 variables.
+NOTE: The data set EMWS2.TREE2_EMTREE has 589 observations and 4 variables.
+NOTE: The data set EMWS2.TREE2_OUTNODES has 11 observations and 24 variables.
+NOTE: The data set EMWS2.TREE2_OUTPATH has 57 observations and 7 variables.
+NOTE: The data set EMWS2.TREE2_OUTRULES has 241 observations and 6 variables.
+NOTE: The data set EMWS2.TREE2_OUTSEQ has 6 observations and 20 variables.
+NOTE: The data set EMWS2.TREE2_OUTSTATS has 77 observations and 5 variables.
+NOTE: The data set EMWS2.TREE2_OUTSUMMARY has 24 observations and 6 variables.
+NOTE: The data set EMWS2.TREE2_OUTTOPOLOGY has 11 observations and 5 variables.
+NOTE: External file C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\ORGANICS2\Workspaces\EMWS2\Tree2\TREEFLOW.sas opened.
+NOTE: External file C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\ORGANICS2\Workspaces\EMWS2\Tree2\TREEPUBLISH.sas opened.
+NOTE: The data set WORK.FIT_TRAIN has 1 observations and 10 variables.
+NOTE: The data set WORK.FIT_VALID has 1 observations and 8 variables.
+NOTE: The data set WORK.FIT_TEST has 1 observations and 8 variables.
+
+
+NOTE: There were 8889 observations read from the data set EMWS2.PART_TRAIN.
+NOTE: The data set WORK._NAMEDAT has 2 observations and 5 variables.
+NOTE: PROCEDURE ARBOR used (Total process time):
+      real time           0.18 seconds
+      cpu time            0.10 seconds
+      
+
+
+NOTE: There were 1 observations read from the data set EMWS2.TREE2_VARIABLESET.
+      WHERE ROLE='TARGET';
+NOTE: The data set WORK.TEMPTARGET has 1 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 1 observations read from the data set WORK.FIT_TRAIN.
+NOTE: There were 1 observations read from the data set WORK.FIT_VALID.
+NOTE: There were 1 observations read from the data set WORK.FIT_TEST.
+NOTE: The data set EMWS2.TREE2_EMOUTFIT has 1 observations and 24 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: Deleting WORK.FIT_VALID (memtype=DATA).
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: Deleting WORK.FIT_TEST (memtype=DATA).
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: Variable cvimportance is uninitialized.
+NOTE: Variable nsurrogates is uninitialized.
+NOTE: There were 2 observations read from the data set EMWS2.TREE2_OUTIMPORT.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: There were 5 observations read from the data set EMWS2.TREE2_OUTIMPORT.
+      WHERE nrules>0;
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 57 observations read from the data set EMWS2.TREE2_OUTPATH.
+NOTE: The data set WORK.TEMPOUTPATH has 57 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 2 observations read from the data set EMWS2.IDS_TARGETBUY_DM.
+      WHERE _TYPE_='PREDICTED';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: There were 2 observations read from the data set EMWS2.TREE2_OUTNODES.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 57 observations read from the data set WORK.TEMPOUTPATH.
+NOTE: The data set WORK.TEMPOUTPATH has 57 observations and 8 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 11 observations read from the data set EMWS2.TREE2_OUTNODES.
+NOTE: The data set WORK.OUTNODES has 11 observations and 24 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 57 observations read from the data set WORK.TEMPOUTPATH.
+NOTE: There were 11 observations read from the data set WORK.OUTNODES.
+NOTE: The data set WORK.TEMPOUTPATH has 57 observations and 11 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: There were 57 observations read from the data set WORK.TEMPOUTPATH.
+NOTE: The data set WORK.TEMPOUTPATH has 57 observations and 11 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: Numeric values have been converted to character values at the places given by: (Line):(Column).
+      218:176   228:190   374:191   381:195   
+NOTE: The file X is:
+      Filename=C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\ORGANICS2\Workspaces\EMWS2\Tree2\ENGLISHRULES.txt,
+      RECFM=V,LRECL=131068,File Size (bytes)=0,
+      Last Modified=26Mar2016:22:16:44,
+      Create Time=26Mar2016:22:16:44
+
+NOTE: 74 records were written to the file X.
+      The minimum record length was 1.
+      The maximum record length was 99.
+NOTE: There were 57 observations read from the data set WORK.TEMPOUTPATH.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: Deleting WORK.TEMPOUTPATH (memtype=DATA).
+NOTE: Deleting WORK.OUTNODES (memtype=DATA).
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.EM_USER_REPORT has 132 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      
+
+NOTE: Fileref X has been deassigned.
+

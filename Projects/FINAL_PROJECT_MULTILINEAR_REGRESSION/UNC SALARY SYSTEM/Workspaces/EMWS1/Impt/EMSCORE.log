@@ -1,0 +1,97 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                April 21, 2016
+Time:                05:40:00
+*------------------------------------------------------------*
+11119  data _null_;
+11120  set EMWS1.Impt_META end=eof;
+11121  length string $34;
+11122  retain missTotal;
+11123  file #LN00136;
+11124  if _n_=1 then misstotal = percentmiss;
+11125  missTotal = percentmiss+misstotal;
+11126  if IMP ne '' and METHOD ne 'NONE' then do;
+11127  string = '"'!!strip(NAME)!!'"';
+11128  put 'if NAME = ' string 'then delete;';
+11129  put 'else ';
+11130  string = '"'!!strip(IMP)!!'"';
+11131  put 'if NAME    = ' string ' then do;';
+11132  string = '"'!!strip(ROLE)!!'"';
+11133  put '   ROLE    = ' string ';';
+11134  string = '"'!!strip(FAMILY)!!'"';
+11135  put '   FAMILY  = ' string ';';
+11136  string = '"'!!strip(REPORT)!!'"';
+11137  put '   REPORT  = ' string ';';
+11138  string = '"'!!strip(LEVEL)!!'"';
+11139  put '   LEVEL   = ' string ';';
+11140  string = '"'!!strip(ORDER)!!'"';
+11141  put '   ORDER   = ' string ';';
+11142  put 'end;';
+11143  end;
+11144  if percentmiss>50 and ROLE ne 'TARGET' then do;
+11145  string = '"'!!strip(NAME)!!'"';
+11146  put 'if NAME = ' string ' then do;';
+11147  put '   ROLE ="REJECTED";';
+11148  put '   COMMENT = "Percent of missing exceeds 50%";';
+11149  put 'end;';
+11150  end;
+11151  run;
+
+NOTE: The file #LN00136 is:
+      Filename=C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Impt\CDELTA_TRAIN.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=21Apr2016:05:40:00,
+      Create Time=21Apr2016:05:37:54
+
+NOTE: 0 records were written to the file #LN00136.
+NOTE: There were 13 observations read from the data set EMWS1.IMPT_META.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11152  filename emflow "C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 458H\HW\458 FINAL PROJECT\UNC SALARY SYSTEM\Workspaces\EMWS1\Impt\EMFLOWSCORE.sas";
+11153  *------------------------------------------------------------*;
+11154  * Impt: Scoring DATA data;
+11155  *------------------------------------------------------------*;
+11156  data EMWS1.Impt_TRAIN
+11157  / view=EMWS1.Impt_TRAIN
+11158  ;
+11159  set EMWS1.Ids_DATA
+11160  ;
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+11161  %inc emflow;
+11165  run;
+
+NOTE: DATA STEP view saved on file EMWS1.IMPT_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+11166  quit;
+11167  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+11168  *------------------------------------------------------------*;
+11169  * Impt: Computing metadata for TRAIN data;
+11170  *------------------------------------------------------------*;
+
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+NOTE: View EMWS1.IMPT_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+NOTE: View EMWS1.IMPT_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      

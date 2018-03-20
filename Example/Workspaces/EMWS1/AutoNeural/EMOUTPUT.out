@@ -1,0 +1,867 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                March 01, 2016
+Time:                12:46:28
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          10
+INPUT      NOMINAL           10
+TARGET     NOMINAL            1
+ 
+ 
+ 
+ 
+Model Events
+ 
+                                   Number
+                    Measurement      of
+Target     Event       Level       Levels      Order        Label
+ 
+RESPOND     YES       NOMINAL         2      Descending    RESPOND
+ 
+ 
+ 
+ 
+Predicted and decision variables
+ 
+Type         Variable        Label
+ 
+TARGET       RESPOND         RESPOND
+PREDICTED    P_RESPONDyes    Predicted: RESPOND=yes
+RESIDUAL     R_RESPONDyes    Residual: RESPOND=yes
+PREDICTED    P_RESPONDno     Predicted: RESPOND=no
+RESIDUAL     R_RESPONDno     Residual: RESPOND=no
+FROM         F_RESPOND       From: RESPOND
+INTO         I_RESPOND       Into: RESPOND
+ 
+ 
+ 
+ 
+Search # 1 SINGLE LAYER trial # 1 : DIRECT : Training
+ 
+_ITER_      _AIC_     _AVERR_     _MISC_    _VAVERR_    _VMISC_
+ 
+   0      11707.20    0.35205    0.11266     0.35204    0.11266
+   1       7185.40    0.21481    0.09008     0.21893    0.09323
+   2       6918.09    0.20669    0.09045     0.21532    0.09340
+   3       6883.06    0.20563    0.08838     0.21292    0.09024
+   4       6874.65    0.20537    0.08862     0.21348    0.09170
+   5       6872.93    0.20532    0.08814     0.21302    0.09129
+   6       6872.25    0.20530    0.08832     0.21324    0.09137
+   7       6872.05    0.20529    0.08820     0.21309    0.09113
+   8       6871.96    0.20529    0.08814     0.21318    0.09121
+   8       6871.96    0.20529    0.08814     0.21318    0.09121
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   3      6883.06    0.20563    0.088382     0.21292    0.090240
+ 
+ 
+ 
+ 
+Search # 1 SINGLE LAYER trial # 2 : TANH : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           679865644      0.1995324713            8
+        2           335245709    0.229386702674            8
+        3           466641608    0.195423071276            8
+        4          2007033381    0.192974560963            8
+        5           796374574    0.223084511015            8
+        6           244017995    0.195921549239            8
+        7          1968674623    0.255066511662            8
+        8          2059748735    0.198597827122            8
+ 
+ 
+ 
+ 
+Search # 1 SINGLE LAYER trial # 2 : TANH : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      6579.54    0.19296    0.092206     0.19728    0.092910
+   1      6556.84    0.19227    0.092752     0.19618    0.093153
+   2      6531.17    0.19149    0.092267     0.19513    0.093639
+   3      6513.00    0.19094    0.091053     0.19427    0.093234
+   4      6484.95    0.19009    0.091113     0.19377    0.093477
+   5      6461.03    0.18936    0.089171     0.19384    0.092991
+   6      6443.28    0.18882    0.090931     0.19349    0.093234
+   7      6422.45    0.18819    0.088867     0.19345    0.093315
+   8      6388.68    0.18716    0.088685     0.19295    0.092506
+   8      6388.68    0.18716    0.088685     0.19295    0.092506
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   8      6388.68    0.18716    0.088685     0.19295    0.092506
+ 
+ 
+ 
+ 
+Search # 1 SINGLE LAYER trial # 3 : NORMAL : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           679865644    0.279099965178            8
+        2           335245709    0.215261605214            8
+        3           466641608    0.302485896897            8
+        4          2007033381     0.23272896413            8
+        5           796374574    0.245160599297            8
+        6           244017995    0.205956030886            8
+        7          1968674623    0.316106347264            8
+        8          2059748735    0.257207537155            8
+ 
+ 
+ 
+ 
+Search # 1 SINGLE LAYER trial # 3 : NORMAL : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_    _VAVERR_    _VMISC_
+ 
+   0      7007.15    0.20594    0.11266     0.20986    0.11266
+   1      6848.72    0.20113    0.10253     0.20287    0.10578
+   2      6754.44    0.19827    0.09749     0.19987    0.10165
+   3      6704.07    0.19674    0.09415     0.19841    0.09841
+   4      6673.54    0.19581    0.09415     0.19803    0.09607
+   5      6650.90    0.19512    0.09409     0.19770    0.09518
+   6      6621.83    0.19424    0.09275     0.19803    0.09477
+   7      6581.14    0.19301    0.09190     0.19621    0.09493
+   8      6565.27    0.19252    0.09221     0.19622    0.09404
+   8      6565.27    0.19252    0.09221     0.19622    0.09404
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   8      6565.27    0.19252    0.092206     0.19622    0.094043
+ 
+ 
+ 
+ 
+Search # 1 SINGLE LAYER trial # 4 : SINE : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           679865644    0.301167800544            8
+        2           335245709    0.221718790896            8
+        3           466641608    0.210502327585            8
+        4          2007033381    0.201341971291            8
+        5           796374574    0.251631182103            8
+        6           244017995    0.204483678366            8
+        7          1968674623    0.252796358986            8
+        8          2059748735    0.211491724161            8
+ 
+ 
+ 
+ 
+Search # 1 SINGLE LAYER trial # 4 : SINE : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      6855.16    0.20132    0.091477     0.20394    0.091049
+   1      6828.24    0.20051    0.091174     0.20345    0.091373
+   2      6792.24    0.19941    0.090931     0.20199    0.090563
+   3      6742.25    0.19790    0.089596     0.20119    0.090806
+   4      6687.36    0.19623    0.088685     0.20112    0.090887
+   5      6651.58    0.19514    0.089596     0.20029    0.091373
+   6      6610.33    0.19389    0.090992     0.19930    0.091373
+   7      6596.82    0.19348    0.088928     0.20204    0.093315
+   8      6556.15    0.19225    0.088382     0.19923    0.091534
+   8      6556.15    0.19225    0.088382     0.19923    0.091534
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   2      6792.24    0.19941    0.090931     0.20199    0.090563
+ 
+ 
+ 
+ 
+Search # 2 SINGLE LAYER trial # 1 : TANH : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           348707316    0.205033739284            8
+        2          1902350359    0.205129320001            8
+        3          1594968155    0.205137027918            8
+        4           578040441    0.205312210477            8
+        5          1012158310    0.204764407035            8
+        6          1524375731    0.205268154871            8
+        7          1232052591    0.205009107494            8
+        8          1546103533    0.204846283524            8
+ 
+ 
+ 
+ 
+Search # 2 SINGLE LAYER trial # 1 : TANH : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7073.90    0.20474    0.088624     0.21348    0.090725
+   1      7073.23    0.20472    0.088564     0.21356    0.090968
+   2      7071.92    0.20468    0.089232     0.21355    0.090968
+   3      7070.55    0.20464    0.088382     0.21355    0.090968
+   4      7067.37    0.20455    0.088382     0.21346    0.090887
+   5      7064.82    0.20447    0.088200     0.21329    0.090644
+   6      7061.06    0.20435    0.088624     0.21335    0.091292
+   7      7051.79    0.20407    0.088382     0.21268    0.090806
+   8      7032.35    0.20348    0.089596     0.21120    0.092101
+   8      7032.35    0.20348    0.089596     0.21120    0.092101
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   5      7064.82    0.20447    0.088200     0.21329    0.090644
+ 
+ 
+ 
+ 
+Search # 2 SINGLE LAYER trial # 2 : NORMAL : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           348707316     0.20528871492            8
+        2          1902350359    0.205242148449            8
+        3          1594968155    0.205159918921            8
+        4           578040441    0.205317997797            8
+        5          1012158310    0.205137906375            8
+        6          1524375731    0.205034808003            8
+        7          1232052591    0.205318736407            8
+        8          1546103533     0.20532203951            8
+ 
+ 
+ 
+ 
+Search # 2 SINGLE LAYER trial # 2 : NORMAL : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7082.80    0.20501    0.088078     0.21296    0.089916
+   1      7082.53    0.20501    0.087957     0.21303    0.090563
+   2      7081.01    0.20496    0.087714     0.21311    0.090887
+   3      7079.29    0.20491    0.088017     0.21307    0.090968
+   4      7078.26    0.20488    0.088139     0.21301    0.090482
+   5      7076.65    0.20483    0.088139     0.21300    0.091049
+   6      7075.12    0.20478    0.088321     0.21295    0.090563
+   7      7073.60    0.20473    0.088382     0.21285    0.090887
+   8      7072.75    0.20471    0.087896     0.21309    0.090806
+   8      7072.75    0.20471    0.087896     0.21309    0.090806
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7082.80    0.20501    0.088078     0.21296    0.089916
+ 
+ 
+ 
+ 
+Search # 2 SINGLE LAYER trial # 3 : SINE : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1               12345    0.205256534667            8
+ 
+ 
+ 
+ 
+Search # 2 SINGLE LAYER trial # 3 : SINE : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7090.11    0.20524    0.088200     0.21307    0.090887
+   1      7089.93    0.20523    0.088260     0.21310    0.091049
+   2      7089.80    0.20523    0.088382     0.21307    0.091292
+   3      7089.34    0.20521    0.088139     0.21309    0.090968
+   4      7089.08    0.20520    0.088139     0.21308    0.091373
+   5      7086.81    0.20514    0.088867     0.21310    0.091777
+   6      7083.80    0.20504    0.088139     0.21292    0.090563
+   7      7081.91    0.20499    0.088382     0.21291    0.090725
+   8      7081.14    0.20496    0.088260     0.21297    0.090320
+   8      7081.14    0.20496    0.088260     0.21297    0.090320
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   8      7081.14    0.20496    0.088260     0.21297    0.090320
+ 
+ 
+ 
+ 
+Search # 3 SINGLE LAYER trial # 1 : TANH : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           679865644    0.204487729601            8
+        2           335245709    0.204710626389            8
+        3           466641608    0.204709017846            8
+        4          2007033381    0.204546507476            8
+        5           796374574    0.204666096521            8
+        6           244017995    0.204693523435            8
+        7          1968674623    0.204694302478            8
+        8          2059748735     0.20427280879            8
+ 
+ 
+ 
+ 
+Search # 3 SINGLE LAYER trial # 1 : TANH : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7277.70    0.20425    0.087593     0.21302    0.091454
+   1      7275.33    0.20418    0.086986     0.21298    0.090725
+   2      7274.32    0.20415    0.086864     0.21287    0.090240
+   3      7272.71    0.20410    0.087228     0.21282    0.090563
+   4      7269.39    0.20400    0.087410     0.21264    0.090320
+   5      7266.17    0.20390    0.087289     0.21272    0.090159
+   6      7262.56    0.20379    0.087168     0.21265    0.090806
+   7      7259.34    0.20369    0.087046     0.21296    0.091292
+   8      7254.64    0.20355    0.087228     0.21278    0.091049
+   8      7254.64    0.20355    0.087228     0.21278    0.091049
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   5      7266.17    0.20390    0.087289     0.21272    0.090159
+ 
+ 
+ 
+ 
+Search # 3 SINGLE LAYER trial # 2 : NORMAL : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           679865644    0.203771344543            8
+        2           335245709    0.204438585762            8
+        3           466641608    0.204707155015            8
+        4          2007033381    0.204654513212            8
+        5           796374574    0.204671839088            8
+        6           244017995    0.204638417128            8
+        7          1968674623    0.204724979376            8
+        8          2059748735    0.204638506084            8
+ 
+ 
+ 
+ 
+Search # 3 SINGLE LAYER trial # 2 : NORMAL : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7261.18    0.20375    0.088382     0.21320    0.089349
+   1      7260.26    0.20372    0.088321     0.21350    0.089997
+   2      7258.75    0.20368    0.088260     0.21341    0.089592
+   3      7257.48    0.20364    0.088685     0.21337    0.089430
+   4      7254.04    0.20353    0.088685     0.21343    0.089673
+   5      7249.07    0.20338    0.088564     0.21380    0.089511
+   6      7247.74    0.20334    0.088200     0.21398    0.091130
+   7      7241.55    0.20315    0.088382     0.21383    0.089835
+   8      7239.18    0.20308    0.087957     0.21429    0.090644
+   8      7239.18    0.20308    0.087957     0.21429    0.090644
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7261.18    0.20375    0.088382     0.21320    0.089349
+ 
+ 
+ 
+ 
+Search # 3 SINGLE LAYER trial # 3 : SINE : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1               12345    0.204194299052            8
+ 
+ 
+ 
+ 
+Search # 3 SINGLE LAYER trial # 3 : SINE : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7275.12    0.20417    0.088139     0.21341    0.091373
+   1      7274.06    0.20414    0.087775     0.21331    0.090968
+   2      7271.34    0.20406    0.087896     0.21350    0.091211
+   3      7268.23    0.20396    0.087775     0.21350    0.090725
+   4      7263.25    0.20381    0.088260     0.21362    0.090887
+   5      7253.46    0.20352    0.089171     0.21370    0.091696
+   6      7248.05    0.20335    0.088503     0.21362    0.091454
+   7      7236.00    0.20299    0.089049     0.21405    0.092587
+   8      7229.85    0.20280    0.089656     0.21391    0.092020
+   8      7229.85    0.20280    0.089656     0.21391    0.092020
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   3      7268.23    0.20396    0.087775     0.21350    0.090725
+ 
+ 
+ 
+ 
+Search # 4 SINGLE LAYER trial # 1 : TANH : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           679865644      0.2030090677            8
+        2           335245709    0.202919561865            8
+        3           466641608    0.202981278967            8
+        4          2007033381    0.202892658543            8
+        5           796374574    0.202924665198            8
+        6           244017995    0.203108559217            8
+        7          1968674623    0.202980642671            8
+        8          2059748735     0.20265860223            8
+ 
+ 
+ 
+ 
+Search # 4 SINGLE LAYER trial # 1 : TANH : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7444.53    0.20264    0.087653     0.21370    0.091454
+   1      7442.79    0.20259    0.087653     0.21380    0.091049
+   2      7440.91    0.20253    0.087228     0.21369    0.090644
+   3      7437.97    0.20244    0.087593     0.21369    0.089997
+   4      7434.64    0.20234    0.088078     0.21359    0.090401
+   5      7429.27    0.20218    0.087471     0.21359    0.090887
+   6      7425.80    0.20207    0.087350     0.21349    0.089835
+   7      7418.55    0.20185    0.086925     0.21414    0.090968
+   8      7407.38    0.20151    0.086864     0.21403    0.090401
+   8      7407.38    0.20151    0.086864     0.21403    0.090401
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   6      7425.80    0.20207    0.087350     0.21349    0.089835
+ 
+ 
+ 
+ 
+Search # 4 SINGLE LAYER trial # 2 : NORMAL : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           679865644    0.202818783659            8
+        2           335245709    0.202856275507            8
+        3           466641608    0.202987258108            8
+        4          2007033381    0.202943379215            8
+        5           796374574    0.203011769033            8
+        6           244017995    0.202919914625            8
+        7          1968674623    0.203099421465            8
+        8          2059748735     0.20292934539            8
+ 
+ 
+ 
+ 
+Search # 4 SINGLE LAYER trial # 2 : NORMAL : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7449.81    0.20280    0.087957     0.21383    0.090563
+   1      7444.57    0.20264    0.087957     0.21375    0.090240
+   2      7441.80    0.20256    0.088200     0.21397    0.089916
+   3      7438.95    0.20247    0.087835     0.21388    0.090240
+   4      7435.27    0.20236    0.087896     0.21376    0.089673
+   5      7432.25    0.20227    0.088017     0.21390    0.090159
+   6      7425.11    0.20205    0.087653     0.21398    0.090159
+   7      7414.57    0.20173    0.087957     0.21390    0.090887
+   8      7405.36    0.20145    0.086864     0.21384    0.090968
+   8      7405.36    0.20145    0.086864     0.21384    0.090968
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   4      7435.27    0.20236    0.087896     0.21376    0.089673
+ 
+ 
+ 
+ 
+Search # 4 SINGLE LAYER trial # 3 : SINE : Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1           679865644    0.203025451444            8
+        2           335245709    0.202558931628            8
+        3           466641608     0.20210050139            8
+        4          2007033381    0.202205732793            8
+        5           796374574    0.202770293247            8
+        6           244017995     0.20281960219            8
+        7          1968674623    0.202691740299            8
+        8          2059748735    0.202771242259            8
+ 
+ 
+ 
+ 
+Search # 4 SINGLE LAYER trial # 3 : SINE : Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7426.15    0.20208    0.087410     0.21498    0.091049
+   1      7424.69    0.20204    0.087471     0.21490    0.091130
+   2      7422.54    0.20197    0.086986     0.21506    0.091373
+   3      7418.43    0.20185    0.087046     0.21543    0.092020
+   4      7414.51    0.20173    0.087471     0.21548    0.091777
+   5      7408.45    0.20154    0.086803     0.21561    0.092587
+   6      7402.61    0.20137    0.086925     0.21597    0.092506
+   7      7394.93    0.20113    0.086500     0.21530    0.092263
+   8      7387.10    0.20090    0.086561     0.21520    0.091858
+   8      7387.10    0.20090    0.086561     0.21520    0.091858
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7426.15    0.20208    0.087410     0.21498    0.091049
+ 
+ 
+ 
+ 
+Final Training Prelim
+ 
+The NEURAL Procedure
+ 
+Preliminary       Starting         Objective         Number
+ Training          Random           Function           of        Terminating
+    Run             Seed             Value         Iterations     Criteria
+ 
+        1               12345    0.203103352715            8
+ 
+ 
+ 
+ 
+Final Training Training
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   0      7239.18    0.20308    0.087957     0.21429    0.090644
+   1      7236.49    0.20300    0.087835     0.21437    0.091130
+   2      7232.55    0.20288    0.088078     0.21419    0.091049
+   3      7230.13    0.20281    0.088078     0.21432    0.090078
+   4      7226.64    0.20270    0.088321     0.21419    0.090159
+   5      7223.40    0.20260    0.087593     0.21407    0.090644
+   5      7223.40    0.20260    0.087593     0.21407    0.090644
+ 
+ 
+ 
+ 
+Selected Iteration based on _VMISC_
+ 
+_ITER_     _AIC_     _AVERR_     _MISC_     _VAVERR_     _VMISC_
+ 
+   3      7230.13    0.20281    0.088078     0.21432    0.090078
+ 
+ 
+ 
+ 
+Final Training History
+ 
+    _step_     _func_ _status_  _iter_ _AVERR_  _MISC_   _AIC_  _VAVERR_ _VMISC_
+ 
+SINGLE LAYER 1 DIRECT initial      0   0.35205 0.11266 11707.20  0.35204 0.11266
+SINGLE LAYER 1 DIRECT candidate    3   0.20563 0.08838  6883.06  0.21292 0.09024
+SINGLE LAYER 1 TANH   reject       8   0.18716 0.08869  6388.68  0.19295 0.09251
+SINGLE LAYER 1 NORMAL reject       8   0.19252 0.09221  6565.27  0.19622 0.09404
+SINGLE LAYER 1 SINE   reject       2   0.19941 0.09093  6792.24  0.20199 0.09056
+SINGLE LAYER 1 DIRECT keep         3   0.20563 0.08838  6883.06  0.21292 0.09024
+SINGLE LAYER 2 TANH   reject       5   0.20447 0.08820  7064.82  0.21329 0.09064
+SINGLE LAYER 2 NORMAL candidate    0   0.20501 0.08808  7082.80  0.21296 0.08992
+SINGLE LAYER 2 SINE   reject       8   0.20496 0.08826  7081.14  0.21297 0.09032
+SINGLE LAYER 2 NORMAL keep         0   0.20501 0.08808  7082.80  0.21296 0.08992
+SINGLE LAYER 3 TANH   reject       5   0.20390 0.08729  7266.17  0.21272 0.09016
+SINGLE LAYER 3 NORMAL candidate    0   0.20375 0.08838  7261.18  0.21320 0.08935
+SINGLE LAYER 3 SINE   reject       3   0.20396 0.08777  7268.23  0.21350 0.09073
+SINGLE LAYER 3 NORMAL keep         0   0.20375 0.08838  7261.18  0.21320 0.08935
+SINGLE LAYER 4 TANH   reject       6   0.20207 0.08735  7425.80  0.21349 0.08983
+SINGLE LAYER 4 NORMAL reject       4   0.20236 0.08790  7435.27  0.21376 0.08967
+SINGLE LAYER 4 SINE   reject       0   0.20208 0.08741  7426.15  0.21498 0.09105
+                      Final        3   0.20281 0.08808  7230.13  0.21432 0.09008
+ 
+ 
+ 
+ 
+Final Model
+Stopping: Termination criteria were satisfied: overfitting based on _VMISC_
+ 
+_func_    _AVERR_    _VAVERR_    neurons
+ 
+DIRECT    0.20563     0.21292       0
+NORMAL    0.20501     0.21296       2
+NORMAL    0.20375     0.21320       2
+                                 =======
+                                    4
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Fit Statistics
+ 
+Target=RESPOND Target Label=RESPOND
+ 
+   Fit
+Statistics    Statistics Label                      Train    Validation        Test
+ 
+ _DFT_        Total Degrees of Freedom           16474.00          .            .
+ _DFE_        Degrees of Freedom for Error       16253.00          .            .
+ _DFM_        Model Degrees of Freedom             221.00          .            .
+ _NW_         Number of Estimated Weights          221.00          .            .
+ _AIC_        Akaike's Information Criterion     16151.73          .            .
+ _SBC_        Schwarz's Bayesian Criterion       17855.54          .            .
+ _ASE_        Average Squared Error                  0.11         0.11         0.11
+ _MAX_        Maximum Absolute Error                 1.00         1.00         1.00
+ _DIV_        Divisor for ASE                    32948.00     24712.00     24716.00
+ _NOBS_       Sum of Frequencies                 16474.00     12356.00     12358.00
+ _RASE_       Root Average Squared Error             0.33         0.33         0.33
+ _SSE_        Sum of Squared Errors               3594.18      2697.20      2697.06
+ _SUMW_       Sum of Case Weights Times Freq     32948.00     24712.00     24716.00
+ _FPE_        Final Prediction Error                 0.11          .            .
+ _MSE_        Mean Squared Error                     0.11         0.11         0.11
+ _RFPE_       Root Final Prediction Error            0.33          .            .
+ _RMSE_       Root Mean Squared Error                0.33         0.33         0.33
+ _AVERR_      Average Error Function                 0.48         0.48         0.48
+ _ERR_        Error Function                     15709.73     11855.70     11856.85
+ _MISC_       Misclassification Rate                 0.11         0.11         0.11
+ _WRONG_      Number of Wrong Classifications     1856.00      1392.00      1392.00
+ 
+ 
+ 
+ 
+Classification Table
+ 
+Data Role=TRAIN Target Variable=RESPOND Target Label=RESPOND
+ 
+                       Target        Outcome     Frequency       Total
+Target    Outcome    Percentage    Percentage      Count      Percentage
+ 
+ NO         NO         88.7338         100         14618        88.7338
+ YES        NO         11.2662         100          1856        11.2662
+ 
+ 
+Data Role=VALIDATE Target Variable=RESPOND Target Label=RESPOND
+ 
+                       Target        Outcome     Frequency       Total
+Target    Outcome    Percentage    Percentage      Count      Percentage
+ 
+ NO         NO         88.7342         100         10964        88.7342
+ YES        NO         11.2658         100          1392        11.2658
+ 
+ 
+ 
+ 
+Event Classification Table
+ 
+Data Role=TRAIN Target=RESPOND Target Label=RESPOND
+ 
+  False       True        False       True
+Negative    Negative    Positive    Positive
+ 
+  1856        14618         0           0
+ 
+ 
+Data Role=VALIDATE Target=RESPOND Target Label=RESPOND
+ 
+  False       True        False       True
+Negative    Negative    Positive    Positive
+ 
+  1392        10964         0           0
+ 
+ 
+ 
+ 
+Assessment Score Rankings
+ 
+Data Role=TRAIN Target Variable=RESPOND Target Label=RESPOND
+ 
+                                                                                    Mean
+                            Cumulative       %      Cumulative     Number of     Posterior
+Depth     Gain      Lift       Lift      Response   % Response   Observations   Probability
+ 
+   5    41.1124   1.41112     1.41112     15.8981     15.8981         824         0.024806
+  10    38.4194   1.35726     1.38419     15.2913     15.5947         824         0.022151
+  15    35.3674   1.29263     1.35367     14.5631     15.2508         824         0.020920
+  20    30.6494   1.16478     1.30649     13.1227     14.7193         823         0.019908
+  25    28.4327   1.19569     1.28433     13.4709     14.4695         824         0.019188
+  30    35.7539   1.72351     1.35754     19.4175     15.2944         824         0.018895
+  35    34.6959   1.28342     1.34696     14.4593     15.1752         823         0.018846
+  40    29.8413   0.95870     1.29841     10.8010     14.6282         824         0.018630
+  45    25.1079   0.87253     1.25108      9.8301     14.0950         824         0.018092
+  50    23.5991   1.10007     1.23599     12.3937     13.9250         823         0.017288
+  55    21.4693   1.00179     1.21469     11.2864     13.6850         824         0.016328
+  60    18.4375   0.85098     1.18437      9.5874     13.3434         824         0.015285
+  65    16.8668   0.98025     1.16867     11.0437     13.1665         824         0.014225
+  70    14.0682   0.77652     1.14068      8.7485     12.8512         823         0.013195
+  75    11.7052   0.78635     1.11705      8.8592     12.5850         824         0.012282
+  80     9.5704   0.77558     1.09570      8.7379     12.3445         824         0.011426
+  85     7.1240   0.67946     1.07124      7.6549     12.0688         823         0.010697
+  90     4.5230   0.60323     1.04523      6.7961     11.7758         824         0.009973
+  95     2.1960   0.60323     1.02196      6.7961     11.5136         824         0.009121
+ 100     0.0000   0.58239     1.00000      6.5614     11.2662         823         0.007222
+ 
+ 
+Data Role=VALIDATE Target Variable=RESPOND Target Label=RESPOND
+ 
+                                                                                    Mean
+                            Cumulative       %      Cumulative     Number of     Posterior
+Depth     Gain      Lift       Lift      Response   % Response   Observations   Probability
+ 
+   5    37.8864   1.37886     1.37886     15.5340     15.5340         618         0.024651
+  10    27.8322   1.17778     1.27832     13.2686     14.4013         618         0.022044
+  15    24.9595   1.19214     1.24960     13.4304     14.0777         618         0.020868
+  20    21.0097   1.09160     1.21010     12.2977     13.6327         618         0.019901
+  25    20.1149   1.16530     1.20115     13.1280     13.5319         617         0.019209
+  30    22.0190   1.31536     1.22019     14.8186     13.7464         618         0.018898
+  35    24.1675   1.37055     1.24167     15.4403     13.9884         618         0.018851
+  40    22.4708   1.10596     1.22471     12.4595     13.7973         618         0.018662
+  45    17.6395   0.78997     1.17640      8.8997     13.2530         618         0.018183
+  50    15.2299   0.93512     1.15230     10.5348     12.9815         617         0.017419
+  55    13.2412   0.93361     1.13241     10.5178     12.7575         618         0.016479
+  60    11.2248   0.89052     1.11225     10.0324     12.5303         618         0.015398
+  65    10.6239   1.03415     1.10624     11.6505     12.4626         618         0.014281
+  70    10.1089   1.03415     1.10109     11.6505     12.4046         618         0.013238
+  75     7.2797   0.67616     1.07280      7.6175     12.0859         617         0.012328
+  80     5.6911   0.81870     1.05691      9.2233     11.9069         618         0.011475
+  85     4.1204   0.78997     1.04120      8.8997     11.7300         618         0.010738
+  90     2.7243   0.78997     1.02724      8.8997     11.5727         618         0.009976
+  95     2.0802   0.90488     1.02080     10.1942     11.5001         618         0.009145
+ 100     0.0000   0.60423     1.00000      6.8071     11.2658         617         0.007137
+ 
+ 
+ 
+ 
+Assessment Score Distribution
+ 
+Data Role=TRAIN Target Variable=RESPOND Target Label=RESPOND
+ 
+ Posterior     Number                     Mean
+Probability      of      Number of     Posterior
+   Range       Events    Nonevents    Probability    Percentage
+ 
+ 0.10-0.15         0           4        0.11269         0.0243
+ 0.00-0.05      1856       14614        0.01590        99.9757
+ 
+ 
+Data Role=VALIDATE Target Variable=RESPOND Target Label=RESPOND
+ 
+ Posterior     Number                     Mean
+Probability      of      Number of     Posterior
+   Range       Events    Nonevents    Probability    Percentage
+ 
+ 0.10-0.15         2           1        0.11269         0.0243
+ 0.00-0.05      1390       10963        0.01592        99.9757

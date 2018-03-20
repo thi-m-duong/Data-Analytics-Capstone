@@ -1,0 +1,15 @@
+                                                             21:47 Saturday, March 26, 2016  17
+
+
+
+
+
+
+
+ 
+
+Obs    NAME         LABEL              NRULES    IMPORTANCE    VIMPORTANCE     RATIO
+
+ 1     DemAge       Age                   1        1.00000       1.00000      1.00000
+ 2     DemAffl      Affluence Grade       6        0.80354       0.76449      0.95141
+ 3     DemGender    Gender               10        0.52177       0.47777      0.91567

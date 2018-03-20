@@ -1,0 +1,2002 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                March 01, 2016
+Time:                12:34:06
+Site:                70085778
+Platform:            X64_7HOME
+Maintenance Release: 9.04.01M3P062415
+EM Version:          14.1
+* 
+*------------------------------------------------------------*
+* Training Log
+Date:                March 01, 2016
+Time:                12:33:55
+*------------------------------------------------------------*
+10867  proc freq data=EMWS1.Stat_VariableSet noprint;
+10868  table ROLE*LEVEL/out=WORK.StatMETA;
+10869  run;
+ 
+NOTE: There were 21 observations read from the data set EMWS1.STAT_VARIABLESET.
+NOTE: The data set WORK.STATMETA has 3 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10870  proc print data=WORK.StatMETA label noobs;
+10871  var ROLE LEVEL COUNT;
+10872  label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+10873  title9 ' ';
+10874  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+10875  run;
+ 
+NOTE: There were 3 observations read from the data set WORK.STATMETA.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10876  title10;
+ 
+10877  data WORK.M04BYJTS;
+10878  set WORK.M04BYJTS;
+10879  where((role in('TARGET' 'FREQ' 'INPUT') and use in('D','Y')) or (role = 'REJECTED' and use = 'Y'));
+10880  if ROLE = 'REJECTED' then role = 'INPUT';
+10881  run;
+ 
+NOTE: There were 21 observations read from the data set WORK.M04BYJTS.
+      WHERE (role in ('FREQ', 'INPUT', 'TARGET') and use in ('D', 'Y')) or ((role='REJECTED') and (use='Y'));
+NOTE: The data set WORK.M04BYJTS has 21 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10882  *------------------------------------------------------------*;
+10883  * Stat: Determining Analysis Variables;
+10884  *------------------------------------------------------------*;
+10885  *------------------------------------------------------------*;
+10886  * Stat: Creating Macros for Variable Selection;
+10887  *------------------------------------------------------------*;
+10888  *------------------------------------------------------------* ;
+10889  * Stat: Interval Input Variables Macro ;
+10890  *------------------------------------------------------------* ;
+10891  %macro INTINPUTS;
+10892      AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+10893  %mend INTINPUTS;
+10894  *------------------------------------------------------------*;
+10895  * Stat: Creating Macros for Variable Selection;
+10896  *------------------------------------------------------------*;
+10897  *------------------------------------------------------------* ;
+10898  * Stat: Binary and Nominal Input Variables Macro ;
+10899  *------------------------------------------------------------* ;
+10900  %macro NOMINPUTS;
+10901      CONTACT DEFAULT DOW EDUCATION HOUSING JOB LOAN MARITAL MONTH POUTCOME
+10902  %mend NOMINPUTS;
+10903  *------------------------------------------------------------*;
+10904  * Stat: Creating Macros for Variable Selection;
+10905  *------------------------------------------------------------*;
+10906  *------------------------------------------------------------* ;
+10907  * Stat: Ordinal Input Variables Macro ;
+10908  *------------------------------------------------------------* ;
+10909  %macro ORDINPUTS;
+10910
+10911  %mend ORDINPUTS;
+10912  data work.EM_Stat_tree / view=work.EM_Stat_tree;
+10913  set EMWS1.Ids_DATA(obs=100000 keep=%INTINPUTS %ORDINPUTS %NOMINPUTS RESPOND);
+10914  run;
+ 
+NOTE: DATA STEP view saved on file WORK.EM_STAT_TREE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+ 
+ 
+10915  proc arbor data=EMWS1.Ids_DATA(obs=100000 keep=%INTINPUTS %ORDINPUTS %NOMINPUTS RESPOND) Criterion=GINI Leafsize=5 Mincatsize = 5 Maxbranch=5 Maxdepth=1 Padjust= NONE NORULELIMIT MAXRULES=20 MAXSURRS=0 Missing=USEINSEARCH Exhaustive=5000;
+WARNING: PADJUST and PVAR options are ignored with this splitting criterion.
+10916  input %INTINPUTS / level = interval;
+10917  input %NOMINPUTS / level=nominal;
+10918  target RESPOND / level=NOMINAL;
+10919  Performance Disk NodeSize=10000;
+10920  Assess NoValidata measure=MISC;
+NOTE: 1601768 kilobytes of physical memory.
+NOTE: Will use 41188 out of 41188 training cases.
+NOTE: Using memory pool with 291472384 bytes.
+NOTE: Passed training data 2 times.
+NOTE: Training used 5219144 bytes of work memory.
+NOTE: The subtree sequence contains 2 subtrees. The largest has 6 nodes and 5 leaves.
+NOTE: Using subtree with 6 nodes and 5 leaves.
+10921  SUBTREE BEST;
+NOTE: Using subtree with 6 nodes and 5 leaves.
+10922  save RULES=WORK.Stat_RULE;
+NOTE: The data set WORK.STAT_RULE has 192 observations and 6 variables.
+10923  run;
+ 
+10924  quit;
+ 
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.87 seconds
+      cpu time            0.48 seconds
+ 
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: There were 41188 observations read from the data set EMWS1.IDS_DATA.
+NOTE: PROCEDURE ARBOR used (Total process time):
+      real time           0.90 seconds
+      cpu time            0.48 seconds
+ 
+ 
+10925  data WORK.Stat_RULE(keep=Target Name Rank Numeric_Value StatVar rename=(numeric_value=Worth));
+10926  label Target = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,      NOQUOTE))" Name = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel,    NOQUOTE))" Rank = "%sysfunc(sasmsg(sashelp.dmine, rpt_importance_vlabel,  NOQUOTE))" Numeric_Value =
+10927     "%sysfunc(sasmsg(sashelp.dmine, rpt_worth_vlabel,       NOQUOTE))" StatVar = "%sysfunc(sasmsg(sashelp.dmine, rpt_analysisVar_vlabel, NOQUOTE))";
+10928  length Target $32 Name $32;
+10929  retain TARGET "RESPOND" Name;
+10930  format STATVAR 6.0;
+10931  set WORK.Stat_RULE;
+10932  where stat in('VARIABLE','WORTH');
+10933  if stat = 'VARIABLE' then Name = character_value;
+10934  else do;
+10935  if _N_<= 2*1000 then STATVAR=1;
+10936  else STATVAR=0;
+10937  output;
+10938  end;
+10939  run;
+ 
+NOTE: There were 40 observations read from the data set WORK.STAT_RULE.
+      WHERE stat in ('VARIABLE', 'WORTH');
+NOTE: The data set WORK.STAT_RULE has 20 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10940  proc append base=EMWS1.Stat_WORTH data=WORK.Stat_RULE force;
+10941  run;
+ 
+NOTE: Appending WORK.STAT_RULE to EMWS1.STAT_WORTH.
+NOTE: BASE data set does not exist. DATA file is being copied to BASE file.
+NOTE: There were 20 observations read from the data set WORK.STAT_RULE.
+NOTE: The data set EMWS1.STAT_WORTH has 20 observations and 5 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10942  *------------------------------------------------------------*;
+10943  * Stat: Counting Levels;
+10944  *------------------------------------------------------------*;
+10945  proc sql;
+10946  create view WORK.Stat_distinct as select distinct RESPOND from EMWS1.Ids_DATA(obs=100000);
+NOTE: SQL view WORK.STAT_DISTINCT has been defined.
+10947  quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10948  proc sql;
+10949  reset noprint;
+10950  select count(*) into :_tmpcount from WORK.Stat_distinct;
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+ 
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+10951  quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+ 
+ 
+10952  proc sort data=WORK.Stat_count NOTHREADS;
+10953  by NAME ROLE DATA;
+10954  run;
+ 
+NOTE: There were 1 observations read from the data set WORK.STAT_COUNT.
+NOTE: The data set WORK.STAT_COUNT has 1 observations and 4 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10955  proc print data=WORK.Stat_count(obs=500) label noobs;
+10956  label NAME = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel,    NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel,       NOQUOTE))" ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel,       NOQUOTE))";
+10957  var NAME ROLE COUNT;
+10958  title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_varLevels_title, NOQUOTE))";
+10959  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title, NOQUOTE))";
+10960  run;
+ 
+NOTE: There were 1 observations read from the data set WORK.STAT_COUNT.
+NOTE: The PROCEDURE PRINT printed page 2.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10961  title9;
+10962  title10;
+ 
+10963  proc sort data=EMWS1.Stat_WORTH nodupkey out=WORK.Stat_SELVAR(keep=Name StatVar);
+10964  by NAME;
+10965  where statvar=1;
+10966  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_WORTH.
+      WHERE statvar=1;
+NOTE: 0 observations with duplicate key values were deleted.
+NOTE: The data set WORK.STAT_SELVAR has 20 observations and 2 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10967  proc sort data=EMWS1.Stat_WORTH;
+10968  by Rank;
+10969  where statvar=1;
+10970  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_WORTH.
+      WHERE statvar=1;
+NOTE: The data set EMWS1.STAT_WORTH has 20 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10971  proc sort data=WORK.M11C8CEQ;
+10972  by name;
+10973  run;
+ 
+NOTE: There were 21 observations read from the data set WORK.M11C8CEQ.
+NOTE: The data set WORK.M11C8CEQ has 21 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10974  data WORK.Stat_analysisMeta;
+10975  merge WORK.M11C8CEQ WORK.Stat_SELVAR(in=_a);
+10976  by name;
+10977  if _a then STATVAR = 1;
+10978  else if ROLE in('INPUT', 'REJECTED') and REPORT ne 'Y' then delete;
+10979  if REPORT eq 'Y' then STATVAR = 1;
+10980  run;
+ 
+NOTE: There were 21 observations read from the data set WORK.M11C8CEQ.
+NOTE: There were 20 observations read from the data set WORK.STAT_SELVAR.
+NOTE: The data set WORK.STAT_ANALYSISMETA has 21 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10981  data WORK.M3LDUQ1J;
+10982  set WORK.M3LDUQ1J;
+10983  where(use = 'Y' or Report='Y' or (role in('TARGET' 'FREQ' 'PREDICT' 'RESIDUAL' 'INPUT') and use = 'D'));
+10984  if ROLE = 'SEGMENT' then delete;
+10985  else if ROLE ^in('FREQ','TARGET') then role = 'INPUT';
+10986  run;
+ 
+NOTE: There were 21 observations read from the data set WORK.M3LDUQ1J.
+      WHERE (use='Y') or (Report='Y') or (role in ('FREQ', 'INPUT', 'PREDICT', 'RESIDUAL', 'TARGET') and (use='D'));
+NOTE: The data set WORK.M3LDUQ1J has 21 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+10987  data WORK.M0Z_KFQT;
+10988  set WORK.M0Z_KFQT;
+10989  where(use = 'Y' or Report='Y' or (role in('SEGMENT', 'TARGET' 'FREQ' 'PREDICT' 'RESIDUAL' 'INPUT') and use = 'D'));
+10990  if ROLE ne 'FREQ' then role = 'INPUT';
+10991  run;
+ 
+NOTE: There were 21 observations read from the data set WORK.M0Z_KFQT.
+      WHERE (use='Y') or (Report='Y') or (role in ('FREQ', 'INPUT', 'PREDICT', 'RESIDUAL', 'SEGMENT', 'TARGET') and (use='D'));
+NOTE: The data set WORK.M0Z_KFQT has 21 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+10992  *------------------------------------------------------------*;
+10993  * Stat: Computing Statistics for Interval Variables;
+10994  *------------------------------------------------------------*;
+10995  proc dmdb data=EMWS1.Ids_DATA(obs=100000) nonorm maxlevel=513
+10996  varout=work._DMDBVAR(RENAME=(NAME=VARIABLE))
+10997  classout=WORK.StatCLASS(drop=NMISSPERCENT rename=(NAME=VARIABLE FREQUENCY=COUNT FREQPERCENT=PERCENT))
+10998  ;
+10999  var
+11000  AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+11001  ;
+11002  class
+11003  CONTACT DEFAULT DOW EDUCATION HOUSING JOB LOAN MARITAL MONTH POUTCOME RESPOND
+11004  ;
+11005  ;
+11006  run;
+ 
+NOTE: Records processed = 41188   Memory used = 511K.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+ 
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: There were 41188 observations read from the data set EMWS1.IDS_DATA.
+NOTE: The data set WORK._DMDBVAR has 10 observations and 9 variables.
+NOTE: The data set WORK.STATCLASS has 55 observations and 8 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+ 
+ 
+11007  proc stdize data = EMWS1.Ids_DATA(obs=100000) out=_null_ outstat=work._STDIZE add=0 fuzz=1E-14 initial=MAD vardef=df method=STD mult=1 pctlmtd=ORD_STAT pctldef=2 pctlpts=(0 5 50 95 100);
+11008  var
+11009  AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+11010  ;
+11011  run;
+ 
+NOTE: INITIAL= will be ignored.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.15 seconds
+      cpu time            0.09 seconds
+ 
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: There were 41188 observations read from the data set EMWS1.IDS_DATA.
+NOTE: The data set WORK._STDIZE has 13 observations and 11 variables.
+NOTE: PROCEDURE STDIZE used (Total process time):
+      real time           0.15 seconds
+      cpu time            0.09 seconds
+ 
+ 
+11012  proc transpose data=work._STDIZE out=work._TRANSSTDIZE(drop=_LABEL_ rename=(_NAME_=VARIABLE));
+11013  id _type_;
+11014  where _TYPE_='P50';
+11015  run;
+ 
+NOTE: There were 1 observations read from the data set WORK._STDIZE.
+      WHERE _TYPE_='P50';
+NOTE: The data set WORK._TRANSSTDIZE has 10 observations and 2 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11016  proc sort data=work._TRANSSTDIZE;
+11017  by VARIABLE;
+11018  run;
+ 
+NOTE: There were 10 observations read from the data set WORK._TRANSSTDIZE.
+NOTE: The data set WORK._TRANSSTDIZE has 10 observations and 2 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11019  proc sort data=work._DMDBVAR;
+11020  by VARIABLE;
+11021  run;
+ 
+NOTE: There were 10 observations read from the data set WORK._DMDBVAR.
+NOTE: The data set WORK._DMDBVAR has 10 observations and 9 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11022  data WORK.StatINTERVAL;
+11023  merge work._TRANSSTDIZE work._DMDBVAR;
+11024  format N NMISS 8. MIN MAX P50 MEAN STD SKEWNESS KURTOSIS BEST8.3;
+11025  by VARIABLE;
+11026  run;
+ 
+WARNING: Multiple lengths were specified for the BY variable VARIABLE by input data sets. This might cause unexpected results.
+NOTE: There were 10 observations read from the data set WORK._TRANSSTDIZE.
+NOTE: There were 10 observations read from the data set WORK._DMDBVAR.
+NOTE: The data set WORK.STATINTERVAL has 10 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11027  proc sort data=WORK.StatCLASS;
+11028  by Variable Level;
+11029  run;
+ 
+NOTE: There were 55 observations read from the data set WORK.STATCLASS.
+NOTE: The data set WORK.STATCLASS has 55 observations and 8 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+NOTE: There were 13 observations read from the data set WORK._STDIZE.
+NOTE: The data set EMWS1.STAT_TRAINPCTLS has 13 observations and 11 variables.
+11030  data colorindex;
+11031  retain LevelIndex 0;
+11032  set WORK.StatCLASS(keep=Variable Level);
+11033  by variable level;
+11034  if first.variable then LevelIndex = 0;
+11035  if first.level then LevelIndex + 1;
+11036  run;
+ 
+NOTE: There were 55 observations read from the data set WORK.STATCLASS.
+NOTE: The data set WORK.COLORINDEX has 55 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11037  data WORK.StatCLASS;
+11038  merge WORK.StatCLASS(in=_a) colorindex;
+11039  by variable level;
+11040  if _a then output;
+11041  run;
+ 
+NOTE: There were 55 observations read from the data set WORK.STATCLASS.
+NOTE: There were 55 observations read from the data set WORK.COLORINDEX.
+NOTE: The data set WORK.STATCLASS has 55 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11042  data WORK.StatINTERVAL;
+11043  length DATAROLE $20;
+11044  retain DATAROLE "TRAIN";
+11045  length Target $32 TargetValue $32;
+11046  label Target = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel, NOQUOTE))" TargetValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetlevel_vlabel, NOQUOTE))";
+11047  retain Target '_OVERALL_';
+11048  set WORK.StatINTERVAL;
+11049  run;
+ 
+NOTE: Variable TargetValue is uninitialized.
+NOTE: There were 10 observations read from the data set WORK.STATINTERVAL.
+NOTE: The data set WORK.STATINTERVAL has 10 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11050  proc append base=EMWS1.Stat_INTERVAL data=WORK.StatINTERVAL force;
+11051  run;
+ 
+NOTE: Appending WORK.STATINTERVAL to EMWS1.STAT_INTERVAL.
+NOTE: BASE data set does not exist. DATA file is being copied to BASE file.
+NOTE: There were 10 observations read from the data set WORK.STATINTERVAL.
+NOTE: The data set EMWS1.STAT_INTERVAL has 10 observations and 13 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11052  data WORK.StatCLASS;
+11053  length DATAROLE $20;
+11054  retain DATAROLE "TRAIN";
+11055  length Target $32 TargetValue $32;
+11056  label Target = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel, NOQUOTE))" TargetValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetlevel_vlabel, NOQUOTE))";
+11057  retain Target '_OVERALL_';
+11058  set WORK.StatCLASS;
+11059  run;
+ 
+NOTE: Variable TargetValue is uninitialized.
+NOTE: There were 55 observations read from the data set WORK.STATCLASS.
+NOTE: The data set WORK.STATCLASS has 55 observations and 12 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11060  proc append base=EMWS1.Stat_CLASS data=WORK.StatCLASS force;
+11061  run;
+ 
+NOTE: Appending WORK.STATCLASS to EMWS1.STAT_CLASS.
+NOTE: BASE data set does not exist. DATA file is being copied to BASE file.
+NOTE: There were 55 observations read from the data set WORK.STATCLASS.
+NOTE: The data set EMWS1.STAT_CLASS has 55 observations and 12 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11062  data WORK.M02HGQX_;
+11063  set WORK.M02HGQX_;
+11064  where(use = 'Y' or Report='Y' or (role in('TARGET' 'FREQ' 'PREDICT' 'RESIDUAL' 'INPUT') and use = 'D'));
+11065  if ROLE = 'SEGMENT' or (ROLE = 'TARGET' and LEVEL ne 'INTERVAL') then delete;
+11066  else if ROLE ne 'FREQ' then role = 'INPUT';
+11067  run;
+ 
+NOTE: There were 21 observations read from the data set WORK.M02HGQX_.
+      WHERE (use='Y') or (Report='Y') or (role in ('FREQ', 'INPUT', 'PREDICT', 'RESIDUAL', 'TARGET') and (use='D'));
+NOTE: The data set WORK.M02HGQX_ has 20 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11068  proc freq data=EMWS1.Ids_DATA noprint;
+11069  table
+11070  RESPOND / out=EMWS1.Stat_BYVAR(drop=COUNT PERCENT) missing;
+11071  run;
+ 
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+ 
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: There were 41188 observations read from the data set EMWS1.IDS_DATA.
+NOTE: The data set EMWS1.STAT_BYVAR has 2 observations and 1 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+ 
+ 
+11072  data WORK.STATEXPLORE_DATA / view=WORK.STATEXPLORE_DATA;
+11073  set EMWS1.Ids_DATA;
+11074  where put(RESPOND,$3.) ="no";
+11075  run;
+ 
+NOTE: DATA STEP view saved on file WORK.STATEXPLORE_DATA.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+ 
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+ 
+ 
+11076  *------------------------------------------------------------*;
+11077  * Stat: Computing Statistics for Interval Variables;
+11078  *------------------------------------------------------------*;
+11079  proc dmdb data=WORK.STATEXPLORE_DATA(obs=100000) nonorm maxlevel=513
+11080  varout=work._DMDBVAR(RENAME=(NAME=VARIABLE))
+11081  classout=WORK.StatCLASS(drop=NMISSPERCENT rename=(NAME=VARIABLE FREQUENCY=COUNT FREQPERCENT=PERCENT))
+11082  ;
+11083  var
+11084  AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+11085  ;
+11086  class
+11087  CONTACT DEFAULT DOW EDUCATION HOUSING JOB LOAN MARITAL MONTH POUTCOME
+11088  ;
+11089  ;
+11090  run;
+ 
+NOTE: Records processed = 36548   Memory used = 511K.
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: View WORK.STATEXPLORE_DATA.VIEW used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.09 seconds
+ 
+NOTE: There were 36548 observations read from the data set EMWS1.IDS_DATA.
+      WHERE PUT(RESPOND, $3.)='no';
+NOTE: There were 36548 observations read from the data set WORK.STATEXPLORE_DATA.
+NOTE: The data set WORK._DMDBVAR has 10 observations and 9 variables.
+NOTE: The data set WORK.STATCLASS has 53 observations and 8 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.11 seconds
+ 
+ 
+11091  proc stdize data = WORK.STATEXPLORE_DATA(obs=100000) out=_null_ outstat=work._STDIZE add=0 fuzz=1E-14 initial=MAD vardef=df method=STD mult=1 pctlmtd=ORD_STAT pctldef=2 pctlpts=(0 5 50 95 100);
+11092  var
+11093  AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+11094  ;
+11095  run;
+ 
+NOTE: INITIAL= will be ignored.
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: View WORK.STATEXPLORE_DATA.VIEW used (Total process time):
+      real time           0.14 seconds
+      cpu time            0.14 seconds
+ 
+NOTE: There were 36548 observations read from the data set EMWS1.IDS_DATA.
+      WHERE PUT(RESPOND, $3.)='no';
+NOTE: There were 36548 observations read from the data set WORK.STATEXPLORE_DATA.
+NOTE: The data set WORK._STDIZE has 13 observations and 11 variables.
+NOTE: PROCEDURE STDIZE used (Total process time):
+      real time           0.15 seconds
+      cpu time            0.15 seconds
+ 
+ 
+11096  proc transpose data=work._STDIZE out=work._TRANSSTDIZE(drop=_LABEL_ rename=(_NAME_=VARIABLE));
+11097  id _type_;
+11098  where _TYPE_='P50';
+11099  run;
+ 
+NOTE: There were 1 observations read from the data set WORK._STDIZE.
+      WHERE _TYPE_='P50';
+NOTE: The data set WORK._TRANSSTDIZE has 10 observations and 2 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11100  proc sort data=work._TRANSSTDIZE;
+11101  by VARIABLE;
+11102  run;
+ 
+NOTE: There were 10 observations read from the data set WORK._TRANSSTDIZE.
+NOTE: The data set WORK._TRANSSTDIZE has 10 observations and 2 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11103  proc sort data=work._DMDBVAR;
+11104  by VARIABLE;
+11105  run;
+ 
+NOTE: There were 10 observations read from the data set WORK._DMDBVAR.
+NOTE: The data set WORK._DMDBVAR has 10 observations and 9 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11106  data WORK.StatINTERVAL;
+11107  merge work._TRANSSTDIZE work._DMDBVAR;
+11108  format N NMISS 8. MIN MAX P50 MEAN STD SKEWNESS KURTOSIS BEST8.3;
+11109  by VARIABLE;
+11110  run;
+ 
+WARNING: Multiple lengths were specified for the BY variable VARIABLE by input data sets. This might cause unexpected results.
+NOTE: There were 10 observations read from the data set WORK._TRANSSTDIZE.
+NOTE: There were 10 observations read from the data set WORK._DMDBVAR.
+NOTE: The data set WORK.STATINTERVAL has 10 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11111  proc sort data=WORK.StatCLASS;
+11112  by Variable Level;
+11113  run;
+ 
+NOTE: There were 53 observations read from the data set WORK.STATCLASS.
+NOTE: The data set WORK.STATCLASS has 53 observations and 8 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11114  data WORK.StatCLASS;
+11115  merge WORK.StatCLASS(in=_a) colorindex;
+11116  by variable level;
+11117  if _a then output;
+11118  run;
+ 
+NOTE: There were 53 observations read from the data set WORK.STATCLASS.
+NOTE: There were 55 observations read from the data set WORK.COLORINDEX.
+NOTE: The data set WORK.STATCLASS has 53 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11119  data WORK.StatINTERVAL;
+11120  length DATAROLE $20;
+11121  retain DATAROLE "TRAIN";
+11122  length Target $32 TargetValue $32;
+11123  label Target = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel, NOQUOTE))" TargetValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetlevel_vlabel, NOQUOTE))";
+11124  Target = "RESPOND";
+11125  TargetValue = 'no';
+11126  set WORK.StatINTERVAL;
+11127  run;
+ 
+NOTE: There were 10 observations read from the data set WORK.STATINTERVAL.
+NOTE: The data set WORK.STATINTERVAL has 10 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11128  proc append base=EMWS1.Stat_INTERVAL data=WORK.StatINTERVAL force;
+11129  run;
+ 
+NOTE: Appending WORK.STATINTERVAL to EMWS1.STAT_INTERVAL.
+NOTE: There were 10 observations read from the data set WORK.STATINTERVAL.
+NOTE: 10 observations added.
+NOTE: The data set EMWS1.STAT_INTERVAL has 20 observations and 13 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11130  data WORK.StatCLASS;
+11131  length DATAROLE $20;
+11132  retain DATAROLE "TRAIN";
+11133  length Target $32 TargetValue $32;
+11134  label Target = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel, NOQUOTE))" TargetValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetlevel_vlabel, NOQUOTE))";
+11135  Target = "RESPOND";
+11136  TargetValue = 'no';
+11137  set WORK.StatCLASS;
+11138  run;
+ 
+NOTE: There were 53 observations read from the data set WORK.STATCLASS.
+NOTE: The data set WORK.STATCLASS has 53 observations and 12 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11139  proc append base=EMWS1.Stat_CLASS data=WORK.StatCLASS force;
+11140  run;
+ 
+NOTE: Appending WORK.STATCLASS to EMWS1.STAT_CLASS.
+NOTE: There were 53 observations read from the data set WORK.STATCLASS.
+NOTE: 53 observations added.
+NOTE: The data set EMWS1.STAT_CLASS has 108 observations and 12 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11141  data WORK.STATEXPLORE_DATA / view=WORK.STATEXPLORE_DATA;
+11142  set EMWS1.Ids_DATA;
+11143  where put(RESPOND,$3.) ="yes";
+11144  run;
+ 
+NOTE: DATA STEP view saved on file WORK.STATEXPLORE_DATA.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+ 
+ 
+11145  *------------------------------------------------------------*;
+11146  * Stat: Computing Statistics for Interval Variables;
+11147  *------------------------------------------------------------*;
+11148  proc dmdb data=WORK.STATEXPLORE_DATA(obs=100000) nonorm maxlevel=513
+11149  varout=work._DMDBVAR(RENAME=(NAME=VARIABLE))
+11150  classout=WORK.StatCLASS(drop=NMISSPERCENT rename=(NAME=VARIABLE FREQUENCY=COUNT FREQPERCENT=PERCENT))
+11151  ;
+11152  var
+11153  AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+11154  ;
+11155  class
+11156  CONTACT DEFAULT DOW EDUCATION HOUSING JOB LOAN MARITAL MONTH POUTCOME
+11157  ;
+11158  ;
+11159  run;
+ 
+NOTE: Records processed = 4640   Memory used = 511K.
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: View WORK.STATEXPLORE_DATA.VIEW used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+ 
+NOTE: There were 4640 observations read from the data set EMWS1.IDS_DATA.
+      WHERE PUT(RESPOND, $3.)='yes';
+NOTE: There were 4640 observations read from the data set WORK.STATEXPLORE_DATA.
+NOTE: The data set WORK._DMDBVAR has 10 observations and 9 variables.
+NOTE: The data set WORK.STATCLASS has 52 observations and 8 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+ 
+ 
+11160  proc stdize data = WORK.STATEXPLORE_DATA(obs=100000) out=_null_ outstat=work._STDIZE add=0 fuzz=1E-14 initial=MAD vardef=df method=STD mult=1 pctlmtd=ORD_STAT pctldef=2 pctlpts=(0 5 50 95 100);
+11161  var
+11162  AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+11163  ;
+11164  run;
+ 
+NOTE: INITIAL= will be ignored.
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: View WORK.STATEXPLORE_DATA.VIEW used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.12 seconds
+ 
+NOTE: There were 4640 observations read from the data set EMWS1.IDS_DATA.
+      WHERE PUT(RESPOND, $3.)='yes';
+NOTE: There were 4640 observations read from the data set WORK.STATEXPLORE_DATA.
+NOTE: The data set WORK._STDIZE has 13 observations and 11 variables.
+NOTE: PROCEDURE STDIZE used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.12 seconds
+ 
+ 
+11165  proc transpose data=work._STDIZE out=work._TRANSSTDIZE(drop=_LABEL_ rename=(_NAME_=VARIABLE));
+11166  id _type_;
+11167  where _TYPE_='P50';
+11168  run;
+ 
+NOTE: There were 1 observations read from the data set WORK._STDIZE.
+      WHERE _TYPE_='P50';
+NOTE: The data set WORK._TRANSSTDIZE has 10 observations and 2 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11169  proc sort data=work._TRANSSTDIZE;
+11170  by VARIABLE;
+11171  run;
+ 
+NOTE: There were 10 observations read from the data set WORK._TRANSSTDIZE.
+NOTE: The data set WORK._TRANSSTDIZE has 10 observations and 2 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11172  proc sort data=work._DMDBVAR;
+11173  by VARIABLE;
+11174  run;
+ 
+NOTE: There were 10 observations read from the data set WORK._DMDBVAR.
+NOTE: The data set WORK._DMDBVAR has 10 observations and 9 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11175  data WORK.StatINTERVAL;
+11176  merge work._TRANSSTDIZE work._DMDBVAR;
+11177  format N NMISS 8. MIN MAX P50 MEAN STD SKEWNESS KURTOSIS BEST8.3;
+11178  by VARIABLE;
+11179  run;
+ 
+WARNING: Multiple lengths were specified for the BY variable VARIABLE by input data sets. This might cause unexpected results.
+NOTE: There were 10 observations read from the data set WORK._TRANSSTDIZE.
+NOTE: There were 10 observations read from the data set WORK._DMDBVAR.
+NOTE: The data set WORK.STATINTERVAL has 10 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11180  proc sort data=WORK.StatCLASS;
+11181  by Variable Level;
+11182  run;
+ 
+NOTE: There were 52 observations read from the data set WORK.STATCLASS.
+NOTE: The data set WORK.STATCLASS has 52 observations and 8 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11183  data WORK.StatCLASS;
+11184  merge WORK.StatCLASS(in=_a) colorindex;
+11185  by variable level;
+11186  if _a then output;
+11187  run;
+ 
+NOTE: There were 52 observations read from the data set WORK.STATCLASS.
+NOTE: There were 55 observations read from the data set WORK.COLORINDEX.
+NOTE: The data set WORK.STATCLASS has 52 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11188  data WORK.StatINTERVAL;
+11189  length DATAROLE $20;
+11190  retain DATAROLE "TRAIN";
+11191  length Target $32 TargetValue $32;
+11192  label Target = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel, NOQUOTE))" TargetValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetlevel_vlabel, NOQUOTE))";
+11193  Target = "RESPOND";
+11194  TargetValue = 'yes';
+11195  set WORK.StatINTERVAL;
+11196  run;
+ 
+NOTE: There were 10 observations read from the data set WORK.STATINTERVAL.
+NOTE: The data set WORK.STATINTERVAL has 10 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11197  proc append base=EMWS1.Stat_INTERVAL data=WORK.StatINTERVAL force;
+11198  run;
+ 
+NOTE: Appending WORK.STATINTERVAL to EMWS1.STAT_INTERVAL.
+NOTE: There were 10 observations read from the data set WORK.STATINTERVAL.
+NOTE: 10 observations added.
+NOTE: The data set EMWS1.STAT_INTERVAL has 30 observations and 13 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11199  data WORK.StatCLASS;
+11200  length DATAROLE $20;
+11201  retain DATAROLE "TRAIN";
+11202  length Target $32 TargetValue $32;
+11203  label Target = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel, NOQUOTE))" TargetValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetlevel_vlabel, NOQUOTE))";
+11204  Target = "RESPOND";
+11205  TargetValue = 'yes';
+11206  set WORK.StatCLASS;
+11207  run;
+ 
+NOTE: There were 52 observations read from the data set WORK.STATCLASS.
+NOTE: The data set WORK.STATCLASS has 52 observations and 12 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11208  proc append base=EMWS1.Stat_CLASS data=WORK.StatCLASS force;
+11209  run;
+ 
+NOTE: Appending WORK.STATCLASS to EMWS1.STAT_CLASS.
+NOTE: There were 52 observations read from the data set WORK.STATCLASS.
+NOTE: 52 observations added.
+NOTE: The data set EMWS1.STAT_CLASS has 160 observations and 12 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11210  proc sort data=EMWS1.Stat_VariableSet out=tempVariable(keep=name label role rename=(name=variable));
+11211  by name;
+11212  run;
+ 
+NOTE: There were 21 observations read from the data set EMWS1.STAT_VARIABLESET.
+NOTE: The data set WORK.TEMPVARIABLE has 21 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11213  proc sort data=EMWS1.Stat_CLASS;
+11214  by Variable;
+11215  run;
+ 
+NOTE: There were 160 observations read from the data set EMWS1.STAT_CLASS.
+NOTE: The data set EMWS1.STAT_CLASS has 160 observations and 12 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11216  data EMWS1.Stat_CLASS;
+11217  merge EMWS1.Stat_CLASS(in=_a) tempVariable;
+11218  by variable;
+11219  if label = '' then label=Variable;
+11220  if _a then output;
+11221  run;
+ 
+WARNING: Multiple lengths were specified for the BY variable VARIABLE by input data sets. This might cause unexpected results.
+NOTE: There were 160 observations read from the data set EMWS1.STAT_CLASS.
+NOTE: There were 21 observations read from the data set WORK.TEMPVARIABLE.
+NOTE: The data set EMWS1.STAT_CLASS has 160 observations and 14 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11222  proc sort data=EMWS1.Stat_INTERVAL NOTHREADS;
+11223  by DATAROLE
+11224  Target TargetValue
+11225  ;
+11226  run;
+ 
+NOTE: There were 30 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: The data set EMWS1.STAT_INTERVAL has 30 observations and 13 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11227  run;
+11228  proc sort data=EMWS1.Stat_VariableSet out=tempVariable(keep=name label role rename=(name=variable));
+11229  by name;
+11230  run;
+ 
+NOTE: There were 21 observations read from the data set EMWS1.STAT_VARIABLESET.
+NOTE: The data set WORK.TEMPVARIABLE has 21 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11231  proc sort data=EMWS1.Stat_INTERVAL;
+11232  by Variable;
+11233  run;
+ 
+NOTE: There were 30 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: The data set EMWS1.STAT_INTERVAL has 30 observations and 13 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11234  data EMWS1.Stat_INTERVAL;
+11235  merge EMWS1.Stat_INTERVAL(in=_a) tempVariable;
+11236  by variable;
+11237  if label = '' then label=Variable;
+11238  if _a then output;
+11239  run;
+ 
+WARNING: Multiple lengths were specified for the BY variable VARIABLE by input data sets. This might cause unexpected results.
+NOTE: There were 30 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: There were 21 observations read from the data set WORK.TEMPVARIABLE.
+NOTE: The data set EMWS1.STAT_INTERVAL has 30 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11240  proc datasets library=EMWS1 nolist;
+11241  modify Stat_INTERVAL;
+11242  label DATAROLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_datarole_vlabel, NOQUOTE))";
+11243  label Variable = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))";
+11244  label MEAN = "%sysfunc(sasmsg(sashelp.dmine, rpt_mean_vlabel,    NOQUOTE))";
+11245  label N = "%sysfunc(sasmsg(sashelp.dmine, rpt_nonMiss_vlabel, NOQUOTE))";
+11246  label STD = "%sysfunc(sasmsg(sashelp.dmine, rpt_std_vlabel,     NOQUOTE))";
+11247  label NMISS = "%sysfunc(sasmsg(sashelp.dmine, rpt_missing_vlabel, NOQUOTE))";
+11248  label p50 = "%sysfunc(sasmsg(sashelp.dmine, rpt_median_vlabel, NOQUOTE))";
+11249  label MIN = "%sysfunc(sasmsg(sashelp.dmine, rpt_minimum_vlabel, NOQUOTE))";
+11250  label MAX = "%sysfunc(sasmsg(sashelp.dmine, rpt_maximum_vlabel, NOQUOTE))";
+11251  label SKEWNESS = "%sysfunc(sasmsg(sashelp.dmine, rpt_skewness_vlabel, NOQUOTE))";
+11252  label KURTOSIS = "%sysfunc(sasmsg(sashelp.dmine, rpt_kurtosis_vlabel, NOQUOTE))";
+11253  label TARGET = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,   NOQUOTE))" TARGETVALUE = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetLevel_vlabel,   NOQUOTE))";
+11254  run;
+ 
+NOTE: MODIFY was successful for EMWS1.STAT_INTERVAL.DATA.
+ 
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11255  proc sort data=EMWS1.Stat_CLASS NOTHREADS;
+11256  by DATAROLE ROLE Variable descending COUNT;
+11257  run;
+ 
+NOTE: There were 160 observations read from the data set EMWS1.STAT_CLASS.
+NOTE: The data set EMWS1.STAT_CLASS has 160 observations and 14 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11258  data WORK.StatCLASS(keep=DATAROLE Variable ROLE Numcat Nmiss Mode ModePct Mode2 Mode2Pct);
+11259  set EMWS1.Stat_CLASS;
+11260  length Mode Mode2 $32;
+11261  retain NMiss 0 ModePct 0 Mode2Pct 0 Mode '' Mode2 '';
+11262  by DATAROLE ROLE Variable;
+11263  if first.DATAROLE or first.variable then do;
+11264  Numcat = 1;
+11265  NMiss = 0;
+11266  Mode = strip(LEVEL);
+11267  ModePct = PERCENT;
+11268  Mode2 = '';
+11269  Mode2Pct = 0;
+11270  end;
+11271  else Numcat +1;
+11272  if Numcat =2 then do;
+11273  Mode2 = strip(LEVEL);
+11274  Mode2Pct = PERCENT;
+11275  end;
+11276  if NRAW=. and CRAW='' then NMiss= COUNT;
+11277  if last.DATAROLE or last.variable then output;
+11278  where TARGET='_OVERALL_';
+11279  run;
+ 
+NOTE: There were 55 observations read from the data set EMWS1.STAT_CLASS.
+      WHERE TARGET='_OVERALL_';
+NOTE: The data set WORK.STATCLASS has 11 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11280  %let _cn = %sysfunc(getoption(CENTER));
+11281  %let _nb = %sysfunc(getoption(NUMBER));
+11282  options nonumber nocenter;
+11283  title;
+11284  title9 ' ';
+11285  proc print data=WORK.StatCLASS(obs=500) label noobs;
+11286  var DATAROLE VARIABLE ROLE NUMCAT NMISS Mode ModePct Mode2 Mode2Pct;
+11287  label DATAROLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_datarole_vlabel, NOQUOTE))" ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" NUMCAT = "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel,   NOQUOTE))" NMISS =
+11288     "%sysfunc(sasmsg(sashelp.dmine, rpt_missing_vlabel,  NOQUOTE))" MODE = "%sysfunc(sasmsg(sashelp.dmine, rpt_mode_vlabel,     NOQUOTE))" MODEPCT = "%sysfunc(sasmsg(sashelp.dmine, rpt_modepct_vlabel,  NOQUOTE))" MODE2 =
+11289     "%sysfunc(sasmsg(sashelp.dmine, rpt_mode2_vlabel,     NOQUOTE))" MODE2PCT = "%sysfunc(sasmsg(sashelp.dmine, rpt_mode2pct_vlabel, NOQUOTE))";
+11290  format ModePct Mode2Pct 5.2;
+11291  by DATAROLE;
+11292  title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_classStats_title,     NOQUOTE))";
+11293  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title,  NOQUOTE))";
+11294  run;
+ 
+NOTE: There were 11 observations read from the data set WORK.STATCLASS.
+NOTE: The PROCEDURE PRINT printed page 3.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.03 seconds
+ 
+ 
+11295  proc print data=EMWS1.Stat_CLASS(obs=500) noobs label;
+11296  var DATAROLE VARIABLE ROLE LEVEL COUNT PERCENT;
+11297  where ROLE in('TARGET', 'SEGMENT');
+11298  by DATAROLE;
+11299  label DATAROLE = "%sysfunc(sasmsg(sashelp.dmine,  rpt_datarole_vlabel, NOQUOTE))" ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel,          NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_level_vlabel,          NOQUOTE))" COUNT =
+11300     "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel,          NOQUOTE))" PERCENT = "%sysfunc(sasmsg(sashelp.dmine, rpt_percent_vlabel,        NOQUOTE))";
+11301  title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_classTargetSegmentDist_title, NOQUOTE))";
+11302  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title,          NOQUOTE))";
+11303  run;
+ 
+NOTE: There were 2 observations read from the data set EMWS1.STAT_CLASS.
+      WHERE ROLE in ('SEGMENT', 'TARGET');
+NOTE: The PROCEDURE PRINT printed page 4.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11304  title9;
+11305  title10;
+11306  options &_cn &_nb;
+ 
+11307  data WORK.StatINTERVALSUMMARY;
+11308  set EMWS1.Stat_INTERVAL;
+11309  length ROLE $32;
+11310  where TARGET='_OVERALL_';
+11311  if Variable = "AGE" then ROLE="INPUT";
+11312  else
+11313  if Variable = "CAMPAIGN" then ROLE="INPUT";
+11314  else
+11315  if Variable = "CCI" then ROLE="INPUT";
+11316  else
+11317  if Variable = "CPI" then ROLE="INPUT";
+11318  else
+11319  if Variable = "DURATION" then ROLE="INPUT";
+11320  else
+11321  if Variable = "EMPVAR" then ROLE="INPUT";
+11322  else
+11323  if Variable = "EURIBOR3M" then ROLE="INPUT";
+11324  else
+11325  if Variable = "NREMP" then ROLE="INPUT";
+11326  else
+11327  if Variable = "PDAYS" then ROLE="INPUT";
+11328  else
+11329  if Variable = "PREVIOUS" then ROLE="INPUT";
+11330  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_INTERVAL.
+      WHERE TARGET='_OVERALL_';
+NOTE: The data set WORK.STATINTERVALSUMMARY has 10 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11331  proc sort data=WORK.StatINTERVALSUMMARY NOTHREADS;
+11332  by DATAROLE ROLE Variable;
+11333  run;
+ 
+NOTE: There were 10 observations read from the data set WORK.STATINTERVALSUMMARY.
+NOTE: The data set WORK.STATINTERVALSUMMARY has 10 observations and 15 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11334  %let _cn = %sysfunc(getoption(CENTER));
+11335  %let _nb = %sysfunc(getoption(NUMBER));
+11336  options nonumber nocenter;
+11337  title;
+11338  proc print data=WORK.StatINTERVALSUMMARY(obs=500) label noobs;
+11339  var Variable ROLE MEAN STD N NMISS MIN P50 MAX SKEWNESS KURTOSIS;
+11340  by DATAROLE;
+11341  title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_intervalStats_title, NOQUOTE))";
+11342  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title, NOQUOTE))";
+11343  run;
+ 
+NOTE: There were 10 observations read from the data set WORK.STATINTERVALSUMMARY.
+NOTE: The PROCEDURE PRINT printed page 5.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11344  title9;
+11345  title10;
+11346  options &_cn &_nb;
+ 
+11347  proc sort data=EMWS1.Stat_CLASS NOTHREADS;
+11348  by DATAROLE DATAROLE Target TargetValue Variable descending COUNT;
+11349  run;
+ 
+NOTE: There were 160 observations read from the data set EMWS1.STAT_CLASS.
+NOTE: Duplicate BY variable(s) specified. Duplicates will be ignored.
+NOTE: The data set EMWS1.STAT_CLASS has 160 observations and 14 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11350  data WORK.StatCLASS(keep=DATAROLE Target TargetValue DATAROLE Variable Numcat NMiss Mode ModePct Mode2 Mode2Pct );
+11351  set EMWS1.Stat_CLASS;
+11352  length Mode Mode2 $32;
+11353  retain NMiss 0 ModePct 0 Mode2Pct 0 Mode '' Mode2 '';
+11354  by DATAROLE DATAROLE Target TargetValue Variable;
+11355  if first.datarole or first.variable then do;
+11356  Numcat = 1;
+11357  NMiss = 0;
+11358  Mode = LEVEL;
+11359  ModePct = PERCENT;
+11360  Mode2 = '';
+11361  Mode2Pct = 0;
+11362  end;
+11363  else Numcat +1;
+11364  if Numcat =2 then do;
+11365  Mode2 = LEVEL;
+11366  Mode2Pct = PERCENT;
+11367  end;
+11368  if NRAW=. and CRAW='' then NMiss= COUNT;
+11369  if last.datarole or last.variable then output;
+11370  where ROLE ^in('TARGET', 'SEGMENT');
+11371  run;
+ 
+NOTE: There were 158 observations read from the data set EMWS1.STAT_CLASS.
+      WHERE ROLE not in ('SEGMENT', 'TARGET');
+NOTE: The data set WORK.STATCLASS has 30 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11372  proc sort data=WORK.StatCLASS NOTHREADS;
+11373  by DATAROLE
+11374  VARIABLE Target TargetValue;
+11375  run;
+ 
+NOTE: There were 30 observations read from the data set WORK.STATCLASS.
+NOTE: The data set WORK.STATCLASS has 30 observations and 10 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11376  %let _cn = %sysfunc(getoption(CENTER));
+11377  %let _nb = %sysfunc(getoption(NUMBER));
+11378  options nonumber nocenter;
+11379  title;
+11380  title9 ' ';
+11381  proc print data=WORK.StatCLASS(obs=500) label noobs;
+11382  label DATAROLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_datarole_vlabel, NOQUOTE))" NUMCAT = "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel,   NOQUOTE))" NMISS = "%sysfunc(sasmsg(sashelp.dmine, rpt_missing_vlabel,  NOQUOTE))" MODE =
+11383     "%sysfunc(sasmsg(sashelp.dmine, rpt_mode_vlabel,     NOQUOTE))" MODEPCT = "%sysfunc(sasmsg(sashelp.dmine, rpt_modepct_vlabel,  NOQUOTE))" MODE2 = "%sysfunc(sasmsg(sashelp.dmine, rpt_mode2_vlabel,     NOQUOTE))" MODE2PCT =
+11384     "%sysfunc(sasmsg(sashelp.dmine, rpt_mode2pct_vlabel, NOQUOTE))";
+11385  format ModePct Mode2Pct 5.2;
+11386  by DATAROLE;
+11387  label TARGET = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,   NOQUOTE))" TARGETVALUE = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetLevel_vlabel,   NOQUOTE))";
+11388  var Target TargetValue NumCat NMiss Mode ModePct Mode2 Mode2Pct;
+11389  by DATAROLE VARIABLE;
+11390  title9 "Class Variable Summary Statistics by Class Target";
+11391  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title, NOQUOTE))";
+11392  run;
+ 
+NOTE: There were 30 observations read from the data set WORK.STATCLASS.
+NOTE: The PROCEDURE PRINT printed page 6.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11393  title9;
+11394  title10;
+11395  options &_cn &_nb;
+ 
+11396  proc sort data=EMWS1.Stat_INTERVAL NOTHREADS;
+11397  by DATAROLE Variable
+11398  Target
+11399  TargetValue
+11400  ;
+11401  run;
+ 
+NOTE: There were 30 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: The data set EMWS1.STAT_INTERVAL has 30 observations and 15 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11402  %let _cn = %sysfunc(getoption(CENTER));
+11403  %let _nb = %sysfunc(getoption(NUMBER));
+11404  options nonumber nocenter;
+11405  title;
+11406  proc print data=EMWS1.Stat_INTERVAL(obs=500) label noobs;
+11407  by DATAROLE Variable
+11408  ;
+11409  title9 "Interval Variable Summary Statistics by Class Target";
+11410  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title, NOQUOTE))";
+11411  run;
+ 
+NOTE: There were 30 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: The PROCEDURE PRINT printed page 7.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11412  title9;
+11413  title10;
+11414  options &_cn &_nb;
+ 
+11415  *------------------------------------------------------------*;
+11416  * Stat: Computing Chi-Square Statistics;
+11417  *------------------------------------------------------------*;
+11418  ods listing close;
+11419  ods output chisq=WORK.TEMPCHISQUARE;
+11420  ods output crosstabFreqs=WORK.TEMPCROSSTAB;
+11421  proc freq data=EMWS1.Ids_DATA(obs=100000) order=formatted addnames;
+11422  table RESPOND*CONTACT /missing chisq outexpect sparse;
+11423  table RESPOND*DEFAULT /missing chisq outexpect sparse;
+11424  table RESPOND*DOW /missing chisq outexpect sparse;
+11425  table RESPOND*EDUCATION /missing chisq outexpect sparse;
+11426  table RESPOND*HOUSING /missing chisq outexpect sparse;
+11427  table RESPOND*JOB /missing chisq outexpect sparse;
+11428  table RESPOND*LOAN /missing chisq outexpect sparse;
+11429  table RESPOND*MARITAL /missing chisq outexpect sparse;
+11430  table RESPOND*MONTH /missing chisq outexpect sparse;
+11431  table RESPOND*POUTCOME /missing chisq outexpect sparse;
+11432  ;
+11433  run;
+ 
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.28 seconds
+      cpu time            0.10 seconds
+ 
+NOTE: There were 41188 observations read from the data set MYDATA.PORTUGUESEBANKALL.
+NOTE: The data set WORK.TEMPCROSSTAB has 189 observations and 21 variables.
+NOTE: The data set WORK.TEMPCHISQUARE has 61 observations and 8 variables.
+NOTE: There were 41188 observations read from the data set EMWS1.IDS_DATA.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.29 seconds
+      cpu time            0.12 seconds
+ 
+ 
+11434  quit;
+11435  ods listing;
+11436  data WORK.StatCHI2(keep=TARGET INPUT CRAMERV CHIMEASURE PROBCHI CHIDF rename=(PROBCHI=PROB CHIDF=DF));
+11437  length TARGET INPUT $32;
+11438  label Target = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel ,      NOQUOTE))" INPUT = "%sysfunc(sasmsg(sashelp.dmine, rpt_input_vlabel ,       NOQUOTE))" CRAMERV = "%sysfunc(sasmsg(sashelp.dmine, rpt_cramerv_vlabel ,     NOQUOTE))" CORRVALUE =
+11439     "%sysfunc(sasmsg(sashelp.dmine, rpt_correlation_vlabel , NOQUOTE))" PROBCHI = "%sysfunc(sasmsg(sashelp.dmine, rpt_probchi_vlabel ,     NOQUOTE))" CHIMEASURE = "%sysfunc(sasmsg(sashelp.dmine, rpt_chisquare_vlabel,    NOQUOTE))" CHIDF =
+11440     "%sysfunc(sasmsg(sashelp.dmine, rpt_df_vlabel ,          NOQUOTE))";
+11441  retain CHIMEASURE CHIDF PROBCHI;
+11442  format PROBCHI PVALUE6.4 CHIMEASURE 10.4;
+11443  set WORK.TEMPCHISQUARE;
+11444  Target = strip(RowVariable);
+11445  Input = strip(ColVariable);
+11446  where StatisticId in('_CRAMV_','_PCHI_');
+11447  if StatisticId = '_PCHI_' then do;
+11448  PROBCHI = Prob;
+11449  CHIMEASURE = VALUE;
+11450  CHIDF = DF;
+11451  end;
+11452  else do;
+11453  CRAMERV = abs(VALUE);
+11454  OUTPUT;
+11455  end;
+11456  run;
+ 
+NOTE: Variable CORRVALUE is uninitialized.
+NOTE: There were 20 observations read from the data set WORK.TEMPCHISQUARE.
+      WHERE StatisticId in ('_CRAMV_', '_PCHI_');
+NOTE: The data set WORK.STATCHI2 has 10 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11457  proc sort data=WORK.TEMPCROSSTAB;
+11458  by RowVariable ColVariable _Type_;
+11459  where _Type_ in('11','00');
+11460  run;
+ 
+NOTE: There were 116 observations read from the data set WORK.TEMPCROSSTAB.
+      WHERE _Type_ in ('00', '11');
+NOTE: The data set WORK.TEMPCROSSTAB has 116 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11461  data WORK.StatCHI(keep=YVAR XVAR X Y XTEXT YTEXT COUNT CHISQUARE LOGCHISQUARE);
+11462  retain N;
+11463  dsid = open("WORK.TEMPCROSSTAB");
+11464  rowvarnum = varnum(dsid, 'RowVariable');
+11465  colvarnum = varnum(dsid, 'ColVariable');
+11466  freqnum = varnum(dsid, 'FREQUENCY');
+11467  rownum = varnum(dsid, 'RowPercent');
+11468  colnum = varnum(dsid, 'ColPercent');
+11469  typenum = varnum(dsid, '_TYPE_');
+11470  length YVAR XVAR $32 YTEXT $32 XTEXT $32;
+11471  do while(^fetch(dsid));
+11472  COUNT = getvarn(dsid, freqnum);
+11473  YVAR = (getvarc(dsid, rowvarnum));
+11474  XVAR = strip(getvarc(dsid, colvarnum));
+11475  ynum = varnum(dsid, YVAR);
+11476  ytype = vartype(dsid, ynum);
+11477  yformat = varfmt(dsid, ynum);
+11478  if yformat eq '' then yformat = 'best12.';
+11479  Y=.;
+11480  if ytype = 'N' then do;
+11481  Y = getvarn(dsid, ynum);
+11482  YTEXT = left(putn(Y, yformat));
+11483  end;
+11484  else YTEXT = getvarc(dsid, ynum);
+11485  xnum = varnum(dsid, XVAR);
+11486  xtype = vartype(dsid, xnum);
+11487  xformat = varfmt(dsid, xnum);
+11488  if xformat eq '' then xformat = 'best12.';
+11489  X=.;
+11490  if xtype = 'N' then do;
+11491  X = getvarn(dsid, xnum);
+11492  XTEXT = left(putn(X, xformat));
+11493  end;
+11494  else XTEXT = getvarc(dsid, xnum);
+11495  if getvarc(dsid, typenum)= '00' then N= count;
+11496  else do;
+11497  EXP = (getvarn(dsid,rownum)/100)*(getvarn(dsid,colnum)/100)*N;
+11498  if exp >0 then do;
+11499  CHISQUARE=(EXP-count)**2/(EXP);
+11500  if chisquare>0 then LOGCHISQUARE = log(CHISQUARE);
+11501  OUTPUT;
+11502  end;
+11503  end;
+11504  end;
+11505  dsid = close(dsid);
+11506  run;
+ 
+NOTE: The data set WORK.STATCHI has 105 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11507  data WORK.StatCHI;
+11508  length DATAROLE $20;
+11509  retain DATAROLE "TRAIN";
+11510  SegmentVar = "";
+11511  SegmentValue = "";
+11512  SegmentId = "_OVERALL_";
+11513  set WORK.StatCHI;
+11514  run;
+ 
+NOTE: There were 105 observations read from the data set WORK.STATCHI.
+NOTE: The data set WORK.STATCHI has 105 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11515  proc append base=EMWS1.Stat_CHI2 data=WORK.StatCHI force;
+11516  run;
+ 
+NOTE: Appending WORK.STATCHI to EMWS1.STAT_CHI2.
+NOTE: BASE data set does not exist. DATA file is being copied to BASE file.
+NOTE: There were 105 observations read from the data set WORK.STATCHI.
+NOTE: The data set EMWS1.STAT_CHI2 has 105 observations and 13 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11517  data WORK.StatCHI2;
+11518  length DATAROLE $20;
+11519  retain DATAROLE "TRAIN";
+11520  SegmentVar = "";
+11521  SegmentValue = "";
+11522  SegmentId = "_OVERALL_";
+11523  set WORK.StatCHI2;
+11524  run;
+ 
+NOTE: There were 10 observations read from the data set WORK.STATCHI2.
+NOTE: The data set WORK.STATCHI2 has 10 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11525  proc append base=EMWS1.Stat_CHIMEASURE data=WORK.StatCHI2 force;
+11526  run;
+ 
+NOTE: Appending WORK.STATCHI2 to EMWS1.STAT_CHIMEASURE.
+NOTE: BASE data set does not exist. DATA file is being copied to BASE file.
+NOTE: There were 10 observations read from the data set WORK.STATCHI2.
+NOTE: The data set EMWS1.STAT_CHIMEASURE has 10 observations and 10 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11527  proc sort data=EMWS1.Stat_VariableSet out=tempVariable(keep=name label role rename=(label=XLabel name=XVAR));
+11528  by name;
+11529  run;
+ 
+NOTE: There were 21 observations read from the data set EMWS1.STAT_VARIABLESET.
+NOTE: The data set WORK.TEMPVARIABLE has 21 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11530  proc sort data=EMWS1.Stat_CHI2;
+11531  by XVAR;
+11532  run;
+ 
+NOTE: There were 105 observations read from the data set EMWS1.STAT_CHI2.
+NOTE: The data set EMWS1.STAT_CHI2 has 105 observations and 13 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11533  data EMWS1.Stat_CHI2;
+11534  merge EMWS1.Stat_CHI2(in=_a) tempVariable;
+11535  by XVAR;
+11536  if XLabel = '' then XLabel=XVAR;
+11537  if _a then output;
+11538  run;
+ 
+WARNING: Multiple lengths were specified for the BY variable XVAR by input data sets. This might cause unexpected results.
+NOTE: There were 105 observations read from the data set EMWS1.STAT_CHI2.
+NOTE: There were 21 observations read from the data set WORK.TEMPVARIABLE.
+NOTE: The data set EMWS1.STAT_CHI2 has 105 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11539  proc datasets library=EMWS1 nolist;
+11540  modify Stat_CHI2;
+11541  label DATAROLE = "%sysfunc(sasmsg(sashelp.dmine,  rpt_datarole_vlabel, NOQUOTE))";
+11542  label SEGMENTVAR = "%sysfunc(sasmsg(sashelp.dmine, rpt_segment_vlabel,      NOQUOTE))";
+11543  label SEGMENTID = "%sysfunc(sasmsg(sashelp.dmine, rpt_segmentnamevalue_vlabel,      NOQUOTE))";
+11544  label SegmentValue= "%sysfunc(sasmsg(sashelp.dmine, rpt_segmentid_vlabel, NOQUOTE))";
+11545  label YVAR = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,         NOQUOTE))";
+11546  label XVAR = "%sysfunc(sasmsg(sashelp.dmine, rpt_input_vlabel,          NOQUOTE))";
+11547  label X = "%sysfunc(sasmsg(sashelp.dmine, rpt_inputNumValue_vlabel,  NOQUOTE))";
+11548  label Y = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetNumValue_vlabel, NOQUOTE))";
+11549  label XTEXT = "%sysfunc(sasmsg(sashelp.dmine, rpt_inputFmtValue_vlabel,  NOQUOTE))";
+11550  label YTEXT = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetFmtValue_vlabel, NOQUOTE))";
+11551  label COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel,          NOQUOTE))";
+11552  label CHISQUARE = "%sysfunc(sasmsg(sashelp.dmine, rpt_chiSquare_vlabel,      NOQUOTE))";
+11553  label LOGCHISQUARE = "%sysfunc(sasmsg(sashelp.dmine, rpt_logChiSquare_vlabel,   NOQUOTE))";
+11554  run;
+ 
+NOTE: MODIFY was successful for EMWS1.STAT_CHI2.DATA.
+ 
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11555  proc sort data=EMWS1.Stat_VariableSet out=tempVariable(keep=name label role rename=(name=INPUT));
+11556  by name;
+11557  run;
+ 
+NOTE: There were 21 observations read from the data set EMWS1.STAT_VARIABLESET.
+NOTE: The data set WORK.TEMPVARIABLE has 21 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11558  proc sort data=EMWS1.Stat_CHIMEASURE;
+11559  by INPUT;
+11560  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: The data set EMWS1.STAT_CHIMEASURE has 10 observations and 10 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11561  data EMWS1.Stat_CHIMEASURE;
+11562  merge EMWS1.Stat_CHIMEASURE(in=_a) tempVariable;
+11563  by INPUT;
+11564  if label = '' then label=INPUT;
+11565  if _a then output;
+11566  run;
+ 
+WARNING: Multiple lengths were specified for the BY variable INPUT by input data sets. This might cause unexpected results.
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: There were 21 observations read from the data set WORK.TEMPVARIABLE.
+NOTE: The data set EMWS1.STAT_CHIMEASURE has 10 observations and 12 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11567  proc sort data=EMWS1.Stat_CHIMEASURE NOTHREADS;
+11568  by DATAROLE TARGET descending CRAMERV;
+11569  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: The data set EMWS1.STAT_CHIMEASURE has 10 observations and 12 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11570  data EMWS1.Stat_CHIMEASURE;
+11571  set EMWS1.Stat_CHIMEASURE;
+11572  label ORDEREDINPUTS = "%sysfunc(sasmsg(sashelp.dmine, rpt_orderedInput_vlabel  , NOQUOTE))" DATAROLE = "%sysfunc(sasmsg(sashelp.dmine,  rpt_datarole_vlabel, NOQUOTE))" SEGMENTID =
+11573     "%sysfunc(sasmsg(sashelp.dmine, rpt_segmentnamevalue_vlabel,       NOQUOTE))" SegmentValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_segmentid_vlabel, NOQUOTE))" SEGMENTVAR = "%sysfunc(sasmsg(sashelp.dmine, rpt_segment_vlabel,      NOQUOTE))";
+11574  format ORDEREDINPUTS 5.0;
+11575  retain ORDEREDINPUTS 0;
+11576  if first.DATAROLE or first.SEGMENTID or first.TARGET then ORDEREDINPUTS=1;
+11577  else ORDEREDINPUTS+1;
+11578  by DATAROLE SEGMENTID TARGET;
+11579  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: The data set EMWS1.STAT_CHIMEASURE has 10 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11580  %let _cn = %sysfunc(getoption(CENTER));
+11581  %let _nb = %sysfunc(getoption(NUMBER));
+11582  options nonumber nocenter;
+11583  title;
+11584  proc print data=EMWS1.Stat_CHIMEASURE(obs=500) label noobs;
+11585  var INPUT CHIMEASURE DF PROB;
+11586  label INPUT = "%sysfunc(sasmsg(sashelp.dmine, rpt_input_vlabel ,       NOQUOTE))" CHIMEASURE = "%sysfunc(sasmsg(sashelp.dmine, rpt_chisquare_vlabel,    NOQUOTE))" PROB = "%sysfunc(sasmsg(sashelp.dmine, rpt_probchi_vlabel ,     NOQUOTE))" DF =
+11587     "%sysfunc(sasmsg(sashelp.dmine, rpt_df_vlabel ,          NOQUOTE))";
+11588  by DATAROLE TARGET;
+11589  title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_chisquareStats_title, NOQUOTE))";
+11590  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title,  NOQUOTE))";
+11591  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: The PROCEDURE PRINT printed page 8.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11592  title10;
+11593  options &_cn &_nb;
+11594  proc sort data=EMWS1.Stat_CHIMEASURE out=trainChimeasure;
+11595  by TARGET descending CramerV;
+11596  where DATAROLE='TRAIN';
+11597  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+      WHERE DATAROLE='TRAIN';
+NOTE: The data set WORK.TRAINCHIMEASURE has 10 observations and 13 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11598  data trainChimeasure;
+11599  set trainchimeasure;
+11600  by TARGET;
+11601  retain groupcount 0;
+11602  if first.Target then groupcount =1;
+11603  else groupcount + 1;
+11604  if groupcount<21 then Plot=1;
+11605  else Plot = 0;
+11606  keep Target Input GroupCount Plot;
+11607  run;
+ 
+NOTE: There were 10 observations read from the data set WORK.TRAINCHIMEASURE.
+NOTE: The data set WORK.TRAINCHIMEASURE has 10 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11608  proc sort data=trainChiMeasure;
+11609  by TARGET INPUT;
+11610  run;
+ 
+NOTE: There were 10 observations read from the data set WORK.TRAINCHIMEASURE.
+NOTE: The data set WORK.TRAINCHIMEASURE has 10 observations and 4 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11611  proc sort data=EMWS1.Stat_CHIMEASURE;
+11612  by TARGET INPUT;
+11613  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: The data set EMWS1.STAT_CHIMEASURE has 10 observations and 13 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11614  data EMWS1.Stat_CHIMEASURE;
+11615  merge EMWS1.Stat_CHIMEASURE trainchimeasure;
+11616  by TARGET INPUT;
+11617  label DATAROLE = "%sysfunc(sasmsg(sashelp.dmine,  rpt_datarole_vlabel, NOQUOTE))" Plot = "%sysfunc(sasmsg(sashelp.dmine, rpt_plot_vlabel,  NOQUOTE))" groupcount = "%sysfunc(sasmsg(sashelp.dmine, rpt_group_vlabel, NOQUOTE))";
+11618  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: There were 10 observations read from the data set WORK.TRAINCHIMEASURE.
+NOTE: The data set EMWS1.STAT_CHIMEASURE has 10 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11619  proc sort data=EMWS1.Stat_CLASS(drop=CRAW NRAW) NOTHREADS;
+11620  by DATAROLE TARGET VARIABLE LEVEL;
+11621  where TARGET ne '_OVERALL_';
+11622  run;
+ 
+NOTE: There were 105 observations read from the data set EMWS1.STAT_CLASS.
+      WHERE TARGET not = '_OVERALL_';
+NOTE: The data set EMWS1.STAT_CLASS has 105 observations and 12 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11623  data WORK.StattempDs(keep=DATAROLE target VARIABLE nobs);
+11624  retain nobs;
+11625  set EMWS1.Stat_CLASS;
+11626  by DATAROLE target VARIABLE;
+11627  if first.DATAROLE or first.variable then nobs=count;
+11628  else nobs = nobs + count;
+11629  if last.DATAROLE or last.variable then output;
+11630  run;
+ 
+NOTE: There were 105 observations read from the data set EMWS1.STAT_CLASS.
+NOTE: The data set WORK.STATTEMPDS has 10 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11631  data EMWS1.Stat_CLASS(drop=NOBS);
+11632  merge EMWS1.Stat_CLASS(where=(TARGET ne '_OVERALL_') rename=(PERCENT=WITHINPCT)) WORK.StattempDs;
+11633  label percent = "%sysfunc(sasmsg(sashelp.dmine, rpt_percent_vlabel,         NOQUOTE))" withinpct = "%sysfunc(sasmsg(sashelp.dmine, rpt_percentwithin_vlabel, NOQUOTE))";
+11634  by DATAROLE TARGET VARIABLE;
+11635  if NOBS>0 then PERCENT=COUNT/NOBS;
+11636  run;
+ 
+NOTE: There were 105 observations read from the data set EMWS1.STAT_CLASS.
+      WHERE TARGET not = '_OVERALL_';
+NOTE: There were 10 observations read from the data set WORK.STATTEMPDS.
+NOTE: The data set EMWS1.STAT_CLASS has 105 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11637  proc sort data=EMWS1.Stat_CHIMEASURE out=WORK.Statcutoff(RENAME=(INPUT=VARIABLE) keep=DATAROLE TARGET INPUT PLOT);
+11638  by DATAROLE TARGET INPUT;
+11639  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: The data set WORK.STATCUTOFF has 10 observations and 4 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11640  data EMWS1.Stat_CLASS;
+11641  drop groupcount;
+11642  retain groupcount 0;
+11643  merge EMWS1.Stat_CLASS(in=_a) WORK.Statcutoff;
+11644  if _a then do;
+11645  plot=1;
+11646  groupcount+1;
+11647  end;
+11648  if groupcount>21 then plot=0;
+11649  by DATAROLE Target Variable;
+11650  if PERCENT eq . or plot = . then delete;
+11651  label DATAROLE = "%sysfunc(sasmsg(sashelp.dmine,  rpt_datarole_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_level_vlabel,          NOQUOTE))" TYPE = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,           NOQUOTE))" COUNT =
+11652     "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel,          NOQUOTE))" ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel,          NOQUOTE))" LEVELINDEX = "%sysfunc(sasmsg(sashelp.dmine, rpt_levelIndex_vlabel,     NOQUOTE))";
+11653  run;
+ 
+NOTE: There were 105 observations read from the data set EMWS1.STAT_CLASS.
+NOTE: There were 10 observations read from the data set WORK.STATCUTOFF.
+NOTE: The data set EMWS1.STAT_CLASS has 105 observations and 14 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11654  proc sort data=EMWS1.Stat_CHIMEASURE;
+11655  by DATAROLE ORDEREDINPUTS;
+11656  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_CHIMEASURE.
+NOTE: The data set EMWS1.STAT_CHIMEASURE has 10 observations and 15 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11657  data WORK.StatINTERVALPLOT(drop=TARGET N MIN NMISS P50 MAX TARGETVALUE rename=(Mean=OMean));
+11658  set EMWS1.Stat_INTERVAL;
+11659  where TARGET='_OVERALL_';
+11660  run;
+ 
+NOTE: There were 10 observations read from the data set EMWS1.STAT_INTERVAL.
+      WHERE TARGET='_OVERALL_';
+NOTE: The data set WORK.STATINTERVALPLOT has 10 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11661  data EMWS1.Stat_INTERVAL(drop=OMean);
+11662  merge EMWS1.Stat_INTERVAL(where=(TARGET ne '_OVERALL_')) WORK.StatINTERVALPLOT;
+11663  by DATAROLE Variable;
+11664  if OMean ne 0 then ScaleDevMean = (Mean - OMean)/OMean;
+11665  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_INTERVAL.
+      WHERE TARGET not = '_OVERALL_';
+NOTE: There were 10 observations read from the data set WORK.STATINTERVALPLOT.
+NOTE: The data set EMWS1.STAT_INTERVAL has 20 observations and 16 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11666  proc sort data=EMWS1.Stat_INTERVAL NOTHREADS;
+11667  by DATAROLE Variable Target;
+11668  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: The data set EMWS1.STAT_INTERVAL has 20 observations and 16 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11669  data WORK.StatMAXINTERVAL(keep=DATAROLE Target Variable MaxDev);
+11670  set EMWS1.Stat_INTERVAL;
+11671  if first.DATAROLE or first.Variable then MaxDev = abs(ScaleDevMean);
+11672  else if abs(ScaleDevMean)>MaxDev then MaxDev = abs(ScaleDevMean);
+11673  if last.datarole or last.variable or last.target then output;
+11674  by DATAROLE Variable Target;
+11675  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: The data set WORK.STATMAXINTERVAL has 10 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11676  data EMWS1.Stat_INTERVAL;
+11677  merge EMWS1.Stat_INTERVAL WORK.StatMAXINTERVAL;
+11678  label LevelId = "%sysfunc(sasmsg(sashelp.dmine, rpt_levelId_vlabel,             NOQUOTE))" Variable = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel,            NOQUOTE))" MaxDev =
+11679     "%sysfunc(sasmsg(sashelp.dmine, rpt_maxdev_vlabel,              NOQUOTE))" ScaleDevMean = "%sysfunc(sasmsg(sashelp.dmine, rpt_scaledMeanDeviation_vlabel, NOQUOTE))";
+11680  format LevelId best3.;
+11681  retain LevelId 0;
+11682  by DATAROLE Variable Target;
+11683  if first.DATAROLE or first.Target then LevelId=1;
+11684  else LevelId + 1;
+11685  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: There were 10 observations read from the data set WORK.STATMAXINTERVAL.
+NOTE: The data set EMWS1.STAT_INTERVAL has 20 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11686  proc sort data=EMWS1.Stat_INTERVAL NOTHREADS;
+11687  by DATAROLE Target descending MaxDev Variable LevelId;
+11688  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_INTERVAL.
+NOTE: The data set EMWS1.STAT_INTERVAL has 20 observations and 18 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11689  proc sort data=WORK.M11C8CEQ;
+11690  by name;
+11691  run;
+ 
+NOTE: Input data set is already sorted, no sorting done.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11692  proc sort data=EMWS1.Stat_WORTH;
+11693  by NAME;
+11694  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_WORTH.
+NOTE: The data set EMWS1.STAT_WORTH has 20 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+11695  data EMWS1.Stat_WORTH;
+11696  merge EMWS1.Stat_WORTH(in=_a) WORK.M11C8CEQ(Keep=NAME LABEL REPORT);
+11697  by NAME;
+11698  if REPORT = 'Y' then plot = 1;
+11699  if LABEL = "" then LABEL = NAME;
+11700  if _a then output;
+11701  drop report;
+11702  run;
+ 
+WARNING: Multiple lengths were specified for the BY variable Name by input data sets. This might cause unexpected results.
+NOTE: There were 20 observations read from the data set EMWS1.STAT_WORTH.
+NOTE: There were 21 observations read from the data set WORK.M11C8CEQ.
+NOTE: The data set EMWS1.STAT_WORTH has 20 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+11703  proc sort data=EMWS1.Stat_WORTH;
+11704  by rank;
+11705  run;
+ 
+NOTE: There were 20 observations read from the data set EMWS1.STAT_WORTH.
+NOTE: The data set EMWS1.STAT_WORTH has 20 observations and 7 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+*------------------------------------------------------------*
+* Score Log
+Date:                March 01, 2016
+Time:                12:34:05
+*------------------------------------------------------------*
+11807  *------------------------------------------------------------*;
+11808  * Stat: Scoring DATA data;
+11809  *------------------------------------------------------------*;
+11810  data EMWS1.Stat_TRAIN
+11811  / view=EMWS1.Stat_TRAIN
+11812  ;
+11813  set EMWS1.Ids_DATA
+11814  ;
+11815  run;
+ 
+NOTE: DATA STEP view saved on file EMWS1.STAT_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.IDS_DATA.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+ 
+ 
+11816  quit;
+ 
+11817  *------------------------------------------------------------*;
+11818  * Stat: Computing metadata for TRAIN data;
+11819  *------------------------------------------------------------*;
+ 
+NOTE: View EMWS1.STAT_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+ 
+NOTE: View EMWS1.STAT_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+ 
+*------------------------------------------------------------*
+* Report Log
+Date:                March 01, 2016
+Time:                12:34:06
+*------------------------------------------------------------*

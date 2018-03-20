@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  NumberOfReportedLevels="1E-6" NormalizeReportingVariables="Y" DecileBin="20" LiftEpsilon="1E-6"
+ ProfitEpsilon="1E-6" RoiEpsilon="1E-6" ScoreDistBin="20" RocChart="Y" RocEpsilon="0.01"
+ AssessAllTargetLevels="N" SelectionData="DEFAULT" HPCriteria="DEFAULT" SelectionTable="TRAIN"
+ SelectionCriteria="DEFAULT" SelectionDepth="10" NumberofBins="20" RecomputeAssess="N"
+ TargetName="RESPOND" ModelId="Reg" ModelDescription="Regression" ModelCriteria="Valid: Misclassification Rate"
+ ForceRun="N" RunAction="Train" Component="ModelCompare" RawCreateTime="1772455444.9"
+ CreateTime="01MAR2016:12:44:05" RunId="80852f45-0919-4152-9acb-8b188b2ed096" StatisticUsed="_VMISC_"
+ TargetLabel="RESPOND">
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES/>
+</_ROOT_>

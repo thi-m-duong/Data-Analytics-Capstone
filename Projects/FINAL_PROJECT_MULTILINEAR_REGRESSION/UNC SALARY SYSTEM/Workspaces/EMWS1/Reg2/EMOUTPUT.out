@@ -1,0 +1,602 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                April 21, 2016
+Time:                05:42:05
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      BINARY            1
+INPUT      INTERVAL          4
+INPUT      NOMINAL           6
+INPUT      ORDINAL           1
+TARGET     INTERVAL          1
+ 
+ 
+ 
+ 
+Predicted and decision variables
+ 
+Type          Variable            Label
+ 
+TARGET       totalsal
+PREDICTED    P_totalsal    Predicted: totalsal
+RESIDUAL     R_totalsal    Residual: totalsal
+ 
+ 
+ 
+ 
+ 
+The DMREG Procedure
+ 
+               Model Information
+ 
+Training Data Set             WORK.EM_DMREG.VIEW
+DMDB Catalog                  WORK.REG2_DMDB
+Target Variable               totalsal
+Target Measurement Level      Interval
+Error                         Normal
+Link Function                 Identity
+Number of Model Parameters    358
+Number of Observations        6616
+ 
+ 
+                             Analysis of Variance
+ 
+                                   Sum of
+Source                 DF         Squares     Mean Square    F Value    Pr > F
+ 
+Model                 355    2.7936149E13     78693377573    4.77E14    <.0001
+Error                6260        1.032606        0.000165
+Corrected Total      6615    2.7936149E13
+ 
+ 
+              Model Fit Statistics
+ 
+R-Square        1.0000     Adj R-Sq        1.0000
+AIC        -57278.2992     BIC        -57235.8150
+SBC        -54858.4796     C(p)          356.0000
+ 
+ 
+            Type 3 Analysis of Effects
+ 
+                        Sum of
+Effect        DF       Squares    F Value    Pr > F
+ 
+Gender         1        0.0003       1.72    0.1891
+age            1        0.0005       3.01    0.0830
+campus         0         .            .       .
+dept         294        0.0269       0.55    1.0000
+employed       1        0.0001       0.89    0.3461
+exempt2        2        0.0002       0.67    0.5115
+fte            1        0.0000       0.06    0.8055
+nonstsal       1    8.48951E12    5.15E16    <.0001
+position      50        0.0057       0.69    0.9552
+statesal       1    4.78984E12     2.9E16    <.0001
+status         2        0.0024       7.23    0.0007
+stservyr       1        0.0002       1.41    0.2352
+ 
+ 
+                          Analysis of Maximum Likelihood Estimates
+ 
+                                                              Standard
+Parameter                                   DF    Estimate       Error    t Value    Pr > |t|
+ 
+Intercept                                    1     0.00193     0.00111       1.74      0.0825
+Gender    F                                  1    -0.00024    0.000181      -1.31      0.1891
+age                                          1    -0.00003    0.000019      -1.73      0.0830
+dept      AHEC Support-Comm Med Care         1    0.000101     0.00346       0.03      0.9768
+dept      Acad Sup Prog Student-Athletes     1    0.000375     0.00457       0.08      0.9346
+dept      Academic Advising                  1    0.000463     0.00245       0.19      0.8499
+dept      Accounting Services                1    0.000122     0.00373       0.03      0.9739
+dept      Ackland Art Museum                 1    0.000304     0.00409       0.07      0.9407
+dept      Admissions                         1    -0.00003     0.00266      -0.01      0.9895
+dept      African Studies Center             1    0.000321      0.0129       0.02      0.9802
+dept      African, Afri-Amer & Diaspora      1    -0.00021     0.00436      -0.05      0.9624
+dept      Alcohol Studies Center             1    -0.00036     0.00392      -0.09      0.9260
+dept      Allied Health Sciences             1    0.000551     0.00183       0.30      0.7639
+dept      Alumni Assoc Office                1    -0.00016     0.00491      -0.03      0.9740
+dept      American Indian Center             1    0.000914      0.0128       0.07      0.9432
+dept      American Studies                   1    0.000420     0.00459       0.09      0.9271
+dept      Anesthesiology                     1    -0.00058     0.00214      -0.27      0.7849
+dept      Anthropology                       1    0.000487     0.00276       0.18      0.8599
+dept      Applied Physical Sciences          1    0.000272     0.00742       0.04      0.9708
+dept      Archaeology                        1    0.000483     0.00753       0.06      0.9488
+dept      Art                                1    0.000272     0.00290       0.09      0.9251
+dept      Arts & Humanities Institute        1    0.000057     0.00643       0.01      0.9930
+dept      Arts & Sci Info Services           1    -0.00056     0.00346      -0.16      0.8712
+dept      Arts & Sciences Dean's Office      1    -0.00014     0.00244      -0.06      0.9537
+dept      Asian Studies                      1    0.000293     0.00293       0.10      0.9203
+dept      Asset Management                   1    0.000143     0.00742       0.02      0.9846
+dept      Assoc Prv Acad Initiatives-UBC     1    0.000255     0.00642       0.04      0.9683
+dept      Assoc VC Campus Services           1    0.000077      0.0128       0.01      0.9952
+dept      Assoc Vice Chancellor Finance      1    0.000243     0.00525       0.05      0.9631
+dept      Ath Academic Counselor             1    0.000873     0.00908       0.10      0.9235
+dept      Ath Baseball Office                1    -0.00048     0.00908      -0.05      0.9575
+dept      Ath Basketball Office              1    -0.00110     0.00583      -0.19      0.8505
+dept      Ath Director of Athletics          1    -0.00013     0.00457      -0.03      0.9766
+dept      Ath Equipment Office               1    -0.00047     0.00748      -0.06      0.9499
+dept      Ath Fencing                        1    -0.00042     0.00921      -0.05      0.9637
+dept      Ath Finley Golf Course             1    -0.00007     0.00433      -0.02      0.9877
+dept      Ath Football Office                1    -0.00145     0.00343      -0.42      0.6715
+dept      Ath Game Operations                1    -0.00048     0.00913      -0.05      0.9585
+dept      Ath Lacrosse                       1    0.000323     0.00913       0.04      0.9717
+dept      Ath Olympic Sports                 1    0.000505     0.00274       0.18      0.8540
+dept      Ath Outdoor Facility Oper          1    -0.00041     0.00320      -0.13      0.8980
+dept      Ath Physical Development           1    -0.00023     0.00648      -0.04      0.9713
+dept      Ath Soccer                         1    0.000313     0.00750       0.04      0.9668
+dept      Ath Sports Information             1    -0.00032     0.00495      -0.07      0.9481
+dept      Ath Sports Marketing               1    -0.00038     0.00434      -0.09      0.9309
+dept      Ath Student Activities Center      1    -0.00022     0.00921      -0.02      0.9808
+dept      Ath Swimming                       1    0.000438      0.0129       0.03      0.9728
+dept      Ath Tennis                         1    0.000514     0.00918       0.06      0.9554
+dept      Ath Ticket Office                  1    -0.00020     0.00744      -0.03      0.9783
+dept      Ath Track-Cross Country            1    -0.00065     0.00750      -0.09      0.9305
+dept      Ath Wrestling                      1     0.00152      0.0132       0.12      0.9083
+dept      Athletics Business Office          1    0.000056     0.00743       0.01      0.9940
+dept      Auxil Enterprises-Gen Adm          1    -0.00008     0.00374      -0.02      0.9825
+dept      Biochemistry and Biophysics        1    0.000164     0.00213       0.08      0.9386
+dept      Biological and Genome Sciences     1    -0.00018     0.00490      -0.04      0.9713
+dept      Biology                            1    4.752E-6     0.00180       0.00      0.9979
+dept      Biomedical Engineering             1    0.000351     0.00347       0.10      0.9195
+dept      Biomedical Engineering - UG        1    -0.00078     0.00916      -0.09      0.9317
+dept      Biomedical Res Imaging Ctr         1    -0.00041     0.00391      -0.10      0.9165
+dept      Biostatistics                      1    0.000212     0.00171       0.12      0.9015
+dept      Budget Office                      1    0.000418     0.00911       0.05      0.9634
+dept      Building Services                  1    -0.00019     0.00137      -0.14      0.8895
+dept      Business Operations                1    -0.00003     0.00259      -0.01      0.9906
+dept      Campus Health Services             1    0.000261     0.00168       0.16      0.8766
+dept      Campus Y                           1    0.000384     0.00907       0.04      0.9663
+dept      Carolina Asia Center               1    0.000364     0.00644       0.06      0.9549
+dept      Carolina Center for Public Svc     1    -0.00007     0.00909      -0.01      0.9939
+dept      Carolina Counts                    1    0.000310      0.0129       0.02      0.9809
+dept      Carolina Higher Ed Opp Pgms        1    0.000511     0.00576       0.09      0.9293
+dept      Carolina Institute for DD          1    0.000126     0.00374       0.03      0.9730
+dept      Carolina Population Center         1    -0.00016     0.00171      -0.10      0.9239
+dept      Carolina Union                     1    -0.00002     0.00410      -0.00      0.9961
+dept      Cell & Molecular Physiology        1    -0.00031     0.00744      -0.04      0.9667
+dept      Cell Biology and Physiology        1    -0.00008     0.00234      -0.03      0.9727
+dept      Center for Aging and Health        1    0.000528     0.00644       0.08      0.9347
+dept      Center for Faculty Excellence      1    0.000479     0.00643       0.07      0.9406
+dept      Center for Galapagos Studies       1    0.000426      0.0129       0.03      0.9737
+dept      Chemistry                          1    0.000053     0.00189       0.03      0.9776
+dept      City & Regional Planning           1    0.000016     0.00460       0.00      0.9972
+dept      Classics                           1    0.000193     0.00432       0.04      0.9643
+dept      Clinical Affairs                   1    0.000243     0.00232       0.10      0.9165
+dept      Clinical Trials                    1    0.000303     0.00430       0.07      0.9439
+dept      Communication Studies              1    -0.00010     0.00276      -0.04      0.9715
+dept      Comprehensive Cancer Center        1    -0.00002    0.000990      -0.02      0.9808
+dept      Computer Science                   1    0.000220     0.00244       0.09      0.9283
+dept      Construction Management            1    4.923E-6     0.00526       0.00      0.9993
+dept      Ctr Health Prom Disease Prev       1    0.000216     0.00309       0.07      0.9444
+dept      Ctr Maternal & Infant Health       1    -0.00056      0.0129      -0.04      0.9654
+dept      Ctr for Developmental Science      1    -0.00021     0.00492      -0.04      0.9654
+dept      Ctr for Drug Safety Science        1    0.000653      0.0129       0.05      0.9596
+dept      Ctr for Women's Hlth Research      1    0.000299     0.00460       0.07      0.9481
+dept      Cys Fibrosis/Pulmonary Res         1    -0.00036     0.00251      -0.14      0.8853
+dept      Dean of Students Office            1    0.000499     0.00374       0.13      0.8937
+dept      Dental Ecology Dept                1    0.000262     0.00248       0.11      0.9161
+dept      Dental Faculty Practice            1    0.000010     0.00435       0.00      0.9981
+dept      Dental Research                    1    0.000237     0.00361       0.07      0.9476
+dept      Dermatology                        1    -0.00059     0.00295      -0.20      0.8403
+dept      Design and Construction Svcs       1    -0.00006     0.00239      -0.03      0.9792
+dept      Diagnostic Sci & Gen Dentistry     1    0.000360     0.00375       0.10      0.9235
+dept      Disbursement Services              1    0.000043     0.00575       0.01      0.9941
+dept      Diversity/Multicultural Aff        1    0.000213     0.00578       0.04      0.9706
+dept      Dramatic Art                       1    -0.00001     0.00331      -0.00      0.9971
+dept      Economics                          1    -0.00035     0.00287      -0.12      0.9042
+dept      Emergency Medicine                 1    0.000231     0.00236       0.10      0.9219
+dept      Endodontics                        1    0.000898     0.00360       0.25      0.8029
+dept      Energy Management                  1    0.000212     0.00744       0.03      0.9773
+dept      Energy Services                    1    -0.00011     0.00162      -0.07      0.9468
+dept      Engineering Info Services          1    0.000241     0.00642       0.04      0.9700
+dept      English & Comp Literature          1    5.038E-6     0.00207       0.00      0.9981
+dept      Enviro Med Asthma & Lung Bio       1    -0.00020     0.00650      -0.03      0.9751
+dept      Environ Health & Suscep            1    -0.00008      0.0129      -0.01      0.9949
+dept      Environment Sciences & Engi        1    0.000224     0.00231       0.10      0.9227
+dept      Environment and Ecology            1    0.000185     0.00651       0.03      0.9774
+dept      Environment, Health & Safety       1    0.000013     0.00238       0.01      0.9956
+dept      Epidemiology                       1    0.000328     0.00158       0.21      0.8357
+dept      Equal Opportunity/ADA Office       1    0.000643     0.00526       0.12      0.9028
+dept      European Studies                   1    0.000449      0.0129       0.03      0.9721
+dept      Exec Director for the Arts         1    -0.00019     0.00456      -0.04      0.9671
+dept      Exercise & Sport Science           1    0.000103     0.00207       0.05      0.9604
+dept      FPG Child Development Inst         1    0.000469     0.00152       0.31      0.7571
+dept      Facilities Planning                1    0.000191     0.00527       0.04      0.9711
+dept      Facilities Planning & Const        1    -0.00003      0.0128      -0.00      0.9984
+dept      Facilities Services Division       1    -0.00010     0.00753      -0.01      0.9894
+dept      Family Medicine                    1    0.000069     0.00194       0.04      0.9718
+dept      Family Support Program             1     0.00125      0.0128       0.10      0.9222
+dept      GEC Building Operations            1    -0.00002      0.0128      -0.00      0.9987
+dept      Gastroint Biology & Dis Ctr        1    0.000144     0.00223       0.06      0.9487
+dept      Gene Therapy Center                1    -0.00038     0.00259      -0.15      0.8827
+dept      Genetics                           1    0.000098     0.00188       0.05      0.9584
+dept      Geography                          1    0.000743     0.00352       0.21      0.8328
+dept      Geological Sciences                1    0.000068     0.00461       0.01      0.9883
+dept      Germanic & Slavic Lang & Lit       1    0.000143     0.00366       0.04      0.9688
+dept      Global Health & Infec Disease      1    0.000090     0.00257       0.04      0.9720
+dept      Global Studies                     1    0.000014     0.00746       0.00      0.9985
+dept      Graduate School                    1    0.000253     0.00359       0.07      0.9438
+dept      Grounds Services                   1    -0.00020     0.00207      -0.09      0.9247
+dept      H W Odum Inst Res Social Sci       1    -0.00001     0.00433      -0.00      0.9979
+dept      Hazards Center                     1    -0.00032      0.0129      -0.02      0.9805
+dept      Health Behavior                    1    0.000839     0.00247       0.34      0.7347
+dept      Health Policy and Management       1    0.000281     0.00257       0.11      0.9130
+dept      Health Sciences Library            1    -0.00102     0.00249      -0.41      0.6809
+dept      Heart and Vascular Center          1    0.000218     0.00488       0.04      0.9643
+dept      Highway Safety Research            1    -0.00004     0.00284      -0.01      0.9885
+dept      History                            1    0.000233     0.00216       0.11      0.9138
+dept      Honors                             1    -0.00019     0.00579      -0.03      0.9733
+dept      Housekeeping Services              1    0.000012     0.00135       0.01      0.9932
+dept      Housing Res Education              1    0.000276     0.00256       0.11      0.9142
+dept      Human Resources                    1    0.000112     0.00198       0.06      0.9550
+dept      Humanities & Human Values          1    -0.00010     0.00908      -0.01      0.9909
+dept      Hunt Institute                     1    0.000198     0.00910       0.02      0.9826
+dept      Information Technology             1    0.000092     0.00578       0.02      0.9873
+dept      Information Technology Svcs.       1    -0.00014     0.00111      -0.13      0.8982
+dept      Injury Prevention Research Ctr     1    0.000400     0.00581       0.07      0.9451
+dept      Innovation and Entrepreneurshp     1    0.000642     0.00747       0.09      0.9316
+dept      Inst Research and Assessment       1    -0.00011     0.00579      -0.02      0.9849
+dept      Inst of Private Enterprise         1    8.051E-6     0.00526       0.00      0.9988
+dept      Institute of Marine Sciences       1    -0.00042     0.00307      -0.14      0.8918
+dept      Internal Audit                     1    0.000124     0.00745       0.02      0.9867
+dept      Journalism/Mass Communication      1    0.000345     0.00174       0.20      0.8432
+dept      Kenan-Flagler Business School      1    0.000270     0.00115       0.24      0.8141
+dept      Laboratory Animal Medicine         1    -0.00052     0.00164      -0.32      0.7523
+dept      Laundry Department                 1    -0.00038      0.0128      -0.03      0.9766
+dept      Law Library                        1    -0.00167     0.00528      -0.32      0.7521
+dept      LearnNC                            1    0.000047     0.00741       0.01      0.9950
+dept      Linguistics                        1    -0.00058     0.00747      -0.08      0.9382
+dept      Logistics                          1    -0.00020     0.00456      -0.04      0.9646
+dept      Marine Sciences                    1    0.000108     0.00360       0.03      0.9761
+dept      Maternal & Child Health            1    0.000217     0.00308       0.07      0.9437
+dept      Mathematics                        1    -0.00023     0.00264      -0.09      0.9299
+dept      Medical Education                  1    -0.00013     0.00256      -0.05      0.9601
+dept      Medicine                           1    0.000252    0.000968       0.26      0.7947
+dept      Medicine Administration            1    0.000039     0.00141       0.03      0.9778
+dept      Microbiology & Immunology          1     -0.0272     0.00220     -12.38      <.0001
+dept      Mid East and Muslim Civ Ctr        1    0.000088      0.0129       0.01      0.9945
+dept      Morehead Planetarium               1    0.000011     0.00345       0.00      0.9974
+dept      Music                              1    0.000738     0.00271       0.27      0.7853
+dept      NC Botanical Garden                1    0.000482     0.00358       0.13      0.8931
+dept      NC Institute for Public Health     1    0.000276     0.00409       0.07      0.9462
+dept      Neurology                          1    0.000903     0.00252       0.36      0.7205
+dept      Neuroscience Center                1    -0.00033     0.00491      -0.07      0.9461
+dept      Neurosurgery                       1    -0.00024     0.00429      -0.06      0.9561
+dept      New Stu/Carolina Parent Prgms      1    0.000550      0.0128       0.04      0.9658
+dept      Nutrition                          1    0.000167     0.00221       0.08      0.9397
+dept      Nutrition Research Institute       1    -0.00042     0.00366      -0.11      0.9088
+dept      Obstetrics and Gynecology          1    0.000752     0.00142       0.53      0.5971
+dept      Ofc of Human Research Ethics       1    0.000196     0.00373       0.05      0.9580
+dept      Ofc of Provost Acad Affairs        1    -0.00012     0.00496      -0.02      0.9803
+dept      Ofc of Provost Health Affrs        1    -0.00039     0.00648      -0.06      0.9516
+dept      Ofc of Research Communications     1    0.000109     0.00917       0.01      0.9905
+dept      Office Faculty Governance          1    -0.00095      0.0129      -0.07      0.9415
+dept      Office of Research Development     1    -7.37E-6     0.00911      -0.00      0.9994
+dept      Office of Sponsored Research       1    0.000217     0.00228       0.10      0.9239
+dept      Office of Technology Develop       1    0.000452     0.00460       0.10      0.9217
+dept      Office of the Chancellor           1    -0.00088     0.00526      -0.17      0.8671
+dept      Operative Dentistry                1    0.000120     0.00285       0.04      0.9665
+dept      Ophthalmology                      1    0.000330     0.00272       0.12      0.9034
+dept      Oral Surgery                       1    -0.00033     0.00349      -0.10      0.9241
+dept      Orthodontics                       1    0.000282     0.00319       0.09      0.9295
+dept      Orthopaedics                       1    -0.00012     0.00288      -0.04      0.9671
+dept      Otolaryngology (Ent)               1    0.000203     0.00263       0.08      0.9385
+dept      PH Leadership Program              1    0.000273     0.00528       0.05      0.9588
+dept      Pathology & Lab Medicine           1    0.000395     0.00153       0.26      0.7969
+dept      Payroll Services                   1    0.000167     0.00460       0.04      0.9710
+dept      Peace War & Defense                1    0.000239     0.00748       0.03      0.9744
+dept      Pediatric Dentistry                1    -0.00005     0.00298      -0.02      0.9856
+dept      Pediatrics                         1    0.000173     0.00134       0.13      0.8978
+dept      Periodontology                     1    0.000360     0.00408       0.09      0.9296
+dept      Pharmacology                       1    -0.00012     0.00228      -0.05      0.9588
+dept      Philosophy                         1    0.000240     0.00352       0.07      0.9455
+dept      Physical Medicine & Rehab          1    0.000157     0.00394       0.04      0.9681
+dept      Physics-Astronomy                  1    -0.00025     0.00226      -0.11      0.9113
+dept      Playmakers Repertory               1    0.000275     0.00489       0.06      0.9552
+dept      Political Science                  1    -0.00008     0.00279      -0.03      0.9785
+dept      Prosthodontics                     1    0.000605     0.00335       0.18      0.8569
+dept      Provost                            1    -0.00104      0.0131      -0.08      0.9369
+dept      Psychiatry                         1    0.000187     0.00119       0.16      0.8747
+dept      Psychology                         1    0.000342     0.00192       0.18      0.8588
+dept      Public Health Nursing              1    0.000735     0.00909       0.08      0.9356
+dept      Public Health Shared Services      1    0.000102     0.00644       0.02      0.9874
+dept      Public Policy                      1    0.000763     0.00329       0.23      0.8166
+dept      Public Safety                      1    -0.00014     0.00193      -0.07      0.9419
+dept      Public Safety Housing Security     1    0.000143      0.0128       0.01      0.9911
+dept      Public Safety Trans & Parking      1    0.000095     0.00183       0.05      0.9585
+dept      Purchasing Services                1    8.112E-6     0.00457       0.00      0.9986
+dept      Radiation Oncology                 1    0.000337     0.00282       0.12      0.9050
+dept      Radiology                          1    0.000136     0.00186       0.07      0.9420
+dept      Religious Studies                  1    0.000841     0.00363       0.23      0.8170
+dept      Renaissance Computing Inst         1    -0.00022     0.00219      -0.10      0.9213
+dept      Research Computing Center          1    -0.00029     0.00412      -0.07      0.9439
+dept      Romance Languages                  1    0.000084     0.00243       0.03      0.9723
+dept      SBTDC KFBS Regional Svc Ctr        1    0.000657     0.00908       0.07      0.9423
+dept      Scholarships & Student Aid         1    0.000174     0.00296       0.06      0.9533
+dept      School of Dentistry                1    0.000109     0.00265       0.04      0.9672
+dept      School of Education                1    -0.00025     0.00207      -0.12      0.9039
+dept      School of Government               1    0.000441     0.00151       0.29      0.7697
+dept      School of Info & Libr Science      1    0.000319     0.00248       0.13      0.8975
+dept      School of Law                      1    0.000029     0.00158       0.02      0.9854
+dept      School of Nursing                  1    0.000040     0.00150       0.03      0.9788
+dept      School of Pharmacy                 1    -0.00008     0.00128      -0.06      0.9507
+dept      School of Public Health            1    0.000142     0.00247       0.06      0.9543
+dept      School of Social Work              1    0.000143     0.00162       0.09      0.9297
+dept      Sheps Ctr for Hlth Serv Res        1    0.000126     0.00200       0.06      0.9499
+dept      Slavic,Euras E Eur Ctr             1    0.000422      0.0128       0.03      0.9737
+dept      Social Medicine                    1    0.000721     0.00308       0.23      0.8147
+dept      Sociology                          1    0.000587     0.00362       0.16      0.8713
+dept      Sonja H Stone Center               1    0.000460      0.0128       0.04      0.9714
+dept      Statistics and Operations Res      1    -0.00011     0.00394      -0.03      0.9770
+dept      Stdnt Success-Acad Counseling      1    -0.00003     0.00908      -0.00      0.9975
+dept      Student AcctsUNC Receivables       1    0.000308     0.00430       0.07      0.9430
+dept      Student Activities Fund Office     1    0.000208     0.00907       0.02      0.9817
+dept      Student Stores-Accounting          1    0.000421     0.00907       0.05      0.9630
+dept      Student Stores-Admin               1    -0.00013      0.0128      -0.01      0.9917
+dept      Student Stores-Bull'S Head         1    -0.00014      0.0128      -0.01      0.9913
+dept      Student Stores-Course Pack         1    -0.00002     0.00741      -0.00      0.9983
+dept      Student Stores-Mechand & Displ     1    -0.00059     0.00907      -0.06      0.9483
+dept      Student Stores-Operations          1    -0.00005     0.00748      -0.01      0.9949
+dept      Student Stores-Sales Floor         1    0.000301     0.00642       0.05      0.9627
+dept      Student Stores-Texbook Dept        1    -0.00022     0.00575      -0.04      0.9689
+dept      Student Stores-The Caduceus        1    -0.00028     0.00742      -0.04      0.9702
+dept      Student Stores-Warehouse           1    -0.00054     0.00907      -0.06      0.9523
+dept      Study Abroad                       1    0.000458     0.00408       0.11      0.9106
+dept      Study of Amer South, Ctr           1    0.000095     0.00909       0.01      0.9916
+dept      Study of the Americas              1    0.000588     0.00908       0.06      0.9484
+dept      Summer School Administration       1    -0.00001      0.0128      -0.00      0.9992
+dept      Surgery                            1    0.000163     0.00164       0.10      0.9207
+dept      TEACCH Autism Program              1    0.000307     0.00184       0.17      0.8675
+dept      Thurston Arthritis Res Center      1    0.000219     0.00336       0.07      0.9480
+dept      TraCS Institute                    1    0.000344     0.00215       0.16      0.8732
+dept      Travel Services                    1    -0.00004     0.00741      -0.01      0.9952
+dept      Treasury & Risk Managmnt Svcs      1    -0.00017     0.00643      -0.03      0.9787
+dept      Tri Res Library Network            1    0.000699      0.0128       0.05      0.9566
+dept      UNC Global                         1    0.000355     0.00325       0.11      0.9131
+dept      UNC Inst for the Environment       1    -0.00013     0.00267      -0.05      0.9613
+dept      UNC Kidney Center                  1    0.000763     0.00911       0.08      0.9332
+dept      UNC McAllister Heart Institute     1    -0.00031     0.00301      -0.10      0.9173
+dept      UNC One Card                       1    -0.00007     0.00575      -0.01      0.9901
+dept      UNC Property Office                1    -0.00006     0.00741      -0.01      0.9930
+dept      Undergraduate Education            1    0.000242     0.00643       0.04      0.9700
+dept      Undergraduate Research             1    0.000850      0.0129       0.07      0.9474
+dept      University Career Services         1    0.000234     0.00430       0.05      0.9567
+dept      University Controller              1    0.000014     0.00741       0.00      0.9985
+dept      University Counsel                 1    -7.73E-6     0.00311      -0.00      0.9980
+dept      University Library                 1    -0.00098     0.00125      -0.78      0.4363
+dept      University Ombuds Office           1    0.000446     0.00909       0.05      0.9608
+dept      University Registrar               1    0.000040     0.00363       0.01      0.9912
+dept      Urban Studies                      1    -0.00039     0.00464      -0.08      0.9337
+dept      Urology                            1    0.000831     0.00380       0.22      0.8268
+dept      V Chan Student Affairs Office      1    0.000050     0.00392       0.01      0.9899
+dept      V Chancellor-Univ Development      1    0.000233     0.00201       0.12      0.9080
+dept      VC for Research                    1    0.000218     0.00252       0.09      0.9311
+dept      VC-Comm and Pub Affair             1    0.000139     0.00283       0.05      0.9610
+dept      Vice Chan Finance & Admin          1    0.000057     0.00578       0.01      0.9922
+dept      WUNC-FM                            1    0.000393     0.00257       0.15      0.8787
+dept      Wm&Ida Friday Ctr-Cont Educ        1    0.000181     0.00261       0.07      0.9448
+dept      Women's and Gender Studies         1    0.000706     0.00489       0.14      0.8853
+dept      Womens Center                      1    0.000525     0.00750       0.07      0.9441
+dept      World View                         1    0.000252     0.00528       0.05      0.9620
+employed  9                                  1    0.000458    0.000486       0.94      0.3461
+exempt2   Exempt                             1    0.000047    0.000766       0.06      0.9510
+exempt2   Non-permanent                      1    0.000829     0.00109       0.76      0.4461
+fte       0                                  1    -0.00010    0.000401      -0.25      0.8055
+nonstsal                                     1      1.0000    4.408E-9    2.269E8      <.0001
+position  Adjunct Instructor                 1    -0.00138     0.00382      -0.36      0.7180
+position  Adjunct Professor                  1    -0.00187     0.00232      -0.81      0.4188
+position  Admin                              1    0.000495    0.000874       0.57      0.5710
+position  Applications                       1    0.000369     0.00144       0.26      0.7983
+position  Assistant Other                    1    0.000627     0.00112       0.56      0.5761
+position  Assistant Professor                1    -0.00539     0.00105      -5.14      <.0001
+position  Associate Other                    1    0.000743     0.00132       0.56      0.5742
+position  Associate Professor                1    0.000374    0.000999       0.37      0.7079
+position  Building                           1    0.000467     0.00115       0.41      0.6843
+position  Clinical Assistant Professor       1    -0.00228     0.00117      -1.95      0.0513
+position  Clinical Associate Professor       1    -0.00223     0.00149      -1.50      0.1343
+position  Clinical Instructor                1    -0.00206     0.00181      -1.14      0.2554
+position  Clinical Other                     1    0.000570     0.00142       0.40      0.6881
+position  Clinical Professor                 1    -0.00187     0.00183      -1.03      0.3050
+position  Clinical Research                  1    0.000317     0.00155       0.20      0.8379
+position  Data                               1    0.000264     0.00101       0.26      0.7936
+position  Director                           1    0.000723    0.000939       0.77      0.4413
+position  Distinguished Professor            1    -0.00023     0.00134      -0.17      0.8658
+position  Executive                          1     0.00124     0.00182       0.68      0.4945
+position  Head                               1    -0.00036     0.00310      -0.11      0.9088
+position  Instructor                         1    0.000925     0.00458       0.20      0.8400
+position  Lecturer                           1    -0.00257     0.00144      -1.79      0.0731
+position  Manager                            1    0.000305     0.00303       0.10      0.9198
+position  Office Other                       1    0.000548     0.00306       0.18      0.8580
+position  Operations                         1    0.000484     0.00291       0.17      0.8680
+position  Other                              1    0.000443    0.000572       0.77      0.4388
+position  Other Dir. Dean Coach              1    0.000410     0.00265       0.15      0.8769
+position  Other Laboratory                   1     0.00141     0.00218       0.65      0.5189
+position  Other Lead                         1    0.000399     0.00528       0.08      0.9397
+position  Other Program                      1    0.000466     0.00165       0.28      0.7776
+position  Processing Assistant               1    0.000710     0.00395       0.18      0.8571
+position  Professor                          1    0.000142    0.000956       0.15      0.8816
+position  Project Manager                    1    0.000710     0.00160       0.44      0.6575
+position  Public Other                       1    0.000557     0.00269       0.21      0.8362
+position  Research                           1    0.000366     0.00384       0.10      0.9241
+position  Research Assistant                 1    -0.00007     0.00207      -0.03      0.9739
+position  Research Associate                 1     0.00164     0.00121       1.36      0.1751
+position  Research Instructor                1    -0.00206     0.00296      -0.70      0.4859
+position  Research Other                     1    0.000626     0.00137       0.46      0.6468
+position  Research Professor                 1    -0.00184     0.00122      -1.51      0.1310
+position  Research Specialist                1    0.000813     0.00128       0.64      0.5252
+position  Research Technician                1     0.00130     0.00150       0.87      0.3856
+position  Senior                             1    0.000817     0.00240       0.34      0.7339
+position  Senior Other                       1    0.000642     0.00187       0.34      0.7316
+position  Senior Research                    1     0.00248     0.00287       0.87      0.3867
+position  Senior Scientist                   1     0.00119     0.00641       0.19      0.8530
+position  Student Other                      1    0.000254     0.00191       0.13      0.8944
+position  Support                            1    0.000508     0.00165       0.31      0.7576
+position  TEACHING FELLOW                    1    -0.00130     0.00326      -0.40      0.6893
+position  Training Other                     1    0.000473     0.00407       0.12      0.9076
+statesal                                     1      1.0000    5.868E-9    1.704E8      <.0001
+status    Continuing                         1    -0.00161    0.000855      -1.89      0.0591
+status    Fixed-Term                         1     0.00153    0.000859       1.78      0.0750
+status    Permanent                          0           0           .        .         .
+status    Temporary/Visiting Faculty         0           0           .        .         .
+stservyr                                     1    0.000029    0.000024       1.19      0.2352
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Fit Statistics
+ 
+Target=totalsal Target Label=' '
+ 
+   Fit
+Statistics    Statistics Label                      Train       Validation             Test
+ 
+ _AIC_        Akaike's Information Criterion    -57721.52              .                .
+ _ASE_        Average Squared Error                  0.00       3324161.37       3017804.99
+ _AVERR_      Average Error Function                 0.00       3324161.37       3017804.99
+ _DFE_        Degrees of Freedom for Error        6260.00              .                .
+ _DFM_        Model Degrees of Freedom             356.00              .                .
+ _DFT_        Total Degrees of Freedom            6616.00              .                .
+ _DIV_        Divisor for ASE                     6616.00          2835.00          2836.00
+ _ERR_        Error Function                         0.97    9423997473.70    8558494952.66
+ _FPE_        Final Prediction Error                 0.00              .                .
+ _MAX_        Maximum Absolute Error                 0.97         68997.32         46457.32
+ _MSE_        Mean Square Error                      0.00       3324161.37       3017804.99
+ _NOBS_       Sum of Frequencies                  6616.00          2835.00          2836.00
+ _NW_         Number of Estimate Weights           356.00              .                .
+ _RASE_       Root Average Sum of Squares            0.01          1823.23          1737.18
+ _RFPE_       Root Final Prediction Error            0.01              .                .
+ _RMSE_       Root Mean Squared Error                0.01          1823.23          1737.18
+ _SBC_        Schwarz's Bayesian Criterion      -55301.70              .                .
+ _SSE_        Sum of Squared Errors                  0.97    9423997473.70    8558494952.66
+ _SUMW_       Sum of Case Weights Times Freq      6616.00          2835.00          2836.00
+ 
+ 
+ 
+ 
+Assessment Score Rankings
+ 
+Data Role=TRAIN Target Variable=totalsal Target Label=' '
+ 
+           Number of        Mean         Mean
+Depth    Observations      Target     Predicted
+ 
+   5          331        290058.82    290058.82
+  10          331        181847.98    181847.98
+  15          331        144104.82    144104.82
+  20          331        117337.89    117337.90
+  25          330         99199.01     99199.01
+  30          331         88579.38     88579.38
+  35          331         80266.01     80266.01
+  40          331         73575.54     73575.54
+  45          331         67338.20     67338.20
+  50          330         61965.68     61965.68
+  55          331         57255.49     57255.49
+  60          331         52651.55     52651.55
+  65          331         49290.11     49290.11
+  70          331         46010.22     46010.22
+  75          330         43476.59     43476.59
+  80          331         40858.28     40858.28
+  85          331         37829.31     37829.30
+  90          331         34864.86     34864.86
+  95          331         30493.41     30493.41
+ 100          330         22651.05     22651.05
+ 
+ 
+Data Role=VALIDATE Target Variable=totalsal Target Label=' '
+ 
+           Number of        Mean         Mean
+Depth    Observations      Target     Predicted
+ 
+   5          142        287766.96    287766.96
+  10          142        182373.75    182373.75
+  15          142        140376.41    140376.41
+  20          141        115028.52    115028.52
+  25          142         98199.34     98199.34
+  30          142         88119.65     88119.65
+  35          142         79048.19     79734.06
+  40          141         72821.86     72821.86
+  45          142         66790.82     66790.82
+  50          142         61579.94     61579.94
+  55          142         56724.25     56724.25
+  60          141         52312.60     52312.60
+  65          142         49128.82     49128.82
+  70          142         45975.73     45975.73
+  75          142         43202.83     43202.83
+  80          141         40971.76     40971.76
+  85          142         38544.41     38544.41
+  90          142         35193.96     35193.96
+  95          142         30379.87     30379.87
+ 100          141         21334.22     21334.22
+ 
+ 
+ 
+ 
+Assessment Score Distribution
+ 
+Data Role=TRAIN Target Variable=totalsal Target Label=' '
+ 
+                               Mean         Mean        Number of       Model
+  Range for Predicted         Target     Predicted    Observations      Score
+ 
+778265.551 -  819069.001    819069.00    819069.00           1        798667.28
+615051.751 -  655855.201    627424.00    627424.00           3        635453.48
+574248.301 -  615051.751    605456.00    605456.00           4        594650.03
+533444.851 -  574248.301    546349.33    546349.33           3        553846.58
+492641.401 -  533444.851    519086.33    519086.33           3        513043.13
+451837.951 -  492641.401    479794.00    479794.00           1        472239.68
+411034.501 -  451837.951    431993.86    431993.86           7        431436.23
+370231.051 -  411034.501    388746.47    388746.47          19        390632.78
+329427.601 -  370231.051    345859.96    345859.96          28        349829.33
+288624.150 -  329427.601    306208.71    306208.71          56        309025.88
+247820.700 -  288624.150    264410.23    264410.23          78        268222.43
+207017.250 -  247820.700    226745.99    226745.99         147        227418.98
+166213.800 -  207017.250    184724.81    184724.81         247        186615.53
+125410.350 -  166213.800    145005.63    145005.63         445        145812.08
+84606.900 -  125410.350     100786.05    100786.05         919        105008.63
+43803.450 -  84606.900       60381.37     60381.37        2815         64205.18
+3000.000 -  43803.450        34310.31     34310.31        1840         23401.73
+ 
+ 
+Data Role=VALIDATE Target Variable=totalsal Target Label=' '
+ 
+                               Mean         Mean        Number of       Model
+  Range for Predicted         Target     Predicted    Observations      Score
+ 
+590804.250 -  621715.000    620877.50    620877.50           2        606259.62
+528982.750 -  559893.500    547398.00    547398.00           1        544438.12
+498072.000 -  528982.750    498593.00    498593.00           1        513527.37
+467161.250 -  498072.000    469631.00    469631.00           1        482616.62
+436250.500 -  467161.250    452014.00    452014.00           1        451705.87
+405339.750 -  436250.500    425924.00    425924.00           2        420795.12
+374429.000 -  405339.750    385831.88    385831.87           8        389884.37
+343518.250 -  374429.000    360141.33    360141.33           6        358973.62
+312607.500 -  343518.250    330456.25    330456.25          16        328062.87
+281696.750 -  312607.500    294235.78    294235.78          18        297152.12
+250786.000 -  281696.750    265078.93    265078.93          29        266241.37
+219875.250 -  250786.000    234284.15    234284.15          53        235330.62
+188964.500 -  219875.250    200370.49    200370.49          55        204419.87
+158053.750 -  188964.500    173534.63    173534.62          88        173509.12
+127143.000 -  158053.750    141124.05    141124.05         141        142598.37
+96232.250 -  127143.000     109615.29    109615.29         234        111687.62
+65321.500 -  96232.250       79205.43     79373.64         579         80776.87
+34410.750 -  65321.500       48063.65     48063.65        1276         49866.12
+3500.000 -  34410.750        26870.14     26870.14         324         18955.37

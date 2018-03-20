@@ -1,0 +1,425 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                March 18, 2016
+Time:                18:52:57
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+            Measurement    Frequency
+Role           Level         Count
+ 
+INPUT        INTERVAL          4
+INPUT        NOMINAL           5
+REJECTED     INTERVAL          1
+REJECTED     NOMINAL           1
+TARGET       BINARY            1
+ 
+ 
+ 
+ 
+Model Events
+ 
+                                     Number
+                      Measurement      of
+ Target      Event       Level       Levels      Order                  Label
+ 
+TargetBuy      1        BINARY          2      Descending    Organics Purchase Indicator
+ 
+ 
+ 
+ 
+Predicted and decision variables
+ 
+Type           Variable      Label
+ 
+TARGET       TargetBuy       Organics Purchase Indicator
+PREDICTED    P_TargetBuy1    Predicted: TargetBuy=1
+RESIDUAL     R_TargetBuy1    Residual: TargetBuy=1
+PREDICTED    P_TargetBuy0    Predicted: TargetBuy=0
+RESIDUAL     R_TargetBuy0    Residual: TargetBuy=0
+FROM         F_TargetBuy     From: TargetBuy
+INTO         I_TargetBuy     Into: TargetBuy
+ 
+ 
+ 
+ 
+ 
+The DMREG Procedure
+ 
+                          Model Information
+ 
+Training Data Set              WORK.EM_DMREG.VIEW
+DMDB Catalog                   WORK.REG_DMDB
+Target Variable                TargetBuy (Organics Purchase Indicator)
+Target Measurement Level       Ordinal
+Number of Target Categories    2
+Error                          MBernoulli
+Link Function                  Logit
+Number of Model Parameters     32
+Number of Observations         6604
+ 
+ 
+           Target Profile
+ 
+ Ordered                       Total
+   Value     TargetBuy     Frequency
+ 
+       1             1          1746
+       2             0          4858
+ 
+ 
+ 
+ 
+ 
+The DMREG Procedure
+ 
+Newton-Raphson Ridge Optimization
+ 
+Without Parameter Scaling
+ 
+Parameter Estimates              27
+ 
+                                             Optimization Start
+ 
+Active Constraints                                  0  Objective Function                       3814.4302905
+Max Abs Gradient Element                 421.31889764
+ 
+ 
+                                                                                                        Ratio
+                                                                                                      Between
+                                                                                                       Actual
+                                                                 Objective     Max Abs                    and
+                     Function         Active        Objective     Function    Gradient              Predicted
+Iter     Restarts       Calls    Constraints         Function       Change     Element     Ridge       Change
+ 
+   1            0           2              0             3038        776.7       236.1         0        1.025
+   2            0           3              0             2984      53.8941     28.1113         0        1.107
+   3            0           4              0             2982       2.1590      1.3585         0        1.047
+   4            0           5              0             2982       0.0146      0.0109         0        1.007
+   5            0           6              0             2982      1.71E-6    1.307E-6         0        1.000
+ 
+                                            Optimization Results
+ 
+Iterations                                          5  Function Calls                                      8
+Hessian Calls                                       6  Active Constraints                                  0
+Objective Function                       2981.7093141  Max Abs Gradient Element                  1.307114E-6
+Ridge                                               0  Actual Over Pred Change                  1.0000774822
+ 
+Convergence criterion (GCONV=1E-6) satisfied.
+ 
+ 
+     Likelihood Ratio Test for Global Null Hypothesis: BETA=0
+ 
+     -2 Log Likelihood          Likelihood
+  Intercept     Intercept &          Ratio
+       Only      Covariates     Chi-Square       DF     Pr > ChiSq
+ 
+   7628.861        5963.419      1665.4420       26         <.0001
+ 
+ 
+            Type 3 Analysis of Effects
+ 
+                                 Wald
+Effect               DF    Chi-Square    Pr > ChiSq
+ 
+DemAffl               1      542.9618        <.0001
+DemAge                1      345.5793        <.0001
+DemClusterGroup       6        2.6150        0.8554
+DemGender             2      230.4142        <.0001
+DemReg                4       10.0764        0.0392
+DemTVReg              7        6.8502        0.4446
+PromClass             3        3.2738        0.3513
+PromSpend             1        0.3924        0.5310
+PromTime              1        1.8620        0.1724
+ 
+ 
+                                     Analysis of Maximum Likelihood Estimates
+ 
+                                                  Standard          Wald                  Standardized
+Parameter                       DF    Estimate       Error    Chi-Square    Pr > ChiSq        Estimate    Exp(Est)
+ 
+Intercept                        1     -1.3409      0.2476         29.33        <.0001                       0.262
+DemAffl                          1      0.2434      0.0104        542.96        <.0001          0.4609       1.276
+DemAge                           1     -0.0528     0.00284        345.58        <.0001         -0.3858       0.949
+DemClusterGroup A                1      0.1290      0.1521          0.72        0.3965                       1.138
+DemClusterGroup B                1      0.1398      0.1324          1.11        0.2911                       1.150
+DemClusterGroup C                1      0.1738      0.1299          1.79        0.1808                       1.190
+DemClusterGroup D                1      0.2018      0.1304          2.39        0.1219                       1.224
+DemClusterGroup E                1      0.1198      0.1415          0.72        0.3972                       1.127
+DemClusterGroup F                1      0.1597      0.1324          1.45        0.2278                       1.173
+DemGender       F                1      0.9467      0.0679        194.27        <.0001                       2.577
+DemGender       M                1      0.0406      0.0747          0.30        0.5870                       1.041
+DemReg          Midlands         1      0.0991      0.1192          0.69        0.4057                       1.104
+DemReg          North            1     -0.3185      0.1146          7.72        0.0055                       0.727
+DemReg          Scottish         1      0.0418      0.1939          0.05        0.8294                       1.043
+DemReg          South East       1     -0.0481      0.1016          0.22        0.6354                       0.953
+DemTVReg        Border           1     -0.3103      0.2953          1.10        0.2934                       0.733
+DemTVReg        C Scotland       1      0.0206      0.2313          0.01        0.9289                       1.021
+DemTVReg        East             1     -0.0366      0.1605          0.05        0.8197                       0.964
+DemTVReg        London           1      0.0607      0.1163          0.27        0.6020                       1.063
+DemTVReg        Midlands         1     -0.1588      0.1420          1.25        0.2636                       0.853
+DemTVReg        N East           1      0.3968      0.1958          4.11        0.0427                       1.487
+DemTVReg        N Scot           1     -0.1516      0.2615          0.34        0.5621                       0.859
+DemTVReg        N West           0           0           .           .           .                   .        .
+DemTVReg        S & S East       0           0           .           .           .                   .        .
+DemTVReg        S West           0           0           .           .           .                   .        .
+DemTVReg        Ulster           0           0           .           .           .                   .        .
+DemTVReg        Wales & West     0           0           .           .           .                   .        .
+PromClass       Gold             1      0.1184      0.0708          2.80        0.0943                       1.126
+PromClass       Platinum         1     -0.1103      0.2514          0.19        0.6609                       0.896
+PromClass       Silver           1     -0.0181      0.1088          0.03        0.8682                       0.982
+PromSpend                        1    -7.02E-6    0.000011          0.39        0.5310         -0.0280       1.000
+PromTime                         1      0.0105     0.00768          1.86        0.1724          0.0268       1.011
+ 
+NOTE: There are no valid observations for DemTVReg=Ulster.
+ 
+ 
+                  Odds Ratio Estimates
+ 
+                                                   Point
+Effect                                          Estimate
+ 
+DemAffl                                            1.276
+DemAge                                             0.949
+DemClusterGroup A vs U                             2.866
+DemClusterGroup B vs U                             2.897
+DemClusterGroup C vs U                             2.997
+DemClusterGroup D vs U                             3.082
+DemClusterGroup E vs U                             2.839
+DemClusterGroup F vs U                             2.955
+DemGender       F vs U                             6.917
+DemGender       M vs U                             2.795
+DemReg          Midlands vs South West             0.881
+DemReg          North vs South West                0.580
+DemReg          Scottish vs South West             0.832
+DemReg          South East vs South West           0.760
+DemTVReg        Border vs Yorkshire                0.613
+DemTVReg        C Scotland vs Yorkshire            0.853
+DemTVReg        East vs Yorkshire                  0.806
+DemTVReg        London vs Yorkshire                0.888
+DemTVReg        Midlands vs Yorkshire              0.713
+DemTVReg        N East vs Yorkshire                1.243
+DemTVReg        N Scot vs Yorkshire                0.718
+DemTVReg        N West vs Yorkshire                 .
+DemTVReg        S & S East vs Yorkshire             .
+DemTVReg        S West vs Yorkshire                 .
+DemTVReg        Ulster vs Yorkshire                 .
+DemTVReg        Wales & West vs Yorkshire           .
+PromClass       Gold vs Tin                        1.115
+PromClass       Platinum vs Tin                    0.887
+PromClass       Silver vs Tin                      0.972
+PromSpend                                          1.000
+PromTime                                           1.011
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Fit Statistics
+ 
+Target=TargetBuy Target Label=Organics Purchase Indicator
+ 
+   Fit
+Statistics    Statistics Label                     Train    Validation        Test
+ 
+ _AIC_        Akaike's Information Criterion     8353.88          .            .
+ _ASE_        Average Squared Error                 0.15         0.15         0.15
+ _AVERR_      Average Error Function                0.47         0.46         0.47
+ _DFE_        Degrees of Freedom for Error       8862.00          .            .
+ _DFM_        Model Degrees of Freedom             27.00          .            .
+ _DFT_        Total Degrees of Freedom           8889.00          .            .
+ _DIV_        Divisor for ASE                   17778.00     13334.00     13334.00
+ _ERR_        Error Function                     8299.88      6154.93      6215.94
+ _FPE_        Final Prediction Error                0.15          .            .
+ _MAX_        Maximum Absolute Error                0.98         0.98         0.99
+ _MSE_        Mean Square Error                     0.15         0.15         0.15
+ _NOBS_       Sum of Frequencies                 8889.00      6667.00      6667.00
+ _NW_         Number of Estimate Weights           27.00          .            .
+ _RASE_       Root Average Sum of Squares           0.39         0.39         0.39
+ _RFPE_       Root Final Prediction Error           0.39          .            .
+ _RMSE_       Root Mean Squared Error               0.39         0.39         0.39
+ _SBC_        Schwarz's Bayesian Criterion       8545.38          .            .
+ _SSE_        Sum of Squared Errors              2658.65      1976.88      1986.64
+ _SUMW_       Sum of Case Weights Times Freq    17778.00     13334.00     13334.00
+ _MISC_       Misclassification Rate                0.20         0.20         0.20
+ 
+ 
+ 
+ 
+Classification Table
+ 
+Data Role=TRAIN Target Variable=TargetBuy Target Label=Organics Purchase Indicator
+ 
+                       Target        Outcome     Frequency       Total
+Target    Outcome    Percentage    Percentage      Count      Percentage
+ 
+  0          0         81.3488       95.4240        6381        71.7854
+  1          0         18.6512       66.4396        1463        16.4585
+  0          1         29.2823        4.5760         306         3.4425
+  1          1         70.7177       33.5604         739         8.3136
+ 
+ 
+Data Role=VALIDATE Target Variable=TargetBuy Target Label=Organics Purchase Indicator
+ 
+                       Target        Outcome     Frequency       Total
+Target    Outcome    Percentage    Percentage      Count      Percentage
+ 
+  0          0         81.2458       95.4536        4787        71.8014
+  1          0         18.7542       66.8886        1105        16.5742
+  0          1         29.4194        4.5464         228         3.4198
+  1          1         70.5806       33.1114         547         8.2046
+ 
+ 
+ 
+ 
+Event Classification Table
+ 
+Data Role=TRAIN Target=TargetBuy Target Label=Organics Purchase Indicator
+ 
+  False       True        False       True
+Negative    Negative    Positive    Positive
+ 
+  1463        6381         306         739
+ 
+ 
+Data Role=VALIDATE Target=TargetBuy Target Label=Organics Purchase Indicator
+ 
+  False       True        False       True
+Negative    Negative    Positive    Positive
+ 
+  1105        4787         228         547
+ 
+ 
+ 
+ 
+Assessment Score Rankings
+ 
+Data Role=TRAIN Target Variable=TargetBuy Target Label=Organics Purchase Indicator
+ 
+                                                                                    Mean
+                            Cumulative       %      Cumulative     Number of     Posterior
+Depth      Gain     Lift       Lift      Response   % Response   Observations   Probability
+ 
+   5    235.643   3.35643     3.35643     83.1461     83.1461         445         0.79508
+  10    196.969   2.58209     2.96969     63.9640     73.5658         444         0.60596
+  15    160.848   1.88686     2.60848     46.7416     64.6177         445         0.48783
+  20    134.306   1.54562     2.34306     38.2883     58.0427         444         0.40252
+  25    111.918   1.22464     2.11918     30.3371     52.4966         445         0.33388
+  30     91.736   0.90691     1.91736     22.4662     47.4972         444         0.27837
+  35     75.838   0.80559     1.75838     19.9562     43.5590         445         0.26439
+  40     63.942   0.80559     1.63942     19.9562     40.6120         444         0.26439
+  45     54.668   0.80559     1.54668     19.9562     38.3146         445         0.26439
+  50     47.265   0.80559     1.47265     19.9562     36.4808         444         0.26439
+  55     41.027   0.78579     1.41027     19.4658     34.9356         444         0.26401
+  60     37.360   0.97064     1.37360     24.0449     34.0270         445         0.23702
+  65     32.533   0.74553     1.32533     18.4685     32.8314         444         0.19805
+  70     28.051   0.69850     1.28051     17.3034     31.7210         445         0.16430
+  75     23.398   0.58188     1.23398     14.4144     30.5685         444         0.13542
+  80     18.004   0.37193     1.18004      9.2135     29.2323         445         0.10980
+  85     13.581   0.42732     1.13581     10.5856     28.1366         444         0.08627
+  90      8.828   0.28121     1.08828      6.9663     26.9591         445         0.06545
+  95      4.397   0.24548     1.04397      6.0811     25.8615         444         0.04434
+ 100      0.000   0.16365     1.00000      4.0541     24.7722         444         0.02109
+ 
+ 
+Data Role=VALIDATE Target Variable=TargetBuy Target Label=Organics Purchase Indicator
+ 
+                                                                                    Mean
+                            Cumulative       %      Cumulative     Number of     Posterior
+Depth      Gain     Lift       Lift      Response   % Response   Observations   Probability
+ 
+   5    247.990   3.47990     3.47990     86.2275     86.2275         334         0.80938
+  10    196.477   2.44809     2.96477     60.6607     73.4633         333         0.60603
+  15    162.059   1.93328     2.62059     47.9042     64.9351         334         0.48392
+  20    134.156   1.50279     2.34156     37.2372     58.0210         333         0.39856
+  25    106.507   0.95742     2.06507     23.7237     51.1698         333         0.33619
+  30     90.399   1.10003     1.90399     27.2574     47.1784         334         0.27979
+  35     75.605   0.86708     1.75605     21.4853     43.5127         333         0.26439
+  40     64.505   0.86708     1.64505     21.4853     40.7623         333         0.26439
+  45     55.847   0.86708     1.55847     21.4853     38.6169         334         0.26439
+  50     48.941   0.86708     1.48941     21.4853     36.9058         333         0.26439
+  55     43.290   0.86708     1.43290     21.4853     35.5054         333         0.26439
+  60     38.491   0.85808     1.38491     21.2622     34.3164         334         0.24762
+  65     34.369   0.84835     1.34369     21.0210     33.2949         333         0.20834
+  70     29.797   0.70292     1.29797     17.4174     32.1620         333         0.17351
+  75     24.275   0.47124     1.24275     11.6766     30.7938         334         0.14168
+  80     19.316   0.44841     1.19316     11.1111     29.5651         333         0.11372
+  85     14.228   0.32722     1.14228      8.1081     28.3042         333         0.08787
+  90      9.350   0.26583     1.09350      6.5868     27.0955         334         0.06654
+  95      4.556   0.18179     1.04556      4.5045     25.9078         333         0.04517
+ 100      0.000   0.13331     1.00000      3.3033     24.7788         333         0.02184
+ 
+ 
+ 
+ 
+Assessment Score Distribution
+ 
+Data Role=TRAIN Target Variable=TargetBuy Target Label=Organics Purchase Indicator
+ 
+ Posterior     Number                     Mean
+Probability      of      Number of     Posterior
+   Range       Events    Nonevents    Probability    Percentage
+ 
+ 0.95-1.00        27           0        0.97334         0.3037
+ 0.90-0.95        37           1        0.92480         0.4275
+ 0.85-0.90        43           4        0.87363         0.5287
+ 0.80-0.85        71          10        0.82171         0.9112
+ 0.75-0.80        78          13        0.77047         1.0237
+ 0.70-0.75        75          29        0.72570         1.1700
+ 0.65-0.70        97          52        0.67183         1.6762
+ 0.60-0.65       100          42        0.62517         1.5975
+ 0.55-0.60       103          67        0.57366         1.9125
+ 0.50-0.55       108          88        0.52517         2.2050
+ 0.45-0.50       110         149        0.47338         2.9137
+ 0.40-0.45       109         155        0.42375         2.9700
+ 0.35-0.40       109         202        0.37410         3.4987
+ 0.30-0.35       109         261        0.32513         4.1624
+ 0.25-0.30       556        2158        0.26594        30.5321
+ 0.20-0.25       116         449        0.22506         6.3562
+ 0.15-0.20       124         556        0.17412         7.6499
+ 0.10-0.15       105         769        0.12386         9.8324
+ 0.05-0.10        88         936        0.07412        11.5199
+ 0.00-0.05        37         746        0.03009         8.8086
+ 
+ 
+Data Role=VALIDATE Target Variable=TargetBuy Target Label=Organics Purchase Indicator
+ 
+ Posterior     Number                     Mean
+Probability      of      Number of     Posterior
+   Range       Events    Nonevents    Probability    Percentage
+ 
+ 0.95-1.00        29           0        0.97065         0.4350
+ 0.90-0.95        32           0        0.92464         0.4800
+ 0.85-0.90        38           3        0.87236         0.6150
+ 0.80-0.85        50           6        0.82504         0.8400
+ 0.75-0.80        67          12        0.77615         1.1849
+ 0.70-0.75        50          16        0.72631         0.9900
+ 0.65-0.70        73          27        0.67496         1.4999
+ 0.60-0.65        69          41        0.62245         1.6499
+ 0.55-0.60        62          53        0.57416         1.7249
+ 0.50-0.55        77          70        0.52486         2.2049
+ 0.45-0.50        83          98        0.47362         2.7149
+ 0.40-0.45        77         110        0.42468         2.8049
+ 0.35-0.40        98         193        0.37512         4.3648
+ 0.30-0.35        60         214        0.32288         4.1098
+ 0.25-0.30       468        1637        0.26567        31.5734
+ 0.20-0.25        92         339        0.22454         6.4647
+ 0.15-0.20        80         413        0.17463         7.3946
+ 0.10-0.15        72         514        0.12515         8.7896
+ 0.05-0.10        56         710        0.07473        11.4894
+ 0.00-0.05        19         559        0.03054         8.6696

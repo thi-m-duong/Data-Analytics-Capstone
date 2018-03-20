@@ -1,0 +1,2108 @@
+NOTE: PROCEDURE PRINTTO used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1 
+Traverser: Traverser invoked.  MPCONNECT command is sas. 
+Traverser: Beginning flow traversal 
+*------------------------------------------------------------* 
+* 
+* Ids : Beginning Update 
+* datetime : 21APR2016:05:41:10 
+* 
+*------------------------------------------------------------* 
+NOTE: Data file NEWDATA.GENDER_UNC_SYSTEM_SALARY_SEARCH_.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might require additional CPU resources 
+      and might reduce performance.
+17494      %let _HPDMGRIDHOST=;
+17495      %let _HPDMGRIDINSTALLLOC=;
+17496      %let _HPDMGRIDDATASERVER=;
+17497      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Ids : End Update 
+* datetime : 21APR2016:05:41:10 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "TREE4" 
+Traverser: WaitingNode "TREE5" 
+Traverser: WaitingNode "PART" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Impt : Beginning Update 
+* datetime : 21APR2016:05:41:11 
+* 
+*------------------------------------------------------------* 
+17517      %let _HPDMGRIDHOST=;
+17518      %let _HPDMGRIDINSTALLLOC=;
+17519      %let _HPDMGRIDDATASERVER=;
+17520      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Impt : End Update 
+* datetime : 21APR2016:05:41:11 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "TREE4" 
+Traverser: WaitingNode "TREE5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Part : Beginning Update 
+* datetime : 21APR2016:05:41:11 
+* 
+*------------------------------------------------------------* 
+17538      *------------------------------------------------------------*;
+17539      * Part: Update Variables Set;
+17540      *------------------------------------------------------------*;
+
+17541      proc sort data=EMWS1.Impt_CMeta_TRAIN out=_SortedVar;
+17542      by name;
+17543      run;
+
+NOTE: There were 15 observations read from the data set EMWS1.IMPT_CMETA_TRAIN.
+NOTE: The data set WORK._SORTEDVAR has 15 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+17544      proc sort data=EMWS1.Part_VariableSet;
+17545      by name;
+17546      run;
+
+NOTE: There were 15 observations read from the data set EMWS1.PART_VARIABLESET.
+NOTE: The data set EMWS1.PART_VARIABLESET has 15 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+17547      data EMWS1.Part_VariableSet;
+17548      merge _SortedVar(in=_a) EMWS1.Part_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE PARTITIONROLE);
+17549      by name;
+17550      drop OLDROLE;
+17551      if _b and ^_a then delete;
+17552      run;
+
+NOTE: There were 15 observations read from the data set WORK._SORTEDVAR.
+NOTE: There were 15 observations read from the data set EMWS1.PART_VARIABLESET.
+NOTE: The data set EMWS1.PART_VARIABLESET has 15 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+17553      * Part: End of Update Variables Set;
+17554      *------------------------------------------------------------*;
+
+17555      *------------------------------------------------------------*;
+17556      * Part: Computing metadata for TRAIN data;
+17557      *------------------------------------------------------------*;
+
+17905      %let _HPDMGRIDHOST=;
+17906      %let _HPDMGRIDINSTALLLOC=;
+17907      %let _HPDMGRIDDATASERVER=;
+17908      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Part : End Update 
+* datetime : 21APR2016:05:41:12 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg2 : Beginning Update 
+* datetime : 21APR2016:05:41:12 
+* 
+*------------------------------------------------------------* 
+17927      *------------------------------------------------------------*;
+17928      * Reg2: Update Variables Set;
+17929      *------------------------------------------------------------*;
+
+17930      proc sort data=EMWS1.Part_CMeta_TRAIN out=_SortedVar;
+17931      by name;
+17932      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: The data set WORK._SORTEDVAR has 16 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+17937      proc sort data=EMWS1.Reg2_VariableSet;
+17938      by name;
+17939      run;
+
+NOTE: There were 13 observations read from the data set EMWS1.REG2_VARIABLESET.
+NOTE: The data set EMWS1.REG2_VARIABLESET has 13 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+17940      data EMWS1.Reg2_VariableSet;
+17941      merge _SortedVar(in=_a) EMWS1.Reg2_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE USE REPORT);
+17942      by name;
+17943      if (OLDROLE = 'TARGET' and use = 'Y') and ROLE = 'REJECTED' then USE = 'D';
+17944      drop OLDROLE;
+17945      if _b and ^_a then delete;
+17946      run;
+
+NOTE: There were 13 observations read from the data set WORK._SORTEDVAR.
+NOTE: There were 13 observations read from the data set EMWS1.REG2_VARIABLESET.
+NOTE: The data set EMWS1.REG2_VARIABLESET has 13 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+17947      * Reg2: End of Update Variables Set;
+17948      *------------------------------------------------------------*;
+
+17949      *------------------------------------------------------------*;
+17950      * Reg2: Computing metadata for TRAIN data;
+17951      *------------------------------------------------------------*;
+
+18299      data WORK.MODELTEMP_INFO;
+18300      set EMWS1.Reg2_EMINFO;
+18301      where DATA='Reg2' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+18302      run;
+
+NOTE: There were 0 observations read from the data set EMWS1.REG2_EMINFO.
+      WHERE (DATA='Reg2') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18303      data EMWS1.Reg2_EMINFO;
+18304      length TARGET KEY $32 DATA $43;
+18305      input TARGET KEY DATA $;
+18306      cards;
+
+NOTE: The data set EMWS1.REG2_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18310      run;
+18311      data EMWS1.Reg2_EMINFO;
+18312      set EMWS1.Reg2_EMINFO WORK.MODELTEMP_INFO;
+18313      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.REG2_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS1.REG2_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+18314      proc sort data = EMWS1.Reg2_EMINFO NOTHREADS;
+18315      by TARGET KEY;
+18316      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.REG2_EMINFO.
+NOTE: The data set EMWS1.REG2_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18317      proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+18318      by TARGET KEY;
+18319      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18320      proc sort data = EMWS1.Reg2_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+18321      by TARGET KEY;
+18322      run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.REG2_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18323      data EMWS1.Reg2_EMINFO;
+18324      merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+18325      by TARGET KEY;
+18326      run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.REG2_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+18327      proc datasets lib=work nolist;
+18328      delete TEMP_INFO SORTEDEMINFO;
+18329      run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+18330      quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18332      %let _HPDMGRIDHOST=;
+18333      %let _HPDMGRIDINSTALLLOC=;
+18334      %let _HPDMGRIDDATASERVER=;
+18335      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Reg2 : End Update 
+* datetime : 21APR2016:05:41:13 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree5 : Beginning Update 
+* datetime : 21APR2016:05:41:14 
+* 
+*------------------------------------------------------------* 
+18366      *------------------------------------------------------------*;
+18367      * Tree5: Update Variables Set;
+18368      *------------------------------------------------------------*;
+
+18369      proc sort data=EMWS1.Part_CMeta_TRAIN out=_SortedVar;
+18370      by name;
+18371      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: The data set WORK._SORTEDVAR has 16 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18372      proc sort data=EMWS1.Tree5_VariableSet;
+18373      by name;
+18374      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.TREE5_VARIABLESET.
+NOTE: The data set EMWS1.TREE5_VARIABLESET has 16 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18375      data EMWS1.Tree5_VariableSet;
+18376      merge _SortedVar(in=_a) EMWS1.Tree5_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE USE REPORT);
+18377      by name;
+18378      if (OLDROLE = 'TARGET' and use = 'Y') and ROLE = 'REJECTED' then USE = 'D';
+18379      drop OLDROLE;
+18380      if _b and ^_a then delete;
+18381      run;
+
+NOTE: There were 16 observations read from the data set WORK._SORTEDVAR.
+NOTE: There were 16 observations read from the data set EMWS1.TREE5_VARIABLESET.
+NOTE: The data set EMWS1.TREE5_VARIABLESET has 16 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18382      * Tree5: End of Update Variables Set;
+18383      *------------------------------------------------------------*;
+
+18384      *------------------------------------------------------------*;
+18385      * Tree5: Computing metadata for TRAIN data;
+18386      *------------------------------------------------------------*;
+
+18782      data WORK.MODELTEMP_INFO;
+18783      set EMWS1.Tree5_EMINFO;
+18784      where DATA='Tree5' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+18785      run;
+
+NOTE: There were 0 observations read from the data set EMWS1.TREE5_EMINFO.
+      WHERE (DATA='Tree5') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+18786      data EMWS1.Tree5_EMINFO;
+18787      length TARGET KEY $32 DATA $43;
+18788      input TARGET KEY DATA $;
+18789      cards;
+
+NOTE: The data set EMWS1.TREE5_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18793      run;
+18794      data EMWS1.Tree5_EMINFO;
+18795      set EMWS1.Tree5_EMINFO WORK.MODELTEMP_INFO;
+18796      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE5_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS1.TREE5_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18797      proc sort data = EMWS1.Tree5_EMINFO NOTHREADS;
+18798      by TARGET KEY;
+18799      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE5_EMINFO.
+NOTE: The data set EMWS1.TREE5_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+18800      proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+18801      by TARGET KEY;
+18802      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18803      proc sort data = EMWS1.Tree5_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+18804      by TARGET KEY;
+18805      run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.TREE5_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18806      data EMWS1.Tree5_EMINFO;
+18807      merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+18808      by TARGET KEY;
+18809      run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.TREE5_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+18810      proc datasets lib=work nolist;
+18811      delete TEMP_INFO SORTEDEMINFO;
+18812      run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+18813      quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+PERFORMANCE  DETAILS
+19190      data EM_TARGETDECINFO;
+19191      length TARGET $32 DECDATA DECMETA $43;
+19192      TARGET="totalsal";
+19193      DECDATA="EMWS1.Ids_totalsal_DD";
+19194      DECMETA="EMWS1.Ids_totalsal_DM";
+19195      output;
+19196      run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+19197      %let emexceptionString =;
+19198      %let EMEXCEPTIONSTRING=;
+19199      *------------------------------------------------------------*;
+19200      * UPDATE: Tree5;
+19201      *------------------------------------------------------------*;
+19202      %let EM_ACTION = UPDATE;
+19203      %let syscc = 0;
+19204      %macro main;
+19205      
+19206        %if %upcase(&EM_ACTION) = CREATE %then %do;
+19207          filename temp catalog 'sashelp.emmodl.tree_create.source';
+19208          %include temp;
+19209          filename temp;
+19210      
+19211          %em_tree_create;
+19212        %end;
+19213      
+19214         %else
+19215         %if %upcase(&EM_ACTION) = TRAIN %then %do;
+19216      
+19217             filename temp catalog 'sashelp.emmodl.tree_train.source';
+19218             %include temp;
+19219             filename temp;
+19220             %em_tree_train;
+19221         %end;
+19222      
+19223        %else
+19224        %if %upcase(&EM_ACTION) = SCORE %then %do;
+19225          filename temp catalog 'sashelp.emmodl.tree_score.source';
+19226          %include temp;
+19227          filename temp;
+19228      
+19229          %em_tree_score;
+19230      
+19231        %end;
+19232      
+19233        %else
+19234        %if %upcase(&EM_ACTION) = REPORT %then %do;
+19235      
+19236             filename temp catalog 'sashelp.emmodl.tree_report.source';
+19237             %include temp;
+19238             filename temp;
+19239      
+19240             %em_tree_report;
+19241         %end;
+19242      
+19243        %else
+19244        %if %upcase(&EM_ACTION) = OPENINT %then %do;
+19245      
+19246             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+19247             %include temp;
+19248             filename temp;
+19249             %EM_TREE_OPENTREEVIEWER;
+19250      
+19251         %end;
+19252      
+19253        %else
+19254        %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+19255      
+19256             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+19257             %include temp;
+19258             filename temp;
+19259             %EM_TREE_CLOSETREEVIEWER;
+19260      
+19261         %end;
+19262      
+19263      
+19264         %doendm:
+19265      %mend main;
+19266      
+19267      %main;
+19268      
+19269      *------------------------------------------------------------*;
+19270      * End UPDATE: Tree5;
+19271      *------------------------------------------------------------*;
+
+19272      %em_delMacro;
+
+19274      %let _HPDMGRIDHOST=;
+19275      %let _HPDMGRIDINSTALLLOC=;
+19276      %let _HPDMGRIDDATASERVER=;
+19277      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Tree5 : End Update 
+* datetime : 21APR2016:05:41:14 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree4 : Beginning Update 
+* datetime : 21APR2016:05:41:15 
+* 
+*------------------------------------------------------------* 
+19308      *------------------------------------------------------------*;
+19309      * Tree4: Update Variables Set;
+19310      *------------------------------------------------------------*;
+
+19311      proc sort data=EMWS1.Part_CMeta_TRAIN out=_SortedVar;
+19312      by name;
+19313      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: The data set WORK._SORTEDVAR has 16 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+19314      proc sort data=EMWS1.Tree4_VariableSet;
+19315      by name;
+19316      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.TREE4_VARIABLESET.
+NOTE: The data set EMWS1.TREE4_VARIABLESET has 16 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+19317      data EMWS1.Tree4_VariableSet;
+19318      merge _SortedVar(in=_a) EMWS1.Tree4_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE USE REPORT);
+19319      by name;
+19320      if (OLDROLE = 'TARGET' and use = 'Y') and ROLE = 'REJECTED' then USE = 'D';
+19321      drop OLDROLE;
+19322      if _b and ^_a then delete;
+19323      run;
+
+NOTE: There were 16 observations read from the data set WORK._SORTEDVAR.
+NOTE: There were 16 observations read from the data set EMWS1.TREE4_VARIABLESET.
+NOTE: The data set EMWS1.TREE4_VARIABLESET has 16 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+19324      * Tree4: End of Update Variables Set;
+19325      *------------------------------------------------------------*;
+
+19326      *------------------------------------------------------------*;
+19327      * Tree4: Computing metadata for TRAIN data;
+19328      *------------------------------------------------------------*;
+
+19724      data WORK.MODELTEMP_INFO;
+19725      set EMWS1.Tree4_EMINFO;
+19726      where DATA='Tree4' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+19727      run;
+
+NOTE: There were 0 observations read from the data set EMWS1.TREE4_EMINFO.
+      WHERE (DATA='Tree4') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+19728      data EMWS1.Tree4_EMINFO;
+19729      length TARGET KEY $32 DATA $43;
+19730      input TARGET KEY DATA $;
+19731      cards;
+
+NOTE: The data set EMWS1.TREE4_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+19735      run;
+19736      data EMWS1.Tree4_EMINFO;
+19737      set EMWS1.Tree4_EMINFO WORK.MODELTEMP_INFO;
+19738      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE4_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS1.TREE4_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+19739      proc sort data = EMWS1.Tree4_EMINFO NOTHREADS;
+19740      by TARGET KEY;
+19741      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE4_EMINFO.
+NOTE: The data set EMWS1.TREE4_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+19742      proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+19743      by TARGET KEY;
+19744      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+19745      proc sort data = EMWS1.Tree4_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+19746      by TARGET KEY;
+19747      run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.TREE4_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+19748      data EMWS1.Tree4_EMINFO;
+19749      merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+19750      by TARGET KEY;
+19751      run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.TREE4_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+19752      proc datasets lib=work nolist;
+19753      delete TEMP_INFO SORTEDEMINFO;
+19754      run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+19755      quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+PERFORMANCE  DETAILS
+20132      data EM_TARGETDECINFO;
+20133      length TARGET $32 DECDATA DECMETA $43;
+20134      TARGET="totalsal";
+20135      DECDATA="EMWS1.Ids_totalsal_DD";
+20136      DECMETA="EMWS1.Ids_totalsal_DM";
+20137      output;
+20138      run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+20139      %let emexceptionString =;
+20140      %let EMEXCEPTIONSTRING=;
+20141      *------------------------------------------------------------*;
+20142      * UPDATE: Tree4;
+20143      *------------------------------------------------------------*;
+20144      %let EM_ACTION = UPDATE;
+20145      %let syscc = 0;
+20146      %macro main;
+20147      
+20148        %if %upcase(&EM_ACTION) = CREATE %then %do;
+20149          filename temp catalog 'sashelp.emmodl.tree_create.source';
+20150          %include temp;
+20151          filename temp;
+20152      
+20153          %em_tree_create;
+20154        %end;
+20155      
+20156         %else
+20157         %if %upcase(&EM_ACTION) = TRAIN %then %do;
+20158      
+20159             filename temp catalog 'sashelp.emmodl.tree_train.source';
+20160             %include temp;
+20161             filename temp;
+20162             %em_tree_train;
+20163         %end;
+20164      
+20165        %else
+20166        %if %upcase(&EM_ACTION) = SCORE %then %do;
+20167          filename temp catalog 'sashelp.emmodl.tree_score.source';
+20168          %include temp;
+20169          filename temp;
+20170      
+20171          %em_tree_score;
+20172      
+20173        %end;
+20174      
+20175        %else
+20176        %if %upcase(&EM_ACTION) = REPORT %then %do;
+20177      
+20178             filename temp catalog 'sashelp.emmodl.tree_report.source';
+20179             %include temp;
+20180             filename temp;
+20181      
+20182             %em_tree_report;
+20183         %end;
+20184      
+20185        %else
+20186        %if %upcase(&EM_ACTION) = OPENINT %then %do;
+20187      
+20188             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+20189             %include temp;
+20190             filename temp;
+20191             %EM_TREE_OPENTREEVIEWER;
+20192      
+20193         %end;
+20194      
+20195        %else
+20196        %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+20197      
+20198             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+20199             %include temp;
+20200             filename temp;
+20201             %EM_TREE_CLOSETREEVIEWER;
+20202      
+20203         %end;
+20204      
+20205      
+20206         %doendm:
+20207      %mend main;
+20208      
+20209      %main;
+20210      
+20211      *------------------------------------------------------------*;
+20212      * End UPDATE: Tree4;
+20213      *------------------------------------------------------------*;
+
+20214      %em_delMacro;
+
+20216      %let _HPDMGRIDHOST=;
+20217      %let _HPDMGRIDINSTALLLOC=;
+20218      %let _HPDMGRIDDATASERVER=;
+20219      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Tree4 : End Update 
+* datetime : 21APR2016:05:41:16 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree3 : Beginning Update 
+* datetime : 21APR2016:05:41:16 
+* 
+*------------------------------------------------------------* 
+20250      *------------------------------------------------------------*;
+20251      * Tree3: Update Variables Set;
+20252      *------------------------------------------------------------*;
+
+20253      proc sort data=EMWS1.Part_CMeta_TRAIN out=_SortedVar;
+20254      by name;
+20255      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: The data set WORK._SORTEDVAR has 16 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+20256      proc sort data=EMWS1.Tree3_VariableSet;
+20257      by name;
+20258      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.TREE3_VARIABLESET.
+NOTE: The data set EMWS1.TREE3_VARIABLESET has 16 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+20259      data EMWS1.Tree3_VariableSet;
+20260      merge _SortedVar(in=_a) EMWS1.Tree3_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE USE REPORT);
+20261      by name;
+20262      if (OLDROLE = 'TARGET' and use = 'Y') and ROLE = 'REJECTED' then USE = 'D';
+20263      drop OLDROLE;
+20264      if _b and ^_a then delete;
+20265      run;
+
+NOTE: There were 16 observations read from the data set WORK._SORTEDVAR.
+NOTE: There were 16 observations read from the data set EMWS1.TREE3_VARIABLESET.
+NOTE: The data set EMWS1.TREE3_VARIABLESET has 16 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+20266      * Tree3: End of Update Variables Set;
+20267      *------------------------------------------------------------*;
+
+20268      *------------------------------------------------------------*;
+20269      * Tree3: Computing metadata for TRAIN data;
+20270      *------------------------------------------------------------*;
+
+20666      data WORK.MODELTEMP_INFO;
+20667      set EMWS1.Tree3_EMINFO;
+20668      where DATA='Tree3' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+20669      run;
+
+NOTE: There were 0 observations read from the data set EMWS1.TREE3_EMINFO.
+      WHERE (DATA='Tree3') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+20670      data EMWS1.Tree3_EMINFO;
+20671      length TARGET KEY $32 DATA $43;
+20672      input TARGET KEY DATA $;
+20673      cards;
+
+NOTE: The data set EMWS1.TREE3_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+20677      run;
+20678      data EMWS1.Tree3_EMINFO;
+20679      set EMWS1.Tree3_EMINFO WORK.MODELTEMP_INFO;
+20680      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE3_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS1.TREE3_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+20681      proc sort data = EMWS1.Tree3_EMINFO NOTHREADS;
+20682      by TARGET KEY;
+20683      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE3_EMINFO.
+NOTE: The data set EMWS1.TREE3_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+20684      proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+20685      by TARGET KEY;
+20686      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+20687      proc sort data = EMWS1.Tree3_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+20688      by TARGET KEY;
+20689      run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.TREE3_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+20690      data EMWS1.Tree3_EMINFO;
+20691      merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+20692      by TARGET KEY;
+20693      run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.TREE3_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+20694      proc datasets lib=work nolist;
+20695      delete TEMP_INFO SORTEDEMINFO;
+20696      run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+20697      quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+PERFORMANCE  DETAILS
+21074      data EM_TARGETDECINFO;
+21075      length TARGET $32 DECDATA DECMETA $43;
+21076      TARGET="totalsal";
+21077      DECDATA="EMWS1.Ids_totalsal_DD";
+21078      DECMETA="EMWS1.Ids_totalsal_DM";
+21079      output;
+21080      run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+21081      %let emexceptionString =;
+21082      %let EMEXCEPTIONSTRING=;
+21083      *------------------------------------------------------------*;
+21084      * UPDATE: Tree3;
+21085      *------------------------------------------------------------*;
+21086      %let EM_ACTION = UPDATE;
+21087      %let syscc = 0;
+21088      %macro main;
+21089      
+21090        %if %upcase(&EM_ACTION) = CREATE %then %do;
+21091          filename temp catalog 'sashelp.emmodl.tree_create.source';
+21092          %include temp;
+21093          filename temp;
+21094      
+21095          %em_tree_create;
+21096        %end;
+21097      
+21098         %else
+21099         %if %upcase(&EM_ACTION) = TRAIN %then %do;
+21100      
+21101             filename temp catalog 'sashelp.emmodl.tree_train.source';
+21102             %include temp;
+21103             filename temp;
+21104             %em_tree_train;
+21105         %end;
+21106      
+21107        %else
+21108        %if %upcase(&EM_ACTION) = SCORE %then %do;
+21109          filename temp catalog 'sashelp.emmodl.tree_score.source';
+21110          %include temp;
+21111          filename temp;
+21112      
+21113          %em_tree_score;
+21114      
+21115        %end;
+21116      
+21117        %else
+21118        %if %upcase(&EM_ACTION) = REPORT %then %do;
+21119      
+21120             filename temp catalog 'sashelp.emmodl.tree_report.source';
+21121             %include temp;
+21122             filename temp;
+21123      
+21124             %em_tree_report;
+21125         %end;
+21126      
+21127        %else
+21128        %if %upcase(&EM_ACTION) = OPENINT %then %do;
+21129      
+21130             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+21131             %include temp;
+21132             filename temp;
+21133             %EM_TREE_OPENTREEVIEWER;
+21134      
+21135         %end;
+21136      
+21137        %else
+21138        %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+21139      
+21140             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+21141             %include temp;
+21142             filename temp;
+21143             %EM_TREE_CLOSETREEVIEWER;
+21144      
+21145         %end;
+21146      
+21147      
+21148         %doendm:
+21149      %mend main;
+21150      
+21151      %main;
+21152      
+21153      *------------------------------------------------------------*;
+21154      * End UPDATE: Tree3;
+21155      *------------------------------------------------------------*;
+
+21156      %em_delMacro;
+
+21158      %let _HPDMGRIDHOST=;
+21159      %let _HPDMGRIDINSTALLLOC=;
+21160      %let _HPDMGRIDDATASERVER=;
+21161      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Tree3 : End Update 
+* datetime : 21APR2016:05:41:17 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree2 : Beginning Update 
+* datetime : 21APR2016:05:41:17 
+* 
+*------------------------------------------------------------* 
+21192      *------------------------------------------------------------*;
+21193      * Tree2: Update Variables Set;
+21194      *------------------------------------------------------------*;
+
+21195      proc sort data=EMWS1.Part_CMeta_TRAIN out=_SortedVar;
+21196      by name;
+21197      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: The data set WORK._SORTEDVAR has 16 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+21198      proc sort data=EMWS1.Tree2_VariableSet;
+21199      by name;
+21200      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.TREE2_VARIABLESET.
+NOTE: The data set EMWS1.TREE2_VARIABLESET has 16 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+21201      data EMWS1.Tree2_VariableSet;
+21202      merge _SortedVar(in=_a) EMWS1.Tree2_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE USE REPORT);
+21203      by name;
+21204      if (OLDROLE = 'TARGET' and use = 'Y') and ROLE = 'REJECTED' then USE = 'D';
+21205      drop OLDROLE;
+21206      if _b and ^_a then delete;
+21207      run;
+
+NOTE: There were 16 observations read from the data set WORK._SORTEDVAR.
+NOTE: There were 16 observations read from the data set EMWS1.TREE2_VARIABLESET.
+NOTE: The data set EMWS1.TREE2_VARIABLESET has 16 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+21208      * Tree2: End of Update Variables Set;
+21209      *------------------------------------------------------------*;
+
+21210      *------------------------------------------------------------*;
+21211      * Tree2: Computing metadata for TRAIN data;
+21212      *------------------------------------------------------------*;
+
+21608      data WORK.MODELTEMP_INFO;
+21609      set EMWS1.Tree2_EMINFO;
+21610      where DATA='Tree2' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+21611      run;
+
+NOTE: There were 0 observations read from the data set EMWS1.TREE2_EMINFO.
+      WHERE (DATA='Tree2') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+21612      data EMWS1.Tree2_EMINFO;
+21613      length TARGET KEY $32 DATA $43;
+21614      input TARGET KEY DATA $;
+21615      cards;
+
+NOTE: The data set EMWS1.TREE2_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+21619      run;
+21620      data EMWS1.Tree2_EMINFO;
+21621      set EMWS1.Tree2_EMINFO WORK.MODELTEMP_INFO;
+21622      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE2_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS1.TREE2_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+21623      proc sort data = EMWS1.Tree2_EMINFO NOTHREADS;
+21624      by TARGET KEY;
+21625      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE2_EMINFO.
+NOTE: The data set EMWS1.TREE2_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+21626      proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+21627      by TARGET KEY;
+21628      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+21629      proc sort data = EMWS1.Tree2_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+21630      by TARGET KEY;
+21631      run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.TREE2_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+21632      data EMWS1.Tree2_EMINFO;
+21633      merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+21634      by TARGET KEY;
+21635      run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.TREE2_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+21636      proc datasets lib=work nolist;
+21637      delete TEMP_INFO SORTEDEMINFO;
+21638      run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+21639      quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+PERFORMANCE  DETAILS
+22016      data EM_TARGETDECINFO;
+22017      length TARGET $32 DECDATA DECMETA $43;
+22018      TARGET="totalsal";
+22019      DECDATA="EMWS1.Ids_totalsal_DD";
+22020      DECMETA="EMWS1.Ids_totalsal_DM";
+22021      output;
+22022      run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+22023      %let emexceptionString =;
+22024      %let EMEXCEPTIONSTRING=;
+22025      *------------------------------------------------------------*;
+22026      * UPDATE: Tree2;
+22027      *------------------------------------------------------------*;
+22028      %let EM_ACTION = UPDATE;
+22029      %let syscc = 0;
+22030      %macro main;
+22031      
+22032        %if %upcase(&EM_ACTION) = CREATE %then %do;
+22033          filename temp catalog 'sashelp.emmodl.tree_create.source';
+22034          %include temp;
+22035          filename temp;
+22036      
+22037          %em_tree_create;
+22038        %end;
+22039      
+22040         %else
+22041         %if %upcase(&EM_ACTION) = TRAIN %then %do;
+22042      
+22043             filename temp catalog 'sashelp.emmodl.tree_train.source';
+22044             %include temp;
+22045             filename temp;
+22046             %em_tree_train;
+22047         %end;
+22048      
+22049        %else
+22050        %if %upcase(&EM_ACTION) = SCORE %then %do;
+22051          filename temp catalog 'sashelp.emmodl.tree_score.source';
+22052          %include temp;
+22053          filename temp;
+22054      
+22055          %em_tree_score;
+22056      
+22057        %end;
+22058      
+22059        %else
+22060        %if %upcase(&EM_ACTION) = REPORT %then %do;
+22061      
+22062             filename temp catalog 'sashelp.emmodl.tree_report.source';
+22063             %include temp;
+22064             filename temp;
+22065      
+22066             %em_tree_report;
+22067         %end;
+22068      
+22069        %else
+22070        %if %upcase(&EM_ACTION) = OPENINT %then %do;
+22071      
+22072             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+22073             %include temp;
+22074             filename temp;
+22075             %EM_TREE_OPENTREEVIEWER;
+22076      
+22077         %end;
+22078      
+22079        %else
+22080        %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+22081      
+22082             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+22083             %include temp;
+22084             filename temp;
+22085             %EM_TREE_CLOSETREEVIEWER;
+22086      
+22087         %end;
+22088      
+22089      
+22090         %doendm:
+22091      %mend main;
+22092      
+22093      %main;
+22094      
+22095      *------------------------------------------------------------*;
+22096      * End UPDATE: Tree2;
+22097      *------------------------------------------------------------*;
+
+22098      %em_delMacro;
+
+22100      %let _HPDMGRIDHOST=;
+22101      %let _HPDMGRIDINSTALLLOC=;
+22102      %let _HPDMGRIDDATASERVER=;
+22103      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Tree2 : End Update 
+* datetime : 21APR2016:05:41:18 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree : Beginning Update 
+* datetime : 21APR2016:05:41:19 
+* 
+*------------------------------------------------------------* 
+22134      *------------------------------------------------------------*;
+22135      * Tree: Update Variables Set;
+22136      *------------------------------------------------------------*;
+
+22137      proc sort data=EMWS1.Part_CMeta_TRAIN out=_SortedVar;
+22138      by name;
+22139      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: The data set WORK._SORTEDVAR has 16 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+22140      proc sort data=EMWS1.Tree_VariableSet;
+22141      by name;
+22142      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.TREE_VARIABLESET.
+NOTE: The data set EMWS1.TREE_VARIABLESET has 16 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+22143      data EMWS1.Tree_VariableSet;
+22144      merge _SortedVar(in=_a) EMWS1.Tree_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE USE REPORT);
+22145      by name;
+22146      if (OLDROLE = 'TARGET' and use = 'Y') and ROLE = 'REJECTED' then USE = 'D';
+22147      drop OLDROLE;
+22148      if _b and ^_a then delete;
+22149      run;
+
+NOTE: There were 16 observations read from the data set WORK._SORTEDVAR.
+NOTE: There were 16 observations read from the data set EMWS1.TREE_VARIABLESET.
+NOTE: The data set EMWS1.TREE_VARIABLESET has 16 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+22150      * Tree: End of Update Variables Set;
+22151      *------------------------------------------------------------*;
+
+22152      *------------------------------------------------------------*;
+22153      * Tree: Computing metadata for TRAIN data;
+22154      *------------------------------------------------------------*;
+
+22550      data WORK.MODELTEMP_INFO;
+22551      set EMWS1.Tree_EMINFO;
+22552      where DATA='Tree' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+22553      run;
+
+NOTE: There were 0 observations read from the data set EMWS1.TREE_EMINFO.
+      WHERE (DATA='Tree') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+22554      data EMWS1.Tree_EMINFO;
+22555      length TARGET KEY $32 DATA $43;
+22556      input TARGET KEY DATA $;
+22557      cards;
+
+NOTE: The data set EMWS1.TREE_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+22561      run;
+22562      data EMWS1.Tree_EMINFO;
+22563      set EMWS1.Tree_EMINFO WORK.MODELTEMP_INFO;
+22564      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS1.TREE_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+22565      proc sort data = EMWS1.Tree_EMINFO NOTHREADS;
+22566      by TARGET KEY;
+22567      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.TREE_EMINFO.
+NOTE: The data set EMWS1.TREE_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+22568      proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+22569      by TARGET KEY;
+22570      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+22571      proc sort data = EMWS1.Tree_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+22572      by TARGET KEY;
+22573      run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.TREE_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+22574      data EMWS1.Tree_EMINFO;
+22575      merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+22576      by TARGET KEY;
+22577      run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.TREE_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+22578      proc datasets lib=work nolist;
+22579      delete TEMP_INFO SORTEDEMINFO;
+22580      run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+22581      quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+PERFORMANCE  DETAILS
+22953      data EM_TARGETDECINFO;
+22954      length TARGET $32 DECDATA DECMETA $43;
+22955      TARGET="totalsal";
+22956      DECDATA="EMWS1.Ids_totalsal_DD";
+22957      DECMETA="EMWS1.Ids_totalsal_DM";
+22958      output;
+22959      run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+22960      %let emexceptionString =;
+22961      %let EMEXCEPTIONSTRING=;
+22962      *------------------------------------------------------------*;
+22963      * UPDATE: Tree;
+22964      *------------------------------------------------------------*;
+22965      %let EM_ACTION = UPDATE;
+22966      %let syscc = 0;
+22967      %macro main;
+22968      
+22969        %if %upcase(&EM_ACTION) = CREATE %then %do;
+22970          filename temp catalog 'sashelp.emmodl.tree_create.source';
+22971          %include temp;
+22972          filename temp;
+22973      
+22974          %em_tree_create;
+22975        %end;
+22976      
+22977         %else
+22978         %if %upcase(&EM_ACTION) = TRAIN %then %do;
+22979      
+22980             filename temp catalog 'sashelp.emmodl.tree_train.source';
+22981             %include temp;
+22982             filename temp;
+22983             %em_tree_train;
+22984         %end;
+22985      
+22986        %else
+22987        %if %upcase(&EM_ACTION) = SCORE %then %do;
+22988          filename temp catalog 'sashelp.emmodl.tree_score.source';
+22989          %include temp;
+22990          filename temp;
+22991      
+22992          %em_tree_score;
+22993      
+22994        %end;
+22995      
+22996        %else
+22997        %if %upcase(&EM_ACTION) = REPORT %then %do;
+22998      
+22999             filename temp catalog 'sashelp.emmodl.tree_report.source';
+23000             %include temp;
+23001             filename temp;
+23002      
+23003             %em_tree_report;
+23004         %end;
+23005      
+23006        %else
+23007        %if %upcase(&EM_ACTION) = OPENINT %then %do;
+23008      
+23009             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+23010             %include temp;
+23011             filename temp;
+23012             %EM_TREE_OPENTREEVIEWER;
+23013      
+23014         %end;
+23015      
+23016        %else
+23017        %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+23018      
+23019             filename temp catalog 'sashelp.emmodl.tree_actions.source';
+23020             %include temp;
+23021             filename temp;
+23022             %EM_TREE_CLOSETREEVIEWER;
+23023      
+23024         %end;
+23025      
+23026      
+23027         %doendm:
+23028      %mend main;
+23029      
+23030      %main;
+23031      
+23032      *------------------------------------------------------------*;
+23033      * End UPDATE: Tree;
+23034      *------------------------------------------------------------*;
+
+23035      %em_delMacro;
+
+23037      %let _HPDMGRIDHOST=;
+23038      %let _HPDMGRIDINSTALLLOC=;
+23039      %let _HPDMGRIDDATASERVER=;
+23040      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Tree : End Update 
+* datetime : 21APR2016:05:41:20 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg : Beginning Update 
+* datetime : 21APR2016:05:41:20 
+* 
+*------------------------------------------------------------* 
+23059      *------------------------------------------------------------*;
+23060      * Reg: Update Variables Set;
+23061      *------------------------------------------------------------*;
+
+23062      proc sort data=EMWS1.Part_CMeta_TRAIN out=_SortedVar;
+23063      by name;
+23064      run;
+
+NOTE: There were 16 observations read from the data set EMWS1.PART_CMETA_TRAIN.
+NOTE: The data set WORK._SORTEDVAR has 16 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+23069      proc sort data=EMWS1.Reg_VariableSet;
+23070      by name;
+23071      run;
+
+NOTE: There were 13 observations read from the data set EMWS1.REG_VARIABLESET.
+NOTE: The data set EMWS1.REG_VARIABLESET has 13 observations and 21 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+23072      data EMWS1.Reg_VariableSet;
+23073      merge _SortedVar(in=_a) EMWS1.Reg_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE USE REPORT);
+23074      by name;
+23075      if (OLDROLE = 'TARGET' and use = 'Y') and ROLE = 'REJECTED' then USE = 'D';
+23076      drop OLDROLE;
+23077      if _b and ^_a then delete;
+23078      run;
+
+NOTE: There were 13 observations read from the data set WORK._SORTEDVAR.
+NOTE: There were 13 observations read from the data set EMWS1.REG_VARIABLESET.
+NOTE: The data set EMWS1.REG_VARIABLESET has 13 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+23079      * Reg: End of Update Variables Set;
+23080      *------------------------------------------------------------*;
+
+23081      *------------------------------------------------------------*;
+23082      * Reg: Computing metadata for TRAIN data;
+23083      *------------------------------------------------------------*;
+
+23431      data WORK.MODELTEMP_INFO;
+23432      set EMWS1.Reg_EMINFO;
+23433      where DATA='Reg' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+23434      run;
+
+NOTE: There were 0 observations read from the data set EMWS1.REG_EMINFO.
+      WHERE (DATA='Reg') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+23435      data EMWS1.Reg_EMINFO;
+23436      length TARGET KEY $32 DATA $43;
+23437      input TARGET KEY DATA $;
+23438      cards;
+
+NOTE: The data set EMWS1.REG_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+23442      run;
+23443      data EMWS1.Reg_EMINFO;
+23444      set EMWS1.Reg_EMINFO WORK.MODELTEMP_INFO;
+23445      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.REG_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS1.REG_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+23446      proc sort data = EMWS1.Reg_EMINFO NOTHREADS;
+23447      by TARGET KEY;
+23448      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.REG_EMINFO.
+NOTE: The data set EMWS1.REG_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+23449      proc sort data = EMWS1.Ids_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+23450      by TARGET KEY;
+23451      run;
+
+NOTE: There were 3 observations read from the data set EMWS1.IDS_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+23452      proc sort data = EMWS1.Reg_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+23453      by TARGET KEY;
+23454      run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS1.REG_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+23455      data EMWS1.Reg_EMINFO;
+23456      merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+23457      by TARGET KEY;
+23458      run;
+
+NOTE: There were 3 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS1.REG_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+23459      proc datasets lib=work nolist;
+23460      delete TEMP_INFO SORTEDEMINFO;
+23461      run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+23462      quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+23464      %let _HPDMGRIDHOST=;
+23465      %let _HPDMGRIDINSTALLLOC=;
+23466      %let _HPDMGRIDDATASERVER=;
+23467      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Reg : End Update 
+* datetime : 21APR2016:05:41:21 
+* 
+*------------------------------------------------------------* 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlComp : Beginning Update 
+* datetime : 21APR2016:05:41:21 
+* 
+*------------------------------------------------------------* 
+NOTE: There were 48 observations read from the data set WORK.MDLCOMP_FILTERSET.
+NOTE: The data set EMWS1.MDLCOMP_IMPORTSET has 48 observations and 14 variables.
+23563      data _null_;
+23564      set EMWS1.MdlComp_TRAIN (obs=1);
+23565      run;
+
+NOTE: There were 6616 observations read from the data set EMWS1.PART_TRAIN.
+NOTE: View EMWS1.MDLCOMP_TRAIN.VIEW used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.09 seconds
+      
+NOTE: There were 6616 observations read from the data set EMWS1.REG_TRAIN.
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP_TRAIN.
+NOTE: DATA statement used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.11 seconds
+      
+
+23566      data _null_;
+23567      set EMWS1.MdlComp_VALIDATE (obs=1);
+23568      run;
+
+NOTE: There were 2835 observations read from the data set EMWS1.PART_VALIDATE.
+NOTE: View EMWS1.MDLCOMP_VALIDATE.VIEW used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+NOTE: There were 2835 observations read from the data set EMWS1.REG_VALIDATE.
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP_VALIDATE.
+NOTE: DATA statement used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+      
+
+23569      data _null_;
+23570      set EMWS1.MdlComp_TEST (obs=1);
+23571      run;
+
+NOTE: There were 2836 observations read from the data set EMWS1.PART_TEST.
+NOTE: View EMWS1.MDLCOMP_TEST.VIEW used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+NOTE: There were 2836 observations read from the data set EMWS1.REG_TEST.
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP_TEST.
+NOTE: DATA statement used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.06 seconds
+      
+
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.REG_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO4352_G21 has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.REG_EMINFO.
+      WHERE (TARGET='totalsal') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO42IO9KHJ has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO419VTEA2 has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE_EMINFO.
+      WHERE (TARGET='totalsal') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO405IBT3J has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE2_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO42YGQAJK has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE2_EMINFO.
+      WHERE (TARGET='totalsal') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO425U1W_5 has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE3_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO41YCPXM9 has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE3_EMINFO.
+      WHERE (TARGET='totalsal') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO41PUWEWN has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE4_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO40N9BTIP has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE4_EMINFO.
+      WHERE (TARGET='totalsal') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO42WGM0YB has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE5_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO416XNPVV has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.TREE5_EMINFO.
+      WHERE (TARGET='totalsal') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO40KRIH29 has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.REG2_EMINFO.
+      WHERE KEY='MODEL';
+NOTE: The data set WORK.EMINFO42PXH0MY has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.REG2_EMINFO.
+      WHERE (TARGET='totalsal') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO40GA2MMJ has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL numElements >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+23572      data EMWS1.MdlComp_VariableSet;
+23573      length USE $1 NAME $32 ROLE $32 LEVEL $10 EVENT $32 LABEL $200;
+23574      NAME = "totalsal";
+23575      ROLE="TARGET";
+23576      LEVEL = 'INTERVAL';
+23577      EVENT = '';
+23578      LABEL = '';
+23579      output;
+23580      NAME = "totalsal";
+23581      ROLE="TARGET";
+23582      LEVEL = 'INTERVAL';
+23583      EVENT = '';
+23584      LABEL = '';
+23585      output;
+23586      NAME = "totalsal";
+23587      ROLE="TARGET";
+23588      LEVEL = 'INTERVAL';
+23589      EVENT = '';
+23590      LABEL = '';
+23591      output;
+23592      NAME = "totalsal";
+23593      ROLE="TARGET";
+23594      LEVEL = 'INTERVAL';
+23595      EVENT = '';
+23596      LABEL = '';
+23597      output;
+23598      NAME = "totalsal";
+23599      ROLE="TARGET";
+23600      LEVEL = 'INTERVAL';
+23601      EVENT = '';
+23602      LABEL = '';
+23603      output;
+23604      NAME = "totalsal";
+23605      ROLE="TARGET";
+23606      LEVEL = 'INTERVAL';
+23607      EVENT = '';
+23608      LABEL = '';
+23609      output;
+23610      NAME = "totalsal";
+23611      ROLE="TARGET";
+23612      LEVEL = 'INTERVAL';
+23613      EVENT = '';
+23614      LABEL = '';
+23615      output;
+23616      run;
+
+NOTE: Variable USE is uninitialized.
+NOTE: The data set EMWS1.MDLCOMP_VARIABLESET has 7 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+23617      proc sort data=EMWS1.MdlComp_VariableSet nodupkey NOTHREADS;
+23618      by NAME LEVEL;
+23619      run;
+
+NOTE: There were 7 observations read from the data set EMWS1.MDLCOMP_VARIABLESET.
+NOTE: 6 observations with duplicate key values were deleted.
+NOTE: The data set EMWS1.MDLCOMP_VARIABLESET has 1 observations and 6 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+23620      data EMWS1.MdlComp_VariableSet;
+23621      set EMWS1.MdlComp_VariableSet;
+23622      if NAME = "totalsal" then USE="Y";
+23623      else USE = "N";
+23624      run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP_VARIABLESET.
+NOTE: The data set EMWS1.MDLCOMP_VARIABLESET has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+23625      *------------------------------------------------------------*;
+23626      * MdlComp: Computing metadata for TRAIN data;
+23627      *------------------------------------------------------------*;
+
+23960      %let _HPDMGRIDHOST=;
+23961      %let _HPDMGRIDINSTALLLOC=;
+23962      %let _HPDMGRIDDATASERVER=;
+23963      %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlComp : End Update 
+* datetime : 21APR2016:05:41:22 
+* 
+*------------------------------------------------------------* 
+Traverser: Run Completed 
+23964      proc printto;
+23965      run;
+

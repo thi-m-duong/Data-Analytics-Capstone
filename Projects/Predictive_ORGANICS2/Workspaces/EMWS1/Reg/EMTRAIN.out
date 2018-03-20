@@ -1,0 +1,211 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+            Measurement    Frequency
+Role           Level         Count
+
+INPUT        INTERVAL          4    
+INPUT        NOMINAL           5    
+REJECTED     INTERVAL          1    
+REJECTED     NOMINAL           1    
+TARGET       BINARY            1    
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Model Events
+
+                                     Number
+                      Measurement      of
+ Target      Event       Level       Levels      Order                  Label
+
+TargetBuy      1        BINARY          2      Descending    Organics Purchase Indicator
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Predicted and decision variables
+
+Type           Variable      Label
+
+TARGET       TargetBuy       Organics Purchase Indicator
+PREDICTED    P_TargetBuy1    Predicted: TargetBuy=1     
+RESIDUAL     R_TargetBuy1    Residual: TargetBuy=1      
+PREDICTED    P_TargetBuy0    Predicted: TargetBuy=0     
+RESIDUAL     R_TargetBuy0    Residual: TargetBuy=0      
+FROM         F_TargetBuy     From: TargetBuy            
+INTO         I_TargetBuy     Into: TargetBuy            
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+The DMREG Procedure
+
+                          Model Information
+
+Training Data Set              WORK.EM_DMREG.VIEW                     
+DMDB Catalog                   WORK.REG_DMDB                          
+Target Variable                TargetBuy (Organics Purchase Indicator)
+Target Measurement Level       Ordinal                                
+Number of Target Categories    2                                      
+Error                          MBernoulli                             
+Link Function                  Logit                                  
+Number of Model Parameters     32                                     
+Number of Observations         6604                                   
+
+
+           Target Profile
+ 
+ Ordered                       Total
+   Value     TargetBuy     Frequency
+
+       1             1          1746
+       2             0          4858
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+The DMREG Procedure
+
+Newton-Raphson Ridge Optimization
+
+Without Parameter Scaling
+
+Parameter Estimates              27
+
+                                             Optimization Start
+
+Active Constraints                                  0  Objective Function                       3814.4302905
+Max Abs Gradient Element                 421.31889764                                                       
+
+
+                                                                                                        Ratio
+                                                                                                      Between
+                                                                                                       Actual
+                                                                 Objective     Max Abs                    and
+                     Function         Active        Objective     Function    Gradient              Predicted
+Iter     Restarts       Calls    Constraints         Function       Change     Element     Ridge       Change
+
+   1            0           2              0             3038        776.7       236.1         0        1.025
+   2            0           3              0             2984      53.8941     28.1113         0        1.107
+   3            0           4              0             2982       2.1590      1.3585         0        1.047
+   4            0           5              0             2982       0.0146      0.0109         0        1.007
+   5            0           6              0             2982      1.71E-6    1.307E-6         0        1.000
+
+                                            Optimization Results
+
+Iterations                                          5  Function Calls                                      8
+Hessian Calls                                       6  Active Constraints                                  0
+Objective Function                       2981.7093141  Max Abs Gradient Element                  1.307114E-6
+Ridge                                               0  Actual Over Pred Change                  1.0000774822
+
+Convergence criterion (GCONV=1E-6) satisfied.                                                     
+
+
+     Likelihood Ratio Test for Global Null Hypothesis: BETA=0
+ 
+     -2 Log Likelihood          Likelihood
+  Intercept     Intercept &          Ratio
+       Only      Covariates     Chi-Square       DF     Pr > ChiSq
+
+   7628.861        5963.419      1665.4420       26         <.0001
+
+
+            Type 3 Analysis of Effects
+ 
+                                 Wald
+Effect               DF    Chi-Square    Pr > ChiSq
+
+DemAffl               1      542.9618        <.0001
+DemAge                1      345.5793        <.0001
+DemClusterGroup       6        2.6150        0.8554
+DemGender             2      230.4142        <.0001
+DemReg                4       10.0764        0.0392
+DemTVReg              7        6.8502        0.4446
+PromClass             3        3.2738        0.3513
+PromSpend             1        0.3924        0.5310
+PromTime              1        1.8620        0.1724
+
+
+                                     Analysis of Maximum Likelihood Estimates
+ 
+                                                  Standard          Wald                  Standardized
+Parameter                       DF    Estimate       Error    Chi-Square    Pr > ChiSq        Estimate    Exp(Est)
+
+Intercept                        1     -1.3409      0.2476         29.33        <.0001                       0.262
+DemAffl                          1      0.2434      0.0104        542.96        <.0001          0.4609       1.276
+DemAge                           1     -0.0528     0.00284        345.58        <.0001         -0.3858       0.949
+DemClusterGroup A                1      0.1290      0.1521          0.72        0.3965                       1.138
+DemClusterGroup B                1      0.1398      0.1324          1.11        0.2911                       1.150
+DemClusterGroup C                1      0.1738      0.1299          1.79        0.1808                       1.190
+DemClusterGroup D                1      0.2018      0.1304          2.39        0.1219                       1.224
+DemClusterGroup E                1      0.1198      0.1415          0.72        0.3972                       1.127
+DemClusterGroup F                1      0.1597      0.1324          1.45        0.2278                       1.173
+DemGender       F                1      0.9467      0.0679        194.27        <.0001                       2.577
+DemGender       M                1      0.0406      0.0747          0.30        0.5870                       1.041
+DemReg          Midlands         1      0.0991      0.1192          0.69        0.4057                       1.104
+DemReg          North            1     -0.3185      0.1146          7.72        0.0055                       0.727
+DemReg          Scottish         1      0.0418      0.1939          0.05        0.8294                       1.043
+DemReg          South East       1     -0.0481      0.1016          0.22        0.6354                       0.953
+DemTVReg        Border           1     -0.3103      0.2953          1.10        0.2934                       0.733
+DemTVReg        C Scotland       1      0.0206      0.2313          0.01        0.9289                       1.021
+DemTVReg        East             1     -0.0366      0.1605          0.05        0.8197                       0.964
+DemTVReg        London           1      0.0607      0.1163          0.27        0.6020                       1.063
+DemTVReg        Midlands         1     -0.1588      0.1420          1.25        0.2636                       0.853
+DemTVReg        N East           1      0.3968      0.1958          4.11        0.0427                       1.487
+DemTVReg        N Scot           1     -0.1516      0.2615          0.34        0.5621                       0.859
+DemTVReg        N West           0           0           .           .           .                   .        .   
+DemTVReg        S & S East       0           0           .           .           .                   .        .   
+DemTVReg        S West           0           0           .           .           .                   .        .   
+DemTVReg        Ulster           0           0           .           .           .                   .        .   
+DemTVReg        Wales & West     0           0           .           .           .                   .        .   
+PromClass       Gold             1      0.1184      0.0708          2.80        0.0943                       1.126
+PromClass       Platinum         1     -0.1103      0.2514          0.19        0.6609                       0.896
+PromClass       Silver           1     -0.0181      0.1088          0.03        0.8682                       0.982
+PromSpend                        1    -7.02E-6    0.000011          0.39        0.5310         -0.0280       1.000
+PromTime                         1      0.0105     0.00768          1.86        0.1724          0.0268       1.011
+
+NOTE: There are no valid observations for DemTVReg=Ulster.
+
+
+                  Odds Ratio Estimates
+                            
+                                                   Point
+Effect                                          Estimate
+
+DemAffl                                            1.276
+DemAge                                             0.949
+DemClusterGroup A vs U                             2.866
+DemClusterGroup B vs U                             2.897
+DemClusterGroup C vs U                             2.997
+DemClusterGroup D vs U                             3.082
+DemClusterGroup E vs U                             2.839
+DemClusterGroup F vs U                             2.955
+DemGender       F vs U                             6.917
+DemGender       M vs U                             2.795
+DemReg          Midlands vs South West             0.881
+DemReg          North vs South West                0.580
+DemReg          Scottish vs South West             0.832
+DemReg          South East vs South West           0.760
+DemTVReg        Border vs Yorkshire                0.613
+DemTVReg        C Scotland vs Yorkshire            0.853
+DemTVReg        East vs Yorkshire                  0.806
+DemTVReg        London vs Yorkshire                0.888
+DemTVReg        Midlands vs Yorkshire              0.713
+DemTVReg        N East vs Yorkshire                1.243
+DemTVReg        N Scot vs Yorkshire                0.718
+DemTVReg        N West vs Yorkshire                 .   
+DemTVReg        S & S East vs Yorkshire             .   
+DemTVReg        S West vs Yorkshire                 .   
+DemTVReg        Ulster vs Yorkshire                 .   
+DemTVReg        Wales & West vs Yorkshire           .   
+PromClass       Gold vs Tin                        1.115
+PromClass       Platinum vs Tin                    0.887
+PromClass       Silver vs Tin                      0.972
+PromSpend                                          1.000
+PromTime                                           1.011

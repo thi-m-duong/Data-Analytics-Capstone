@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  DataSource="uncsystemsalaryfullwith" Scope="LOCAL" Role="RAW" Library="UNCODED" Table="UNC_SYSTEM_SALARY2016_FULL_WITH"
+ NCols="15" NObs="12287" NBytes="2884608" Segment="" DataSourceRole="RAW" OutputType="VIEW"
+ ForceRun="N" ComputeStatistics="N" DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC"
+ ApplyIntervalLevelLowerLimit="Y" IntervalLowerLimit="20" ApplyMaxPercentMissing="Y"
+ MaxPercentMissing="50" ApplyMaxClassLevels="Y" MaxClassLevels="20" IdentifyEmptyColumns="Y"
+ VariableValidation="STRICT" NewVariableRole="REJECT" DropMapVariables="Y" DsId="uncsystemsalaryfullwith"
+ DsSampleName="" DsSampleSizeType="" DsSampleSize="" DsCreatedBy="Intern Three" DsCreateDate="1776837855.6"
+ DsModifiedBy="Intern Three" DsModifyDate="1776837855.6" DsScope="LOCAL" Sample="D"
+ SampleSizeType="PERCENT" SampleSizePercent="20" SampleSizeObs="10000" DBPassThrough="Y"
+ RunAction="Train" Component="DataSource" RawCreateTime="1776837888.1" CreateTime="21APR2016:06:04:48"
+ Description="" Data="UNCODED.UNC_SYSTEM_SALARY2016_FULL_WITH" CMeta="WORK.M09NWVRU"
+ RunId="eae1597d-8a69-4f9c-92db-3b05b105899a" RawLastTimeRun="1776838036.6" RawRunTime="4.5770001411"
+ LastTimeRun="21APR2016:06:07:17" RunTime="0 Hr. 0 Min. 4.58 Sec.">
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES/>
+</_ROOT_>

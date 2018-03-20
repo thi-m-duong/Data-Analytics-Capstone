@@ -1,0 +1,303 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                March 26, 2016
+Time:                23:46:48
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+TARGET      BINARY           1
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fit Statistics
+Model Selection based on Valid: Misclassification Rate (_VMISC_)
+ 
+                                                          Train:                    Valid:
+                                             Valid:      Average       Train:      Average
+Selected Model                         Misclassification Squared Misclassification Squared
+ Model   Node  Model Description              Rate        Error         Rate        Error
+ 
+   Y     Tree  Decision Tree (int)          0.18569      0.14303      0.18877      0.14015
+         Tree2 Decision Tree (default)      0.18569      0.14303      0.18877      0.14015
+         Tree3 Leaf size 40                 0.18614      0.13965      0.18630      0.13740
+         Tree5 Branch 4 Leaf 40             0.18614      0.13965      0.18630      0.13740
+         Reg   Regression                   0.19994      0.14955      0.19901      0.14826
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fit Statistics Table
+Target: TargetBuy
+ 
+Data Role=Train
+ 
+Statistics
+ 
+Train: Bin-Based Two-Way Kolmogorov-Smirnov Probability Cutoff
+Train: Kolmogorov-Smirnov Statistic
+Train: Akaike's Information Criterion
+Train: Average Squared Error
+Train: Roc Index
+Train: Average Error Function
+Train: Cumulative Percent Captured Response
+Train: Percent Captured Response
+Selection Criterion: Valid: Misclassification Rate
+Train: Degrees of Freedom for Error
+Train: Model Degrees of Freedom
+Train: Total Degrees of Freedom
+Train: Divisor for ASE
+Train: Error Function
+Train: Final Prediction Error
+Train: Gain
+Train: Gini Coefficient
+Train: Bin-Based Two-Way Kolmogorov-Smirnov Statistic
+Train: Kolmogorov-Smirnov Probability Cutoff
+Train: Cumulative Lift
+Train: Lift
+Train: Maximum Absolute Error
+Train: Misclassification Rate
+Train: Mean Square Error
+Train: Sum of Frequencies
+Train: Number of Estimate Weights
+Train: Root Average Squared Error
+Train: Cumulative Percent Response
+Train: Percent Response
+Train: Root Final Prediction Error
+Train: Root Mean Squared Error
+Train: Schwarz's Bayesian Criterion
+Train: Sum of Squared Errors
+Train: Sum of Case Weights Times Freq
+ 
+    Tree       Tree2       Tree3       Tree5         Reg
+ 
+    0.30        0.30        0.27        0.27        0.33
+    0.43        0.43        0.45        0.45        0.38
+     .           .           .           .       8353.88
+    0.14        0.14        0.14        0.14        0.15
+    0.75        0.75        0.78        0.78        0.75
+     .           .           .           .          0.47
+   30.97       30.97       30.95       30.95       29.70
+   14.72       14.72       14.17       14.17       12.90
+    0.19        0.19        0.19        0.19        0.20
+     .           .           .           .       8862.00
+     .           .           .           .         27.00
+ 8889.00     8889.00     8889.00     8889.00     8889.00
+17778.00    17778.00    17778.00    17778.00    17778.00
+     .           .           .           .       8299.88
+     .           .           .           .          0.15
+  209.68      209.68      209.50      209.50      196.97
+    0.49        0.49        0.57        0.57        0.51
+    0.43        0.43        0.45        0.45        0.37
+    0.14        0.14        0.20        0.20        0.28
+    3.10        3.10        3.09        3.09        2.97
+    2.95        2.95        2.84        2.84        2.58
+    0.87        0.87        0.93        0.93        0.98
+    0.19        0.19        0.19        0.19        0.20
+     .           .           .           .          0.15
+ 8889.00     8889.00     8889.00     8889.00     8889.00
+     .           .           .           .         27.00
+    0.38        0.38        0.37        0.37        0.39
+   76.72       76.72       76.67       76.67       73.57
+   72.99       72.99       70.27       70.27       63.96
+     .           .           .           .          0.39
+     .           .           .           .          0.39
+     .           .           .           .       8545.38
+ 2542.79     2542.79     2482.77     2482.77     2658.65
+     .           .           .           .      17778.00
+ 
+ 
+Data Role=Valid
+ 
+Statistics
+ 
+Valid: Kolmogorov-Smirnov Statistic
+Valid: Average Squared Error
+Valid: Roc Index
+Valid: Average Error Function
+Valid: Bin-Based Two-Way Kolmogorov-Smirnov Probability Cutoff
+Valid: Cumulative Percent Captured Response
+Valid: Percent Captured Response
+Valid: Divisor for VASE
+Valid: Error Function
+Valid: Gain
+Valid: Gini Coefficient
+Valid: Bin-Based Two-Way Kolmogorov-Smirnov Statistic
+Valid: Kolmogorov-Smirnov Probability Cutoff
+Valid: Cumulative Lift
+Valid: Lift
+Valid: Maximum Absolute Error
+Valid: Misclassification Rate
+Valid: Mean Square Error
+Valid: Sum of Frequencies
+Valid: Root Average Squared Error
+Valid: Cumulative Percent Response
+Valid: Percent Response
+Valid: Root Mean Square Error
+Valid: Sum of Squared Errors
+Valid: Sum of Case Weights Times Freq
+ 
+    Tree       Tree2       Tree3       Tree5         Reg
+ 
+    0.46        0.46        0.47        0.47        0.36
+    0.14        0.14        0.14        0.14        0.15
+    0.76        0.76        0.80        0.80        0.76
+     .           .           .           .          0.46
+    0.30        0.30        0.33        0.33        0.29
+   31.28       31.28       31.16       31.16       29.66
+   14.81       14.81       13.56       13.56       12.23
+13334.00    13334.00    13334.00    13334.00    13334.00
+     .           .           .           .       6154.93
+  212.69      212.69      211.47      211.47      196.48
+    0.52        0.52        0.59        0.59        0.52
+    0.45        0.45        0.46        0.46        0.36
+    0.25        0.25        0.20        0.20        0.29
+    3.13        3.13        3.11        3.11        2.96
+    2.96        2.96        2.72        2.72        2.45
+    0.87        0.87        0.93        0.93        0.98
+    0.19        0.19        0.19        0.19        0.20
+     .           .           .           .          0.15
+ 6667.00     6667.00     6667.00     6667.00     6667.00
+    0.37        0.37        0.37        0.37        0.39
+   77.48       77.48       77.18       77.18       73.46
+   73.45       73.45       67.29       67.29       60.66
+     .           .           .           .          0.39
+ 1868.73     1868.73     1832.07     1832.07     1976.88
+     .           .           .           .      13334.00
+ 
+ 
+Data Role=Test
+ 
+Statistics
+ 
+Test:  Kolmogorov-Smirnov Statistic
+Test: Average Squared Error
+Test:  Roc Index
+Test: Average Error Function
+Test:  Bin-Based Two-Way Kolmogorov-Smirnov Probability Cutoff
+Test: Cumulative Percent Captured Response
+Test: Percent Captured Response
+Test: Divisor for TASE
+Test: Error Function
+Test: Gain
+Test:  Gini Coefficient
+Test:  Bin-Based Two-Way Kolmogorov-Smirnov Statistic
+Test:  Kolmogorov-Smirnov Probability Cutoff
+Test: Cumulative Lift
+Test: Lift
+Test: Maximum Absolute Error
+Test: Misclassification Rate
+Test: Lower 95% Conf. Limit for TMISC
+Test: Upper 95% Conf. Limit for TMISC
+Test: Mean Square Error
+Test: Sum of Frequencies
+Test: Root Average Squared Error
+Test: Cumulative Percent Response
+Test: Percent Response
+Test: Root Mean Square Error
+Test: Sum of Squared Errors
+Test: Sum of Weights Times Freqs
+ 
+    Tree       Tree2       Tree3       Tree5         Reg
+ 
+    0.45        0.45        0.47        0.47        0.39
+    0.14        0.14        0.14        0.14        0.15
+    0.75        0.75        0.79        0.79        0.75
+     .           .           .           .          0.47
+    0.37        0.37        0.31        0.31        0.33
+   30.93       30.93       30.69       30.69       29.92
+   14.62       14.62       13.98       13.98       13.02
+13334.00    13334.00    13334.00    13334.00    13334.00
+     .           .           .           .       6215.94
+  209.20      209.20      206.79      206.79      199.08
+    0.50        0.50        0.58        0.58        0.51
+    0.45        0.45        0.47        0.47        0.38
+    0.25        0.25        0.29        0.29        0.31
+    3.09        3.09        3.07        3.07        2.99
+    2.93        2.93        2.80        2.80        2.61
+    0.87        0.87        0.93        0.93        0.99
+    0.19        0.19        0.19        0.19        0.20
+     .           .           .           .          0.19
+     .           .           .           .          0.21
+     .           .           .           .          0.15
+ 6667.00     6667.00     6667.00     6667.00     6667.00
+    0.38        0.38        0.37        0.37        0.39
+   76.57       76.57       75.97       75.97       74.06
+   72.48       72.48       69.32       69.32       64.56
+     .           .           .           .          0.39
+ 1894.09     1894.09     1848.11     1848.11     1986.64
+13334.00    13334.00    13334.00    13334.00    13334.00
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Event Classification Table
+Model Selection based on Valid: Misclassification Rate (_VMISC_)
+ 
+Model                               Data
+Node     Model Description          Role         Target             Target Label
+ 
+Tree5    Branch 4 Leaf 40           TRAIN       TargetBuy    Organics Purchase Indicator
+Tree5    Branch 4 Leaf 40           VALIDATE    TargetBuy    Organics Purchase Indicator
+Tree3    Leaf size 40               TRAIN       TargetBuy    Organics Purchase Indicator
+Tree3    Leaf size 40               VALIDATE    TargetBuy    Organics Purchase Indicator
+Tree2    Decision Tree (default)    TRAIN       TargetBuy    Organics Purchase Indicator
+Tree2    Decision Tree (default)    VALIDATE    TargetBuy    Organics Purchase Indicator
+Tree     Decision Tree (int)        TRAIN       TargetBuy    Organics Purchase Indicator
+Tree     Decision Tree (int)        VALIDATE    TargetBuy    Organics Purchase Indicator
+Reg      Regression                 TRAIN       TargetBuy    Organics Purchase Indicator
+Reg      Regression                 VALIDATE    TargetBuy    Organics Purchase Indicator
+ 
+  False       True        False       True
+Negative    Negative    Positive    Positive
+ 
+  1277        6308         379         925
+   936        4710         305         716
+  1277        6308         379         925
+   936        4710         305         716
+  1407        6416         271         795
+  1026        4803         212         626
+  1407        6416         271         795
+  1026        4803         212         626
+  1463        6381         306         739
+  1105        4787         228         547
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*

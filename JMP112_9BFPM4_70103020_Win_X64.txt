@@ -1,0 +1,41 @@
+[_SID_]
+Version=11.2
+Revision=11.2
+Platform_long=Microsoft Windows for x64
+Platform_short=wx6
+Order=9BFPM4
+License_prod=JMP
+Setnumid=70103020
+SID_schema=2
+SID_header=JMP 11.2
+[_Info_]
+[_FileData_]
+$_Filename=JMP.per
+$_Path=.\
+$_Date=
+$_Time=
+$_Stream=-------------------- BEGIN --------------------
+/* Do NOT modify the contents of this file. Version: 11.2 */
+ Platform=Windows
+ Product=JMPPRO      
+ Release=11.0.x
+ LType=SiteLicense
+ EMode=Full
+ SiteID=70103020
+ MaxNUsers=9999
+ Starts=01JAN2001
+ Expires=31DEC2016
+ Administrator= 
+ Organization=NORTH CAROLINA STATE UNIVERSITY
+ Password1=7dc8585f5896dd29f7471019abd35399
+ Department=
+$_Stream=--------------------- END ---------------------
+$_Filename=tletter.txt
+$_Path=.\
+$_Date=
+$_Time=
+$_Stream=-------------------- BEGIN --------------------
+Microsoft Windows for x64
+JMP Pro	31DEC2016
+$_Stream=--------------------- END ---------------------
+[_EOF_]

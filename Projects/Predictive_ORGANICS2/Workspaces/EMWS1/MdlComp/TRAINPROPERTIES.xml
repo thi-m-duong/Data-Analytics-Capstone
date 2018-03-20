@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  NumberOfReportedLevels="1E-6" NormalizeReportingVariables="Y" DecileBin="20" LiftEpsilon="1E-6"
+ ProfitEpsilon="1E-6" RoiEpsilon="1E-6" ScoreDistBin="20" RocChart="Y" RocEpsilon="0.01"
+ AssessAllTargetLevels="N" SelectionData="DEFAULT" HPCriteria="DEFAULT" SelectionTable="TRAIN"
+ SelectionCriteria="DEFAULT" SelectionDepth="10" NumberofBins="20" RecomputeAssess="N"
+ TargetName="TargetBuy" ModelId="Tree" ModelDescription="Decision Tree (int)" ModelCriteria="Valid: Misclassification Rate"
+ ForceRun="N" RunAction="Train" Component="ModelCompare" RawCreateTime="1773946707.2"
+ CreateTime="18MAR2016:18:58:27" RunId="3c5687e1-e818-445c-87b3-426a39799bdd" StatisticUsed="_VMISC_"
+ TargetLabel="Organics Purchase Indicator" RawLastTimeRun="1774655177.6" RawRunTime="31.520999908"
+ LastTimeRun="26MAR2016:23:46:18" RunTime="0 Hr. 0 Min. 31.52 Sec.">
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES/>
+</_ROOT_>

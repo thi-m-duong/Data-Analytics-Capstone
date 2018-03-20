@@ -1,0 +1,4018 @@
+*------------------------------------------------------------*
+* Training Log
+Date:                March 01, 2016
+Time:                12:44:21
+*------------------------------------------------------------*
+10867  proc freq data=EMWS1.AutoNeural_VariableSet noprint;
+10868  table ROLE*LEVEL/out=WORK.AutoNeuralMETA;
+10869  run;
+
+NOTE: There were 21 observations read from the data set EMWS1.AUTONEURAL_VARIABLESET.
+NOTE: The data set WORK.AUTONEURALMETA has 3 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10870  proc print data=WORK.AutoNeuralMETA label noobs;
+10871  var ROLE LEVEL COUNT;
+10872  label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+10873  title9 ' ';
+10874  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+10875  run;
+
+NOTE: There were 3 observations read from the data set WORK.AUTONEURALMETA.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10876  title10;
+
+10877  %let EMNORLEN = %DMNORLEN;
+EMWS1.Part_TRAIN EMWS1.Part_TRAIN 
+EMWS1.Part_TRAIN EMWS1.Part_TRAIN EMWS1 Part_TRAIN 
+EMWS1.Part_TRAIN EMWS1.Part_TRAIN 
+EMWS1.Part_TRAIN EMWS1.Part_TRAIN EMWS1 Part_TRAIN 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+10906  data WORK.AutoNeural_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+10907  length ORDER $20;
+10908  label VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,  NOQUOTE))" EVENT = "%sysfunc(sasmsg(sashelp.dmine, assmt_event_vlabel, NOQUOTE))" NUMLEVELS = "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel, NOQUOTE))" LEVEL =
+10909     "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER = "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+10910  set EMWS1.IDS_RESPOND_DM( where=(_TYPE_="TARGET"));
+10911  NumLevels=2;
+10912  select(upcase(ORDER));
+10913  when('DESC') ORDER = 'Descending';
+10914  when('ASC') ORDER = 'Ascending';
+10915  when('FMTDESC') ORDER = 'Formatted Descending';
+10916  when('FMTASC') ORDER = 'Formatted Ascending';
+10917  otherwise ORDER = 'Descending';
+10918  end;
+10919  output;
+10920  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.IDS_RESPOND_DM.
+      WHERE _TYPE_='TARGET';
+NOTE: The data set WORK.AUTONEURAL_EVENT has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10921  title9 ' ';
+10922  proc print data=WORK.AutoNeural_EVENT noobs label;
+10923  var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+10924  title9 ' ';
+10925  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelEvent_title  , NOQUOTE))";
+10926  run;
+
+NOTE: There were 1 observations read from the data set WORK.AUTONEURAL_EVENT.
+NOTE: The PROCEDURE PRINT printed page 2.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10927  title10;
+
+"No decisions defined for target "RESPOND"." 
+10928  proc print data = EMWS1.Ids_RESPOND_DM noobs label;
+10929  var _type_ variable label;
+10930  where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+10931  label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))" VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+10932  title9 ' ';
+10933  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+10934  run;
+
+NOTE: There were 7 observations read from the data set EMWS1.IDS_RESPOND_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 3.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10935  title10;
+
+10944  data WORK.M3M1UF60;
+10945  set WORK.M3M1UF60 end=eof;
+10946  output;
+10947  if eof then do;
+10948  NAME="";
+10949  ROLE="COST";
+10950  LEVEL="INTERVAL";
+10951  TYPE="N";
+10952  output;
+10953  end;
+10954  run;
+
+NOTE: There were 21 observations read from the data set WORK.M3M1UF60.
+NOTE: The data set WORK.M3M1UF60 has 22 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: There were 2 observations read from the data set EMWS1.IDS_RESPOND_DD.
+NOTE: The data set WORK.RESPOND has 2 observations and 7 variables.
+NOTE: There were 2 observations read from the data set EMWS1.IDS_RESPOND_DD.
+NOTE: The data set WORK.RESPOND has 2 observations and 7 variables.
+10955  *------------------------------------------------------------*;
+10956  * AutoNeural: Create decision matrix;
+10957  *------------------------------------------------------------*;
+10958  data WORK.RESPOND;
+10959    length   RESPOND                          $  32
+10960             COUNT                                8
+10961             DATAPRIOR                            8
+10962             TRAINPRIOR                           8
+10963             DECPRIOR                             8
+10964             DECISION1                            8
+10965             DECISION2                            8
+10966             ;
+10967  
+10968    label    COUNT="Level Counts"
+10969             DATAPRIOR="Data Proportions"
+10970             TRAINPRIOR="Training Proportions"
+10971             DECPRIOR="Decision Priors"
+10972             DECISION1="YES"
+10973             DECISION2="NO"
+10974             ;
+10975    format   COUNT 10.
+10976             ;
+10977  RESPOND="YES"; COUNT=4640; DATAPRIOR=0.1126541711178; TRAINPRIOR=0.1126541711178; DECPRIOR=.; DECISION1=1; DECISION2=0;
+10978  output;
+10979  RESPOND="NO"; COUNT=36548; DATAPRIOR=0.88734582888219; TRAINPRIOR=0.88734582888219; DECPRIOR=.; DECISION1=0; DECISION2=1;
+10980  output;
+10981  ;
+10982  run;
+
+NOTE: The data set WORK.RESPOND has 2 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10983  proc datasets lib=work nolist;
+10984  modify RESPOND(type=PROFIT label=RESPOND);
+10985  label DECISION1= 'YES';
+10986  label DECISION2= 'NO';
+10987  run;
+
+NOTE: MODIFY was successful for WORK.RESPOND.DATA.
+10988  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10989  data EM_AutoNeural;
+10990  set EMWS1.Part_TRAIN(keep=
+10991  AGE CAMPAIGN CCI CONTACT CPI DEFAULT DOW DURATION EDUCATION EMPVAR EURIBOR3M
+10992  HOUSING JOB LOAN MARITAL MONTH NREMP PDAYS POUTCOME PREVIOUS RESPOND );
+10993  run;
+
+NOTE: There were 16474 observations read from the data set EMWS1.PART_TRAIN.
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10994  *------------------------------------------------------------* ;
+10995  * AutoNeural: DMDBClass Macro ;
+10996  *------------------------------------------------------------* ;
+10997  %macro DMDBClass;
+10998      CONTACT(ASC) DEFAULT(ASC) DOW(ASC) EDUCATION(ASC) HOUSING(ASC) JOB(ASC)
+10999     LOAN(ASC) MARITAL(ASC) MONTH(ASC) POUTCOME(ASC) RESPOND(DESC)
+11000  %mend DMDBClass;
+11001  *------------------------------------------------------------* ;
+11002  * AutoNeural: DMDBVar Macro ;
+11003  *------------------------------------------------------------* ;
+11004  %macro DMDBVar;
+11005      AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+11006  %mend DMDBVar;
+11007  *------------------------------------------------------------*;
+11008  * AutoNeural: Create DMDB;
+11009  *------------------------------------------------------------*;
+11010  proc dmdb batch data=WORK.EM_AutoNeural
+11011  dmdbcat=WORK.AutoNeural_DMDB
+11012  maxlevel = 513
+11013  ;
+11014  class %DMDBClass;
+11015  var %DMDBVar;
+11016  target
+11017  RESPOND
+11018  ;
+11019  run;
+
+NOTE: Records processed = 16474   Memory used = 511K.
+NOTE: There were 16474 observations read from the data set WORK.EM_AUTONEURAL.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.01 seconds
+      
+
+11020  quit;
+11021  *--- end code ---*;
+
+11022  *------------------------------------------------------------* ;
+11023  * AutoNeural: Interval Inputs Macro ;
+11024  *------------------------------------------------------------* ;
+11025  %macro INTINPUTS;
+11026      AGE CAMPAIGN CCI CPI DURATION EMPVAR EURIBOR3M NREMP PDAYS PREVIOUS
+11027  %mend INTINPUTS;
+11028  *------------------------------------------------------------* ;
+11029  * AutoNeural: Binary Inputs Macro ;
+11030  *------------------------------------------------------------* ;
+11031  %macro BININPUTS;
+11032  
+11033  %mend BININPUTS;
+11034  *------------------------------------------------------------* ;
+11035  * AutoNeural: Nominal Inputs Macro ;
+11036  *------------------------------------------------------------* ;
+11037  %macro NOMINPUTS;
+11038      CONTACT DEFAULT DOW EDUCATION HOUSING JOB LOAN MARITAL MONTH POUTCOME
+11039  %mend NOMINPUTS;
+11040  *------------------------------------------------------------* ;
+11041  * AutoNeural: Ordinal Inputs Macro ;
+11042  *------------------------------------------------------------* ;
+11043  %macro ORDINPUTS;
+11044  
+11045  %mend ORDINPUTS;
+11046  * set printing options;
+11047  ;
+11048  options linesize = 80;
+11049  options pagesize = 6000;
+11050  options nonumber;
+11051  options nocenter;
+11052  options nodate;
+11053  title9 " ";
+11054  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_autonet_title  , NOQUOTE))";
+11055  *;
+
+11056  *------------------------------------------------------------*;
+11057  * Autoneural: search / SINGLE LAYER;
+11058  ;
+11059  *------------------------------------------------------------*;
+11060  *;
+
+11061  *;
+11062  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+11063  validdata=EMWS1.Part_VALIDATE
+11064  ;
+11065  *;
+11066  nloptions noprint;
+11067  performance alldetails noutilfile;
+11068  input %INTINPUTS / level=interval id=interval;
+11069  input %NOMINPUTS / level=nominal id=nominal;
+11070  target RESPOND / level=NOMINAL id=RESPOND
+11071  ;
+11072  *------------------------------------------------------------*;
+11073  * Direct connection;
+11074  ;
+11075  *------------------------------------------------------------*;
+11076  connect interval RESPOND;
+11077  connect nominal RESPOND;
+11078  *;
+11079  netoptions ranscale = 1;
+11080  *;
+11081  title9 " ";
+11082  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+11082!  # 1 SINGLE LAYER trial # 1 : DIRECT : ))";
+11083  train estiter=1 outest=_anest outfit=_anfit maxtime=1800 maxiter=8
+11084  tech = Default;
+NOTE:  Synchronizing the objectives and the Solution.
+WARNING: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 65 observations and 69 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+11085  ;
+11086  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           2.50 seconds
+      cpu time            2.37 seconds
+      
+
+11087  *;
+11088  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+11089  var _iter_ _aic_ _averr_ _misc_
+11090  _vaverr_ _vmisc_
+11091  ;
+11092  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 4.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11093  *------------------------------------------------------------*;
+11094  * Extract best iteration;
+11095  ;
+11096  *------------------------------------------------------------*;
+11097  %global _iter;
+11098  data _null_;
+11099  set _anfit(where=(_NAME_ eq 'OVERALL'));
+11100  retain _min 1e+64;
+11101  if _VMISC_ < _min then do;
+11102  _min = _VMISC_;
+11103  call symput('_iter',put(_ITER_, 6.));
+11104  end;
+11105  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11106  *;
+
+11107  data EMWS1.AutoNeural_ESTDS;
+11108  set _anest;
+11109  if _ITER_ eq 3 then do;
+11110  output;
+11111  stop;
+11112  end;
+11113  run;
+
+NOTE: There were 4 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 69 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+11114  *;
+11115  data EMWS1.AutoNeural_OUTFIT;
+11116  set _anfit;
+11117  if _ITER_ eq 3 and _NAME_ eq "OVERALL" then do;
+11118  output;
+11119  stop;
+11120  end;
+11121  run;
+
+NOTE: There were 8 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11122  *;
+11123  title9 " ";
+11124  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+11124! NOQUOTE, _VMISC_))";
+11125  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+11126  var _iter_ _aic_ _averr_ _misc_
+11127  _vaverr_ _vmisc_
+11128  ;
+11129  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 5.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11130  title9;
+11131  title10;
+
+11132  %sysfunc(sasmsg(sashelp.dmine, starthistory_note , NOQUOTE));
+11133  data EMWS1.AutoNeural_HISTORY;
+11134  length _func_ _status_ _step_ $16;
+11135  label _func_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_function_vlabel  ,
+11135! NOQUOTE))";
+11136  label _status_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_status_vlabel  ,
+11136! NOQUOTE))";
+11137  label _iter_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_iteration_vlabel  ,
+11137! NOQUOTE))";
+11138  label _step_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_step_vlabel  ,
+11138! NOQUOTE))";
+11139  _func_ = '';
+11140  _status_ = '';
+11141  _step_ = 'SINGLE LAYER 1';
+11142  set
+11143  _anfit(where=(_name_ eq 'OVERALL' and _iter_ eq 0))
+11144  ;
+11145  run;
+
+NOTE: There were 1 observations read from the data set WORK._ANFIT.
+      WHERE (_name_='OVERALL') and (_iter_=0);
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 1 observations and 39 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11146  data work.tmp_outfit;
+11147  set EMWS1.AutoNeural_OUTFIT;
+11148  if _NAME_ = 'OVERALL';
+11149  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11150  data work.tmp_outfit;
+11151  set EMWS1.AutoNeural_OUTFIT;
+11152  if _NAME_ = 'OVERALL';
+11153  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11154  *SEARCH: copy estimates and fit to best buffer;
+11155  ;
+11156  data WORK.SAVEDS_AUTONEUR_198E6PY;
+11157  set EMWS1.AutoNeural_ESTDS;
+11158  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_ESTDS.
+NOTE: The data set WORK.SAVEDS_AUTONEUR_198E6PY has 1 observations and 69 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11159  data EMWS1.AutoNeural_BESTDS;
+11160  set EMWS1.AutoNeural_ESTDS;
+11161  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_ESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_BESTDS has 1 observations and 69 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11162  data WORK.BFITDS_AUTONEUR_198E6PY;
+11163  set EMWS1.AutoNeural_OUTFIT;
+11164  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.BFITDS_AUTONEUR_198E6PY has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11165  * Add function info to new history;
+11166  ;
+11167  data EMWS1.AutoNeural_HISTORY;
+11168  set EMWS1.AutoNeural_HISTORY;
+11169  _func_ = 'DIRECT';
+11170  _status_ = 'initial';
+11171  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 1 observations and 39 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11172  * Accumulate history;
+11173  ;
+11174  data EMWS1.AutoNeural_OUTFIT;
+11175  set EMWS1.AutoNeural_OUTFIT;
+11176  length _func_ _status_ _step_ $16 _index_ 8;
+11177  _func_ = "DIRECT";
+11178  _status_ = "candidate";
+11179  _step_ = "SINGLE LAYER 1";
+11180  _index_ = 1;
+11181  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11182  data EMWS1.AutoNeural_HISTORY;
+11183  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11184  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 2 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11185  *;
+11186  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+11187  validdata=EMWS1.Part_VALIDATE
+11188  ;
+11189  *;
+11190  nloptions noprint;
+11191  performance alldetails noutilfile;
+11192  input %INTINPUTS / level=interval id=interval;
+11193  input %NOMINPUTS / level=nominal id=nominal;
+11194  target RESPOND / level=NOMINAL id=RESPOND
+11195  ;
+11196  *------------------------------------------------------------*;
+11197  * Layer #1;
+11198  ;
+11199  *------------------------------------------------------------*;
+11200  Hidden 2 / id = H1x1_ act=TANH;
+11201  connect interval H1x1_;
+11202  connect nominal H1x1_;
+11203  connect H1x1_ RESPOND;
+11204  *;
+11205  netoptions ranscale = 1;
+11206  *;
+11207  initial
+11208  ;
+11209  *;
+11210  title9 " ";
+11211  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+11211! Search # 1 SINGLE LAYER trial # 2 : TANH : ))";
+11212  prelim 8 outest=_anpre pretime=112 preiter=8
+11213  tech = Default
+11214  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 126 variables.
+11215  *;
+11216  title9 " ";
+11217  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+11217!  # 1 SINGLE LAYER trial # 2 : TANH : ))";
+11218  train estiter=1 outest=_anest outfit=_anfit maxtime=899 maxiter=8
+11219  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 126 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+11220  ;
+11221  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 6.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           10.22 seconds
+      cpu time            10.06 seconds
+      
+
+11222  *;
+11223  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+11224  var _iter_ _aic_ _averr_ _misc_
+11225  _vaverr_ _vmisc_
+11226  ;
+11227  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 7.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11228  *------------------------------------------------------------*;
+11229  * Extract best iteration;
+11230  ;
+11231  *------------------------------------------------------------*;
+11232  %global _iter;
+11233  data _null_;
+11234  set _anfit(where=(_NAME_ eq 'OVERALL'));
+11235  retain _min 1e+64;
+11236  if _VMISC_ < _min then do;
+11237  _min = _VMISC_;
+11238  call symput('_iter',put(_ITER_, 6.));
+11239  end;
+11240  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11241  *;
+
+11242  data EMWS1.AutoNeural_ESTDS;
+11243  set _anest;
+11244  if _ITER_ eq 8 then do;
+11245  output;
+11246  stop;
+11247  end;
+11248  run;
+
+NOTE: There were 9 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 126 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+11249  *;
+11250  data EMWS1.AutoNeural_OUTFIT;
+11251  set _anfit;
+11252  if _ITER_ eq 8 and _NAME_ eq "OVERALL" then do;
+11253  output;
+11254  stop;
+11255  end;
+11256  run;
+
+NOTE: There were 18 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11257  *;
+11258  title9 " ";
+11259  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+11259! NOQUOTE, _VMISC_))";
+11260  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+11261  var _iter_ _aic_ _averr_ _misc_
+11262  _vaverr_ _vmisc_
+11263  ;
+11264  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 8.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11265  title9;
+11266  title10;
+
+11267  data work.tmp_outfit;
+11268  set EMWS1.AutoNeural_OUTFIT;
+11269  if _NAME_ = 'OVERALL';
+11270  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11271  data work.tmp_outfit;
+11272  set EMWS1.AutoNeural_OUTFIT;
+11273  if _NAME_ = 'OVERALL';
+11274  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11275  * Accumulate history;
+11276  ;
+11277  data EMWS1.AutoNeural_OUTFIT;
+11278  set EMWS1.AutoNeural_OUTFIT;
+11279  length _func_ _status_ _step_ $16 _index_ 8;
+11280  _func_ = "TANH";
+11281  _status_ = "reject";
+11282  _step_ = "SINGLE LAYER 1";
+11283  _index_ = 1;
+11284  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11285  data EMWS1.AutoNeural_HISTORY;
+11286  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11287  run;
+
+NOTE: There were 2 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 3 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11288  *;
+11289  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+11290  validdata=EMWS1.Part_VALIDATE
+11291  ;
+11292  *;
+11293  nloptions noprint;
+11294  performance alldetails noutilfile;
+11295  input %INTINPUTS / level=interval id=interval;
+11296  input %NOMINPUTS / level=nominal id=nominal;
+11297  target RESPOND / level=NOMINAL id=RESPOND
+11298  ;
+11299  *------------------------------------------------------------*;
+11300  * Layer #1;
+11301  ;
+11302  *------------------------------------------------------------*;
+11303  Hidden 2 / id = H1x1_ act=GAUSS;
+11304  connect interval H1x1_;
+11305  connect nominal H1x1_;
+11306  connect H1x1_ RESPOND;
+11307  *;
+11308  netoptions ranscale = 1;
+11309  *;
+11310  initial
+11311  ;
+11312  *;
+11313  title9 " ";
+11314  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+11314! Search # 1 SINGLE LAYER trial # 3 : NORMAL : ))";
+11315  prelim 8 outest=_anpre pretime=112 preiter=8
+11316  tech = Default
+11317  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 126 variables.
+11318  *;
+11319  title9 " ";
+11320  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+11320!  # 1 SINGLE LAYER trial # 3 : NORMAL : ))";
+11321  train estiter=1 outest=_anest outfit=_anfit maxtime=896 maxiter=8
+11322  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 126 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+11323  ;
+11324  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 9.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           9.53 seconds
+      cpu time            9.45 seconds
+      
+
+11325  *;
+11326  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+11327  var _iter_ _aic_ _averr_ _misc_
+11328  _vaverr_ _vmisc_
+11329  ;
+11330  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 10.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11331  *------------------------------------------------------------*;
+11332  * Extract best iteration;
+11333  ;
+11334  *------------------------------------------------------------*;
+11335  %global _iter;
+11336  data _null_;
+11337  set _anfit(where=(_NAME_ eq 'OVERALL'));
+11338  retain _min 1e+64;
+11339  if _VMISC_ < _min then do;
+11340  _min = _VMISC_;
+11341  call symput('_iter',put(_ITER_, 6.));
+11342  end;
+11343  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11344  *;
+
+11345  data EMWS1.AutoNeural_ESTDS;
+11346  set _anest;
+11347  if _ITER_ eq 8 then do;
+11348  output;
+11349  stop;
+11350  end;
+11351  run;
+
+NOTE: There were 9 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 126 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11352  *;
+11353  data EMWS1.AutoNeural_OUTFIT;
+11354  set _anfit;
+11355  if _ITER_ eq 8 and _NAME_ eq "OVERALL" then do;
+11356  output;
+11357  stop;
+11358  end;
+11359  run;
+
+NOTE: There were 18 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11360  *;
+11361  title9 " ";
+11362  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+11362! NOQUOTE, _VMISC_))";
+11363  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+11364  var _iter_ _aic_ _averr_ _misc_
+11365  _vaverr_ _vmisc_
+11366  ;
+11367  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 11.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11368  title9;
+11369  title10;
+
+11370  data work.tmp_outfit;
+11371  set EMWS1.AutoNeural_OUTFIT;
+11372  if _NAME_ = 'OVERALL';
+11373  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11374  data work.tmp_outfit;
+11375  set EMWS1.AutoNeural_OUTFIT;
+11376  if _NAME_ = 'OVERALL';
+11377  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11378  * Accumulate history;
+11379  ;
+11380  data EMWS1.AutoNeural_OUTFIT;
+11381  set EMWS1.AutoNeural_OUTFIT;
+11382  length _func_ _status_ _step_ $16 _index_ 8;
+11383  _func_ = "NORMAL";
+11384  _status_ = "reject";
+11385  _step_ = "SINGLE LAYER 1";
+11386  _index_ = 1;
+11387  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11388  data EMWS1.AutoNeural_HISTORY;
+11389  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11390  run;
+
+NOTE: There were 3 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 4 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11391  *;
+11392  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+11393  validdata=EMWS1.Part_VALIDATE
+11394  ;
+11395  *;
+11396  nloptions noprint;
+11397  performance alldetails noutilfile;
+11398  input %INTINPUTS / level=interval id=interval;
+11399  input %NOMINPUTS / level=nominal id=nominal;
+11400  target RESPOND / level=NOMINAL id=RESPOND
+11401  ;
+11402  *------------------------------------------------------------*;
+11403  * Layer #1;
+11404  ;
+11405  *------------------------------------------------------------*;
+11406  Hidden 2 / id = H1x1_ act=SINE;
+11407  connect interval H1x1_;
+11408  connect nominal H1x1_;
+11409  connect H1x1_ RESPOND;
+11410  *;
+11411  netoptions ranscale = 1;
+11412  *;
+11413  initial
+11414  ;
+11415  *;
+11416  title9 " ";
+11417  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+11417! Search # 1 SINGLE LAYER trial # 4 : SINE : ))";
+11418  prelim 8 outest=_anpre pretime=111 preiter=8
+11419  tech = Default
+11420  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 126 variables.
+11421  *;
+11422  title9 " ";
+11423  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+11423!  # 1 SINGLE LAYER trial # 4 : SINE : ))";
+11424  train estiter=1 outest=_anest outfit=_anfit maxtime=894 maxiter=8
+11425  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 126 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+11426  ;
+11427  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 12.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           9.07 seconds
+      cpu time            9.01 seconds
+      
+
+11428  *;
+11429  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+11430  var _iter_ _aic_ _averr_ _misc_
+11431  _vaverr_ _vmisc_
+11432  ;
+11433  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 13.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11434  *------------------------------------------------------------*;
+11435  * Extract best iteration;
+11436  ;
+11437  *------------------------------------------------------------*;
+11438  %global _iter;
+11439  data _null_;
+11440  set _anfit(where=(_NAME_ eq 'OVERALL'));
+11441  retain _min 1e+64;
+11442  if _VMISC_ < _min then do;
+11443  _min = _VMISC_;
+11444  call symput('_iter',put(_ITER_, 6.));
+11445  end;
+11446  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11447  *;
+
+11448  data EMWS1.AutoNeural_ESTDS;
+11449  set _anest;
+11450  if _ITER_ eq 2 then do;
+11451  output;
+11452  stop;
+11453  end;
+11454  run;
+
+NOTE: There were 3 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 126 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+11455  *;
+11456  data EMWS1.AutoNeural_OUTFIT;
+11457  set _anfit;
+11458  if _ITER_ eq 2 and _NAME_ eq "OVERALL" then do;
+11459  output;
+11460  stop;
+11461  end;
+11462  run;
+
+NOTE: There were 6 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11463  *;
+11464  title9 " ";
+11465  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+11465! NOQUOTE, _VMISC_))";
+11466  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+11467  var _iter_ _aic_ _averr_ _misc_
+11468  _vaverr_ _vmisc_
+11469  ;
+11470  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 14.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11471  title9;
+11472  title10;
+
+11473  data work.tmp_outfit;
+11474  set EMWS1.AutoNeural_OUTFIT;
+11475  if _NAME_ = 'OVERALL';
+11476  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11477  data work.tmp_outfit;
+11478  set EMWS1.AutoNeural_OUTFIT;
+11479  if _NAME_ = 'OVERALL';
+11480  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11481  * Accumulate history;
+11482  ;
+11483  data EMWS1.AutoNeural_OUTFIT;
+11484  set EMWS1.AutoNeural_OUTFIT;
+11485  length _func_ _status_ _step_ $16 _index_ 8;
+11486  _func_ = "SINE";
+11487  _status_ = "reject";
+11488  _step_ = "SINGLE LAYER 1";
+11489  _index_ = 1;
+11490  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11491  data EMWS1.AutoNeural_HISTORY;
+11492  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11493  run;
+
+NOTE: There were 4 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 5 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11494  *SEARCH: recall best estimates and fit;
+11495  ;
+11496  data EMWS1.AutoNeural_ESTDS;
+11497  set EMWS1.AutoNeural_BESTDS;
+11498  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 69 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11499  data EMWS1.AutoNeural_OUTFIT;
+11500  set WORK.BFITDS_AUTONEUR_198E6PY;
+11501  run;
+
+NOTE: There were 1 observations read from the data set 
+      WORK.BFITDS_AUTONEUR_198E6PY.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11502  * Accumulate history;
+11503  ;
+11504  data EMWS1.AutoNeural_OUTFIT;
+11505  set EMWS1.AutoNeural_OUTFIT;
+11506  length _func_ _status_ _step_ $16 _index_ 8;
+11507  _func_ = "DIRECT";
+11508  _status_ = "keep";
+11509  _step_ = "SINGLE LAYER 1";
+11510  _index_ = 1;
+11511  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11512  data EMWS1.AutoNeural_HISTORY;
+11513  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11514  run;
+
+NOTE: There were 5 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 6 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11515  data work.tmp_outfit;
+11516  set EMWS1.AutoNeural_OUTFIT;
+11517  if _NAME_ = 'OVERALL';
+11518  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11519  *;
+11520  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+11521  validdata=EMWS1.Part_VALIDATE
+11522  ;
+11523  *;
+11524  nloptions noprint;
+11525  performance alldetails noutilfile;
+11526  input %INTINPUTS / level=interval id=interval;
+11527  input %NOMINPUTS / level=nominal id=nominal;
+11528  target RESPOND / level=NOMINAL id=RESPOND
+11529  ;
+11530  *------------------------------------------------------------*;
+11531  * Direct connection;
+11532  ;
+11533  *------------------------------------------------------------*;
+11534  connect interval RESPOND;
+11535  connect nominal RESPOND;
+11536  *------------------------------------------------------------*;
+11537  * Layer #1;
+11538  ;
+11539  *------------------------------------------------------------*;
+11540  Hidden 2 / id = H1x1_ act=TANH;
+11541  connect interval H1x1_;
+11542  connect nominal H1x1_;
+11543  connect H1x1_ RESPOND;
+11544  *;
+11545  netoptions ranscale = 1;
+11546  *;
+11547  initial
+11548  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 69 variables.
+11549  ;
+11550  *;
+11551  title9 " ";
+11552  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+11552! Search # 2 SINGLE LAYER trial # 1 : TANH : ))";
+11553  prelim 8 outest=_anpre pretime=111 preiter=8
+11554  tech = Default
+11555  inest = EMWS1.AutoNeural_ESTDS bylabel
+11556  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 179 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 69 variables.
+11557  *;
+11558  title9 " ";
+11559  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+11559!  # 2 SINGLE LAYER trial # 1 : TANH : ))";
+11560  train estiter=1 outest=_anest outfit=_anfit maxtime=891 maxiter=8
+11561  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 179 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+11562  ;
+11563  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 15.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           8.71 seconds
+      cpu time            8.62 seconds
+      
+
+11564  *;
+11565  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+11566  var _iter_ _aic_ _averr_ _misc_
+11567  _vaverr_ _vmisc_
+11568  ;
+11569  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 16.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11570  *------------------------------------------------------------*;
+11571  * Extract best iteration;
+11572  ;
+11573  *------------------------------------------------------------*;
+11574  %global _iter;
+11575  data _null_;
+11576  set _anfit(where=(_NAME_ eq 'OVERALL'));
+11577  retain _min 1e+64;
+11578  if _VMISC_ < _min then do;
+11579  _min = _VMISC_;
+11580  call symput('_iter',put(_ITER_, 6.));
+11581  end;
+11582  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11583  *;
+
+11584  data EMWS1.AutoNeural_ESTDS;
+11585  set _anest;
+11586  if _ITER_ eq 5 then do;
+11587  output;
+11588  stop;
+11589  end;
+11590  run;
+
+NOTE: There were 6 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+11591  *;
+11592  data EMWS1.AutoNeural_OUTFIT;
+11593  set _anfit;
+11594  if _ITER_ eq 5 and _NAME_ eq "OVERALL" then do;
+11595  output;
+11596  stop;
+11597  end;
+11598  run;
+
+NOTE: There were 12 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11599  *;
+11600  title9 " ";
+11601  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+11601! NOQUOTE, _VMISC_))";
+11602  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+11603  var _iter_ _aic_ _averr_ _misc_
+11604  _vaverr_ _vmisc_
+11605  ;
+11606  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 17.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11607  title9;
+11608  title10;
+
+11609  data work.tmp_outfit;
+11610  set EMWS1.AutoNeural_OUTFIT;
+11611  if _NAME_ = 'OVERALL';
+11612  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11613  data work.tmp_outfit;
+11614  set EMWS1.AutoNeural_OUTFIT;
+11615  if _NAME_ = 'OVERALL';
+11616  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11617  * Accumulate history;
+11618  ;
+11619  data EMWS1.AutoNeural_OUTFIT;
+11620  set EMWS1.AutoNeural_OUTFIT;
+11621  length _func_ _status_ _step_ $16 _index_ 8;
+11622  _func_ = "TANH";
+11623  _status_ = "reject";
+11624  _step_ = "SINGLE LAYER 2";
+11625  _index_ = 2;
+11626  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11627  data EMWS1.AutoNeural_HISTORY;
+11628  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11629  run;
+
+NOTE: There were 6 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 7 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11630  * SEARCH: recall starting estimates;
+11631  ;
+11632  data EMWS1.AutoNeural_ESTDS;
+11633  set EMWS1.AutoNeural_BESTDS;
+11634  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 69 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11635  *;
+11636  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+11637  validdata=EMWS1.Part_VALIDATE
+11638  ;
+11639  *;
+11640  nloptions noprint;
+11641  performance alldetails noutilfile;
+11642  input %INTINPUTS / level=interval id=interval;
+11643  input %NOMINPUTS / level=nominal id=nominal;
+11644  target RESPOND / level=NOMINAL id=RESPOND
+11645  ;
+11646  *------------------------------------------------------------*;
+11647  * Direct connection;
+11648  ;
+11649  *------------------------------------------------------------*;
+11650  connect interval RESPOND;
+11651  connect nominal RESPOND;
+11652  *------------------------------------------------------------*;
+11653  * Layer #1;
+11654  ;
+11655  *------------------------------------------------------------*;
+11656  Hidden 2 / id = H1x1_ act=GAUSS;
+11657  connect interval H1x1_;
+11658  connect nominal H1x1_;
+11659  connect H1x1_ RESPOND;
+11660  *;
+11661  netoptions ranscale = 1;
+11662  *;
+11663  initial
+11664  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 69 variables.
+11665  ;
+11666  *;
+11667  title9 " ";
+11668  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+11668! Search # 2 SINGLE LAYER trial # 2 : NORMAL : ))";
+11669  prelim 8 outest=_anpre pretime=111 preiter=8
+11670  tech = Default
+11671  inest = EMWS1.AutoNeural_ESTDS bylabel
+11672  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 179 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 69 variables.
+11673  *;
+11674  title9 " ";
+11675  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+11675!  # 2 SINGLE LAYER trial # 2 : NORMAL : ))";
+11676  train estiter=1 outest=_anest outfit=_anfit maxtime=889 maxiter=8
+11677  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 179 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+11678  ;
+11679  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 18.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           8.67 seconds
+      cpu time            8.61 seconds
+      
+
+11680  *;
+11681  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+11682  var _iter_ _aic_ _averr_ _misc_
+11683  _vaverr_ _vmisc_
+11684  ;
+11685  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 19.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11686  *------------------------------------------------------------*;
+11687  * Extract best iteration;
+11688  ;
+11689  *------------------------------------------------------------*;
+11690  %global _iter;
+11691  data _null_;
+11692  set _anfit(where=(_NAME_ eq 'OVERALL'));
+11693  retain _min 1e+64;
+11694  if _VMISC_ < _min then do;
+11695  _min = _VMISC_;
+11696  call symput('_iter',put(_ITER_, 6.));
+11697  end;
+11698  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11699  *;
+
+11700  data EMWS1.AutoNeural_ESTDS;
+11701  set _anest;
+11702  if _ITER_ eq 0 then do;
+11703  output;
+11704  stop;
+11705  end;
+11706  run;
+
+NOTE: There were 1 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11707  *;
+11708  data EMWS1.AutoNeural_OUTFIT;
+11709  set _anfit;
+11710  if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+11711  output;
+11712  stop;
+11713  end;
+11714  run;
+
+NOTE: There were 2 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11715  *;
+11716  title9 " ";
+11717  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+11717! NOQUOTE, _VMISC_))";
+11718  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+11719  var _iter_ _aic_ _averr_ _misc_
+11720  _vaverr_ _vmisc_
+11721  ;
+11722  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 20.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11723  title9;
+11724  title10;
+
+11725  data work.tmp_outfit;
+11726  set EMWS1.AutoNeural_OUTFIT;
+11727  if _NAME_ = 'OVERALL';
+11728  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11729  data work.tmp_outfit;
+11730  set EMWS1.AutoNeural_OUTFIT;
+11731  if _NAME_ = 'OVERALL';
+11732  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11733  *SEARCH: copy estimates and fit to best buffer;
+11734  ;
+11735  data WORK.SAVEDS_AUTONEUR_198E6PY;
+11736  set EMWS1.AutoNeural_ESTDS;
+11737  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_ESTDS.
+NOTE: The data set WORK.SAVEDS_AUTONEUR_198E6PY has 1 observations and 179 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11738  data EMWS1.AutoNeural_BESTDS;
+11739  set EMWS1.AutoNeural_ESTDS;
+11740  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_ESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_BESTDS has 1 observations and 179 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11741  data WORK.BFITDS_AUTONEUR_198E6PY;
+11742  set EMWS1.AutoNeural_OUTFIT;
+11743  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.BFITDS_AUTONEUR_198E6PY has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11744  * Accumulate history;
+11745  ;
+11746  data EMWS1.AutoNeural_OUTFIT;
+11747  set EMWS1.AutoNeural_OUTFIT;
+11748  length _func_ _status_ _step_ $16 _index_ 8;
+11749  _func_ = "NORMAL";
+11750  _status_ = "candidate";
+11751  _step_ = "SINGLE LAYER 2";
+11752  _index_ = 2;
+11753  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11754  data EMWS1.AutoNeural_HISTORY;
+11755  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11756  run;
+
+NOTE: There were 7 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 8 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11757  * SEARCH: recall starting estimates;
+11758  ;
+11759  data EMWS1.AutoNeural_ESTDS;
+11760  set EMWS1.AutoNeural_BESTDS;
+11761  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+11762  *;
+11763  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+11764  validdata=EMWS1.Part_VALIDATE
+11765  ;
+11766  *;
+11767  nloptions noprint;
+11768  performance alldetails noutilfile;
+11769  input %INTINPUTS / level=interval id=interval;
+11770  input %NOMINPUTS / level=nominal id=nominal;
+11771  target RESPOND / level=NOMINAL id=RESPOND
+11772  ;
+11773  *------------------------------------------------------------*;
+11774  * Direct connection;
+11775  ;
+11776  *------------------------------------------------------------*;
+11777  connect interval RESPOND;
+11778  connect nominal RESPOND;
+11779  *------------------------------------------------------------*;
+11780  * Layer #1;
+11781  ;
+11782  *------------------------------------------------------------*;
+11783  Hidden 2 / id = H1x1_ act=SINE;
+11784  connect interval H1x1_;
+11785  connect nominal H1x1_;
+11786  connect H1x1_ RESPOND;
+11787  *;
+11788  netoptions ranscale = 1;
+11789  *;
+11790  initial
+11791  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+11792  ;
+11793  *;
+11794  title9 " ";
+11795  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+11795! Search # 2 SINGLE LAYER trial # 3 : SINE : ))";
+11796  prelim 8 outest=_anpre pretime=110 preiter=8
+11797  tech = Default
+11798  inest = EMWS1.AutoNeural_ESTDS bylabel
+11799  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+The prelim will run only once. Use the randbias or randout option on the target 
+layer.
+NOTE: The data set WORK._ANPRE has 3 observations and 179 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+11800  *;
+11801  title9 " ";
+11802  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+11802!  # 2 SINGLE LAYER trial # 3 : SINE : ))";
+11803  train estiter=1 outest=_anest outfit=_anfit maxtime=887 maxiter=8
+11804  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 179 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+11805  ;
+11806  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 21.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           2.16 seconds
+      cpu time            2.13 seconds
+      
+
+11807  *;
+11808  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+11809  var _iter_ _aic_ _averr_ _misc_
+11810  _vaverr_ _vmisc_
+11811  ;
+11812  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 22.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11813  *------------------------------------------------------------*;
+11814  * Extract best iteration;
+11815  ;
+11816  *------------------------------------------------------------*;
+11817  %global _iter;
+11818  data _null_;
+11819  set _anfit(where=(_NAME_ eq 'OVERALL'));
+11820  retain _min 1e+64;
+11821  if _VMISC_ < _min then do;
+11822  _min = _VMISC_;
+11823  call symput('_iter',put(_ITER_, 6.));
+11824  end;
+11825  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11826  *;
+
+11827  data EMWS1.AutoNeural_ESTDS;
+11828  set _anest;
+11829  if _ITER_ eq 8 then do;
+11830  output;
+11831  stop;
+11832  end;
+11833  run;
+
+NOTE: There were 9 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11834  *;
+11835  data EMWS1.AutoNeural_OUTFIT;
+11836  set _anfit;
+11837  if _ITER_ eq 8 and _NAME_ eq "OVERALL" then do;
+11838  output;
+11839  stop;
+11840  end;
+11841  run;
+
+NOTE: There were 18 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11842  *;
+11843  title9 " ";
+11844  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+11844! NOQUOTE, _VMISC_))";
+11845  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+11846  var _iter_ _aic_ _averr_ _misc_
+11847  _vaverr_ _vmisc_
+11848  ;
+11849  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 23.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11850  title9;
+11851  title10;
+
+11852  data work.tmp_outfit;
+11853  set EMWS1.AutoNeural_OUTFIT;
+11854  if _NAME_ = 'OVERALL';
+11855  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11856  data work.tmp_outfit;
+11857  set EMWS1.AutoNeural_OUTFIT;
+11858  if _NAME_ = 'OVERALL';
+11859  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11860  * Accumulate history;
+11861  ;
+11862  data EMWS1.AutoNeural_OUTFIT;
+11863  set EMWS1.AutoNeural_OUTFIT;
+11864  length _func_ _status_ _step_ $16 _index_ 8;
+11865  _func_ = "SINE";
+11866  _status_ = "reject";
+11867  _step_ = "SINGLE LAYER 2";
+11868  _index_ = 2;
+11869  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11870  data EMWS1.AutoNeural_HISTORY;
+11871  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11872  run;
+
+NOTE: There were 8 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 9 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11873  *SEARCH: recall best estimates and fit;
+11874  ;
+11875  data EMWS1.AutoNeural_ESTDS;
+11876  set EMWS1.AutoNeural_BESTDS;
+11877  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11878  data EMWS1.AutoNeural_OUTFIT;
+11879  set WORK.BFITDS_AUTONEUR_198E6PY;
+11880  run;
+
+NOTE: There were 1 observations read from the data set 
+      WORK.BFITDS_AUTONEUR_198E6PY.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11881  * Accumulate history;
+11882  ;
+11883  data EMWS1.AutoNeural_OUTFIT;
+11884  set EMWS1.AutoNeural_OUTFIT;
+11885  length _func_ _status_ _step_ $16 _index_ 8;
+11886  _func_ = "NORMAL";
+11887  _status_ = "keep";
+11888  _step_ = "SINGLE LAYER 2";
+11889  _index_ = 2;
+11890  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11891  data EMWS1.AutoNeural_HISTORY;
+11892  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+11893  run;
+
+NOTE: There were 9 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 10 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11894  data work.tmp_outfit;
+11895  set EMWS1.AutoNeural_OUTFIT;
+11896  if _NAME_ = 'OVERALL';
+11897  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+11898  *;
+11899  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+11900  validdata=EMWS1.Part_VALIDATE
+11901  ;
+11902  *;
+11903  nloptions noprint;
+11904  performance alldetails noutilfile;
+11905  input %INTINPUTS / level=interval id=interval;
+11906  input %NOMINPUTS / level=nominal id=nominal;
+11907  target RESPOND / level=NOMINAL id=RESPOND
+11908  ;
+11909  *------------------------------------------------------------*;
+11910  * Direct connection;
+11911  ;
+11912  *------------------------------------------------------------*;
+11913  connect interval RESPOND;
+11914  connect nominal RESPOND;
+11915  *------------------------------------------------------------*;
+11916  * Layer #1;
+11917  ;
+11918  *------------------------------------------------------------*;
+11919  Hidden 2 / id = H1x1_ act=GAUSS;
+11920  connect interval H1x1_;
+11921  connect nominal H1x1_;
+11922  connect H1x1_ RESPOND;
+11923  Hidden 2 / id = H1x2_ act=TANH;
+11924  connect interval H1x2_;
+11925  connect nominal H1x2_;
+11926  connect H1x2_ RESPOND;
+11927  *;
+11928  netoptions ranscale = 1;
+11929  *;
+11930  initial
+11931  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+11932  ;
+11933  *;
+11934  title9 " ";
+11935  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+11935! Search # 3 SINGLE LAYER trial # 1 : TANH : ))";
+11936  prelim 8 outest=_anpre pretime=110 preiter=8
+11937  tech = Default
+11938  inest = EMWS1.AutoNeural_ESTDS bylabel
+11939  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 289 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+11940  *;
+11941  title9 " ";
+11942  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+11942!  # 3 SINGLE LAYER trial # 1 : TANH : ))";
+11943  train estiter=1 outest=_anest outfit=_anfit maxtime=886 maxiter=8
+11944  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 289 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+11945  ;
+11946  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 24.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           10.08 seconds
+      cpu time            10.03 seconds
+      
+
+11947  *;
+11948  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+11949  var _iter_ _aic_ _averr_ _misc_
+11950  _vaverr_ _vmisc_
+11951  ;
+11952  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 25.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11953  *------------------------------------------------------------*;
+11954  * Extract best iteration;
+11955  ;
+11956  *------------------------------------------------------------*;
+11957  %global _iter;
+11958  data _null_;
+11959  set _anfit(where=(_NAME_ eq 'OVERALL'));
+11960  retain _min 1e+64;
+11961  if _VMISC_ < _min then do;
+11962  _min = _VMISC_;
+11963  call symput('_iter',put(_ITER_, 6.));
+11964  end;
+11965  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11966  *;
+
+11967  data EMWS1.AutoNeural_ESTDS;
+11968  set _anest;
+11969  if _ITER_ eq 5 then do;
+11970  output;
+11971  stop;
+11972  end;
+11973  run;
+
+NOTE: There were 6 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11974  *;
+11975  data EMWS1.AutoNeural_OUTFIT;
+11976  set _anfit;
+11977  if _ITER_ eq 5 and _NAME_ eq "OVERALL" then do;
+11978  output;
+11979  stop;
+11980  end;
+11981  run;
+
+NOTE: There were 12 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11982  *;
+11983  title9 " ";
+11984  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+11984! NOQUOTE, _VMISC_))";
+11985  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+11986  var _iter_ _aic_ _averr_ _misc_
+11987  _vaverr_ _vmisc_
+11988  ;
+11989  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 26.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11990  title9;
+11991  title10;
+
+11992  data work.tmp_outfit;
+11993  set EMWS1.AutoNeural_OUTFIT;
+11994  if _NAME_ = 'OVERALL';
+11995  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+
+11996  data work.tmp_outfit;
+11997  set EMWS1.AutoNeural_OUTFIT;
+11998  if _NAME_ = 'OVERALL';
+11999  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12000  * Accumulate history;
+12001  ;
+12002  data EMWS1.AutoNeural_OUTFIT;
+12003  set EMWS1.AutoNeural_OUTFIT;
+12004  length _func_ _status_ _step_ $16 _index_ 8;
+12005  _func_ = "TANH";
+12006  _status_ = "reject";
+12007  _step_ = "SINGLE LAYER 3";
+12008  _index_ = 3;
+12009  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12010  data EMWS1.AutoNeural_HISTORY;
+12011  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+12012  run;
+
+NOTE: There were 10 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 11 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12013  * SEARCH: recall starting estimates;
+12014  ;
+12015  data EMWS1.AutoNeural_ESTDS;
+12016  set EMWS1.AutoNeural_BESTDS;
+12017  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12018  *;
+12019  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+12020  validdata=EMWS1.Part_VALIDATE
+12021  ;
+12022  *;
+12023  nloptions noprint;
+12024  performance alldetails noutilfile;
+12025  input %INTINPUTS / level=interval id=interval;
+12026  input %NOMINPUTS / level=nominal id=nominal;
+12027  target RESPOND / level=NOMINAL id=RESPOND
+12028  ;
+12029  *------------------------------------------------------------*;
+12030  * Direct connection;
+12031  ;
+12032  *------------------------------------------------------------*;
+12033  connect interval RESPOND;
+12034  connect nominal RESPOND;
+12035  *------------------------------------------------------------*;
+12036  * Layer #1;
+12037  ;
+12038  *------------------------------------------------------------*;
+12039  Hidden 2 / id = H1x1_ act=GAUSS;
+12040  connect interval H1x1_;
+12041  connect nominal H1x1_;
+12042  connect H1x1_ RESPOND;
+12043  Hidden 2 / id = H1x2_ act=GAUSS;
+12044  connect interval H1x2_;
+12045  connect nominal H1x2_;
+12046  connect H1x2_ RESPOND;
+12047  *;
+12048  netoptions ranscale = 1;
+12049  *;
+12050  initial
+12051  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+12052  ;
+12053  *;
+12054  title9 " ";
+12055  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+12055! Search # 3 SINGLE LAYER trial # 2 : NORMAL : ))";
+12056  prelim 8 outest=_anpre pretime=110 preiter=8
+12057  tech = Default
+12058  inest = EMWS1.AutoNeural_ESTDS bylabel
+12059  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 289 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 179 variables.
+12060  *;
+12061  title9 " ";
+12062  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+12062!  # 3 SINGLE LAYER trial # 2 : NORMAL : ))";
+12063  train estiter=1 outest=_anest outfit=_anfit maxtime=883 maxiter=8
+12064  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 289 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+12065  ;
+12066  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 27.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           9.89 seconds
+      cpu time            9.81 seconds
+      
+
+12067  *;
+12068  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+12069  var _iter_ _aic_ _averr_ _misc_
+12070  _vaverr_ _vmisc_
+12071  ;
+12072  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 28.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12073  *------------------------------------------------------------*;
+12074  * Extract best iteration;
+12075  ;
+12076  *------------------------------------------------------------*;
+12077  %global _iter;
+12078  data _null_;
+12079  set _anfit(where=(_NAME_ eq 'OVERALL'));
+12080  retain _min 1e+64;
+12081  if _VMISC_ < _min then do;
+12082  _min = _VMISC_;
+12083  call symput('_iter',put(_ITER_, 6.));
+12084  end;
+12085  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12086  *;
+
+12087  data EMWS1.AutoNeural_ESTDS;
+12088  set _anest;
+12089  if _ITER_ eq 0 then do;
+12090  output;
+12091  stop;
+12092  end;
+12093  run;
+
+NOTE: There were 1 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12094  *;
+12095  data EMWS1.AutoNeural_OUTFIT;
+12096  set _anfit;
+12097  if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+12098  output;
+12099  stop;
+12100  end;
+12101  run;
+
+NOTE: There were 2 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12102  *;
+12103  title9 " ";
+12104  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+12104! NOQUOTE, _VMISC_))";
+12105  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+12106  var _iter_ _aic_ _averr_ _misc_
+12107  _vaverr_ _vmisc_
+12108  ;
+12109  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 29.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12110  title9;
+12111  title10;
+
+12112  data work.tmp_outfit;
+12113  set EMWS1.AutoNeural_OUTFIT;
+12114  if _NAME_ = 'OVERALL';
+12115  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12116  data work.tmp_outfit;
+12117  set EMWS1.AutoNeural_OUTFIT;
+12118  if _NAME_ = 'OVERALL';
+12119  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12120  *SEARCH: copy estimates and fit to best buffer;
+12121  ;
+12122  data WORK.SAVEDS_AUTONEUR_198E6PY;
+12123  set EMWS1.AutoNeural_ESTDS;
+12124  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_ESTDS.
+NOTE: The data set WORK.SAVEDS_AUTONEUR_198E6PY has 1 observations and 289 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12125  data EMWS1.AutoNeural_BESTDS;
+12126  set EMWS1.AutoNeural_ESTDS;
+12127  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_ESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_BESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12128  data WORK.BFITDS_AUTONEUR_198E6PY;
+12129  set EMWS1.AutoNeural_OUTFIT;
+12130  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.BFITDS_AUTONEUR_198E6PY has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12131  * Accumulate history;
+12132  ;
+12133  data EMWS1.AutoNeural_OUTFIT;
+12134  set EMWS1.AutoNeural_OUTFIT;
+12135  length _func_ _status_ _step_ $16 _index_ 8;
+12136  _func_ = "NORMAL";
+12137  _status_ = "candidate";
+12138  _step_ = "SINGLE LAYER 3";
+12139  _index_ = 3;
+12140  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12141  data EMWS1.AutoNeural_HISTORY;
+12142  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+12143  run;
+
+NOTE: There were 11 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 12 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12144  * SEARCH: recall starting estimates;
+12145  ;
+12146  data EMWS1.AutoNeural_ESTDS;
+12147  set EMWS1.AutoNeural_BESTDS;
+12148  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12149  *;
+12150  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+12151  validdata=EMWS1.Part_VALIDATE
+12152  ;
+12153  *;
+12154  nloptions noprint;
+12155  performance alldetails noutilfile;
+12156  input %INTINPUTS / level=interval id=interval;
+12157  input %NOMINPUTS / level=nominal id=nominal;
+12158  target RESPOND / level=NOMINAL id=RESPOND
+12159  ;
+12160  *------------------------------------------------------------*;
+12161  * Direct connection;
+12162  ;
+12163  *------------------------------------------------------------*;
+12164  connect interval RESPOND;
+12165  connect nominal RESPOND;
+12166  *------------------------------------------------------------*;
+12167  * Layer #1;
+12168  ;
+12169  *------------------------------------------------------------*;
+12170  Hidden 2 / id = H1x1_ act=GAUSS;
+12171  connect interval H1x1_;
+12172  connect nominal H1x1_;
+12173  connect H1x1_ RESPOND;
+12174  Hidden 2 / id = H1x2_ act=SINE;
+12175  connect interval H1x2_;
+12176  connect nominal H1x2_;
+12177  connect H1x2_ RESPOND;
+12178  *;
+12179  netoptions ranscale = 1;
+12180  *;
+12181  initial
+12182  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12183  ;
+12184  *;
+12185  title9 " ";
+12186  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+12186! Search # 3 SINGLE LAYER trial # 3 : SINE : ))";
+12187  prelim 8 outest=_anpre pretime=110 preiter=8
+12188  tech = Default
+12189  inest = EMWS1.AutoNeural_ESTDS bylabel
+12190  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+The prelim will run only once. Use the randbias or randout option on the target 
+layer.
+NOTE: The data set WORK._ANPRE has 3 observations and 289 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12191  *;
+12192  title9 " ";
+12193  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+12193!  # 3 SINGLE LAYER trial # 3 : SINE : ))";
+12194  train estiter=1 outest=_anest outfit=_anfit maxtime=881 maxiter=8
+12195  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 289 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+12196  ;
+12197  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 30.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           2.70 seconds
+      cpu time            2.69 seconds
+      
+
+12198  *;
+12199  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+12200  var _iter_ _aic_ _averr_ _misc_
+12201  _vaverr_ _vmisc_
+12202  ;
+12203  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 31.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12204  *------------------------------------------------------------*;
+12205  * Extract best iteration;
+12206  ;
+12207  *------------------------------------------------------------*;
+12208  %global _iter;
+12209  data _null_;
+12210  set _anfit(where=(_NAME_ eq 'OVERALL'));
+12211  retain _min 1e+64;
+12212  if _VMISC_ < _min then do;
+12213  _min = _VMISC_;
+12214  call symput('_iter',put(_ITER_, 6.));
+12215  end;
+12216  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12217  *;
+
+12218  data EMWS1.AutoNeural_ESTDS;
+12219  set _anest;
+12220  if _ITER_ eq 3 then do;
+12221  output;
+12222  stop;
+12223  end;
+12224  run;
+
+NOTE: There were 4 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+12225  *;
+12226  data EMWS1.AutoNeural_OUTFIT;
+12227  set _anfit;
+12228  if _ITER_ eq 3 and _NAME_ eq "OVERALL" then do;
+12229  output;
+12230  stop;
+12231  end;
+12232  run;
+
+NOTE: There were 8 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12233  *;
+12234  title9 " ";
+12235  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+12235! NOQUOTE, _VMISC_))";
+12236  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+12237  var _iter_ _aic_ _averr_ _misc_
+12238  _vaverr_ _vmisc_
+12239  ;
+12240  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 32.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12241  title9;
+12242  title10;
+
+12243  data work.tmp_outfit;
+12244  set EMWS1.AutoNeural_OUTFIT;
+12245  if _NAME_ = 'OVERALL';
+12246  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12247  data work.tmp_outfit;
+12248  set EMWS1.AutoNeural_OUTFIT;
+12249  if _NAME_ = 'OVERALL';
+12250  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12251  * Accumulate history;
+12252  ;
+12253  data EMWS1.AutoNeural_OUTFIT;
+12254  set EMWS1.AutoNeural_OUTFIT;
+12255  length _func_ _status_ _step_ $16 _index_ 8;
+12256  _func_ = "SINE";
+12257  _status_ = "reject";
+12258  _step_ = "SINGLE LAYER 3";
+12259  _index_ = 3;
+12260  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12261  data EMWS1.AutoNeural_HISTORY;
+12262  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+12263  run;
+
+NOTE: There were 12 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 13 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12264  *SEARCH: recall best estimates and fit;
+12265  ;
+12266  data EMWS1.AutoNeural_ESTDS;
+12267  set EMWS1.AutoNeural_BESTDS;
+12268  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12269  data EMWS1.AutoNeural_OUTFIT;
+12270  set WORK.BFITDS_AUTONEUR_198E6PY;
+12271  run;
+
+NOTE: There were 1 observations read from the data set 
+      WORK.BFITDS_AUTONEUR_198E6PY.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12272  * Accumulate history;
+12273  ;
+12274  data EMWS1.AutoNeural_OUTFIT;
+12275  set EMWS1.AutoNeural_OUTFIT;
+12276  length _func_ _status_ _step_ $16 _index_ 8;
+12277  _func_ = "NORMAL";
+12278  _status_ = "keep";
+12279  _step_ = "SINGLE LAYER 3";
+12280  _index_ = 3;
+12281  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12282  data EMWS1.AutoNeural_HISTORY;
+12283  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+12284  run;
+
+NOTE: There were 13 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 14 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12285  data work.tmp_outfit;
+12286  set EMWS1.AutoNeural_OUTFIT;
+12287  if _NAME_ = 'OVERALL';
+12288  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12289  *;
+12290  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+12291  validdata=EMWS1.Part_VALIDATE
+12292  ;
+12293  *;
+12294  nloptions noprint;
+12295  performance alldetails noutilfile;
+12296  input %INTINPUTS / level=interval id=interval;
+12297  input %NOMINPUTS / level=nominal id=nominal;
+12298  target RESPOND / level=NOMINAL id=RESPOND
+12299  ;
+12300  *------------------------------------------------------------*;
+12301  * Direct connection;
+12302  ;
+12303  *------------------------------------------------------------*;
+12304  connect interval RESPOND;
+12305  connect nominal RESPOND;
+12306  *------------------------------------------------------------*;
+12307  * Layer #1;
+12308  ;
+12309  *------------------------------------------------------------*;
+12310  Hidden 2 / id = H1x1_ act=GAUSS;
+12311  connect interval H1x1_;
+12312  connect nominal H1x1_;
+12313  connect H1x1_ RESPOND;
+12314  Hidden 2 / id = H1x2_ act=GAUSS;
+12315  connect interval H1x2_;
+12316  connect nominal H1x2_;
+12317  connect H1x2_ RESPOND;
+12318  Hidden 2 / id = H1x3_ act=TANH;
+12319  connect interval H1x3_;
+12320  connect nominal H1x3_;
+12321  connect H1x3_ RESPOND;
+12322  *;
+12323  netoptions ranscale = 1;
+12324  *;
+12325  initial
+12326  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12327  ;
+12328  *;
+12329  title9 " ";
+12330  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+12330! Search # 4 SINGLE LAYER trial # 1 : TANH : ))";
+12331  prelim 8 outest=_anpre pretime=110 preiter=8
+12332  tech = Default
+12333  inest = EMWS1.AutoNeural_ESTDS bylabel
+12334  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 399 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12335  *;
+12336  title9 " ";
+12337  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+12337!  # 4 SINGLE LAYER trial # 1 : TANH : ))";
+12338  train estiter=1 outest=_anest outfit=_anfit maxtime=880 maxiter=8
+12339  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 399 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+12340  ;
+12341  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 33.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           12.86 seconds
+      cpu time            12.77 seconds
+      
+
+12342  *;
+12343  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+12344  var _iter_ _aic_ _averr_ _misc_
+12345  _vaverr_ _vmisc_
+12346  ;
+12347  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 34.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12348  *------------------------------------------------------------*;
+12349  * Extract best iteration;
+12350  ;
+12351  *------------------------------------------------------------*;
+12352  %global _iter;
+12353  data _null_;
+12354  set _anfit(where=(_NAME_ eq 'OVERALL'));
+12355  retain _min 1e+64;
+12356  if _VMISC_ < _min then do;
+12357  _min = _VMISC_;
+12358  call symput('_iter',put(_ITER_, 6.));
+12359  end;
+12360  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12361  *;
+
+12362  data EMWS1.AutoNeural_ESTDS;
+12363  set _anest;
+12364  if _ITER_ eq 6 then do;
+12365  output;
+12366  stop;
+12367  end;
+12368  run;
+
+NOTE: There were 7 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 399 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12369  *;
+12370  data EMWS1.AutoNeural_OUTFIT;
+12371  set _anfit;
+12372  if _ITER_ eq 6 and _NAME_ eq "OVERALL" then do;
+12373  output;
+12374  stop;
+12375  end;
+12376  run;
+
+NOTE: There were 14 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12377  *;
+12378  title9 " ";
+12379  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+12379! NOQUOTE, _VMISC_))";
+12380  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+12381  var _iter_ _aic_ _averr_ _misc_
+12382  _vaverr_ _vmisc_
+12383  ;
+12384  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 35.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12385  title9;
+12386  title10;
+
+12387  data work.tmp_outfit;
+12388  set EMWS1.AutoNeural_OUTFIT;
+12389  if _NAME_ = 'OVERALL';
+12390  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12391  data work.tmp_outfit;
+12392  set EMWS1.AutoNeural_OUTFIT;
+12393  if _NAME_ = 'OVERALL';
+12394  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12395  * Accumulate history;
+12396  ;
+12397  data EMWS1.AutoNeural_OUTFIT;
+12398  set EMWS1.AutoNeural_OUTFIT;
+12399  length _func_ _status_ _step_ $16 _index_ 8;
+12400  _func_ = "TANH";
+12401  _status_ = "reject";
+12402  _step_ = "SINGLE LAYER 4";
+12403  _index_ = 4;
+12404  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12405  data EMWS1.AutoNeural_HISTORY;
+12406  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+12407  run;
+
+NOTE: There were 14 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 15 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12408  * SEARCH: recall starting estimates;
+12409  ;
+12410  data EMWS1.AutoNeural_ESTDS;
+12411  set EMWS1.AutoNeural_BESTDS;
+12412  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12413  *;
+12414  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+12415  validdata=EMWS1.Part_VALIDATE
+12416  ;
+12417  *;
+12418  nloptions noprint;
+12419  performance alldetails noutilfile;
+12420  input %INTINPUTS / level=interval id=interval;
+12421  input %NOMINPUTS / level=nominal id=nominal;
+12422  target RESPOND / level=NOMINAL id=RESPOND
+12423  ;
+12424  *------------------------------------------------------------*;
+12425  * Direct connection;
+12426  ;
+12427  *------------------------------------------------------------*;
+12428  connect interval RESPOND;
+12429  connect nominal RESPOND;
+12430  *------------------------------------------------------------*;
+12431  * Layer #1;
+12432  ;
+12433  *------------------------------------------------------------*;
+12434  Hidden 2 / id = H1x1_ act=GAUSS;
+12435  connect interval H1x1_;
+12436  connect nominal H1x1_;
+12437  connect H1x1_ RESPOND;
+12438  Hidden 2 / id = H1x2_ act=GAUSS;
+12439  connect interval H1x2_;
+12440  connect nominal H1x2_;
+12441  connect H1x2_ RESPOND;
+12442  Hidden 2 / id = H1x3_ act=GAUSS;
+12443  connect interval H1x3_;
+12444  connect nominal H1x3_;
+12445  connect H1x3_ RESPOND;
+12446  *;
+12447  netoptions ranscale = 1;
+12448  *;
+12449  initial
+12450  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12451  ;
+12452  *;
+12453  title9 " ";
+12454  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+12454! Search # 4 SINGLE LAYER trial # 2 : NORMAL : ))";
+12455  prelim 8 outest=_anpre pretime=109 preiter=8
+12456  tech = Default
+12457  inest = EMWS1.AutoNeural_ESTDS bylabel
+12458  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 399 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12459  *;
+12460  title9 " ";
+12461  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+12461!  # 4 SINGLE LAYER trial # 2 : NORMAL : ))";
+12462  train estiter=1 outest=_anest outfit=_anfit maxtime=877 maxiter=8
+12463  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 399 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+12464  ;
+12465  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 36.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           11.87 seconds
+      cpu time            11.82 seconds
+      
+
+12466  *;
+12467  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+12468  var _iter_ _aic_ _averr_ _misc_
+12469  _vaverr_ _vmisc_
+12470  ;
+12471  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 37.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12472  *------------------------------------------------------------*;
+12473  * Extract best iteration;
+12474  ;
+12475  *------------------------------------------------------------*;
+12476  %global _iter;
+12477  data _null_;
+12478  set _anfit(where=(_NAME_ eq 'OVERALL'));
+12479  retain _min 1e+64;
+12480  if _VMISC_ < _min then do;
+12481  _min = _VMISC_;
+12482  call symput('_iter',put(_ITER_, 6.));
+12483  end;
+12484  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12485  *;
+
+12486  data EMWS1.AutoNeural_ESTDS;
+12487  set _anest;
+12488  if _ITER_ eq 4 then do;
+12489  output;
+12490  stop;
+12491  end;
+12492  run;
+
+NOTE: There were 5 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 399 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12493  *;
+12494  data EMWS1.AutoNeural_OUTFIT;
+12495  set _anfit;
+12496  if _ITER_ eq 4 and _NAME_ eq "OVERALL" then do;
+12497  output;
+12498  stop;
+12499  end;
+12500  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12501  *;
+12502  title9 " ";
+12503  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+12503! NOQUOTE, _VMISC_))";
+12504  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+12505  var _iter_ _aic_ _averr_ _misc_
+12506  _vaverr_ _vmisc_
+12507  ;
+12508  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 38.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12509  title9;
+12510  title10;
+
+12511  data work.tmp_outfit;
+12512  set EMWS1.AutoNeural_OUTFIT;
+12513  if _NAME_ = 'OVERALL';
+12514  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12515  data work.tmp_outfit;
+12516  set EMWS1.AutoNeural_OUTFIT;
+12517  if _NAME_ = 'OVERALL';
+12518  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12519  * Accumulate history;
+12520  ;
+12521  data EMWS1.AutoNeural_OUTFIT;
+12522  set EMWS1.AutoNeural_OUTFIT;
+12523  length _func_ _status_ _step_ $16 _index_ 8;
+12524  _func_ = "NORMAL";
+12525  _status_ = "reject";
+12526  _step_ = "SINGLE LAYER 4";
+12527  _index_ = 4;
+12528  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12529  data EMWS1.AutoNeural_HISTORY;
+12530  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+12531  run;
+
+NOTE: There were 15 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 16 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12532  * SEARCH: recall starting estimates;
+12533  ;
+12534  data EMWS1.AutoNeural_ESTDS;
+12535  set EMWS1.AutoNeural_BESTDS;
+12536  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_BESTDS.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+12537  *;
+12538  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+12539  validdata=EMWS1.Part_VALIDATE
+12540  ;
+12541  *;
+12542  nloptions noprint;
+12543  performance alldetails noutilfile;
+12544  input %INTINPUTS / level=interval id=interval;
+12545  input %NOMINPUTS / level=nominal id=nominal;
+12546  target RESPOND / level=NOMINAL id=RESPOND
+12547  ;
+12548  *------------------------------------------------------------*;
+12549  * Direct connection;
+12550  ;
+12551  *------------------------------------------------------------*;
+12552  connect interval RESPOND;
+12553  connect nominal RESPOND;
+12554  *------------------------------------------------------------*;
+12555  * Layer #1;
+12556  ;
+12557  *------------------------------------------------------------*;
+12558  Hidden 2 / id = H1x1_ act=GAUSS;
+12559  connect interval H1x1_;
+12560  connect nominal H1x1_;
+12561  connect H1x1_ RESPOND;
+12562  Hidden 2 / id = H1x2_ act=GAUSS;
+12563  connect interval H1x2_;
+12564  connect nominal H1x2_;
+12565  connect H1x2_ RESPOND;
+12566  Hidden 2 / id = H1x3_ act=SINE;
+12567  connect interval H1x3_;
+12568  connect nominal H1x3_;
+12569  connect H1x3_ RESPOND;
+12570  *;
+12571  netoptions ranscale = 1;
+12572  *;
+12573  initial
+12574  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12575  ;
+12576  *;
+12577  title9 " ";
+12578  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+12578! Search # 4 SINGLE LAYER trial # 3 : SINE : ))";
+12579  prelim 8 outest=_anpre pretime=109 preiter=8
+12580  tech = Default
+12581  inest = EMWS1.AutoNeural_ESTDS bylabel
+12582  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 17 observations and 399 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12583  *;
+12584  title9 " ";
+12585  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search
+12585!  # 4 SINGLE LAYER trial # 3 : SINE : ))";
+12586  train estiter=1 outest=_anest outfit=_anfit maxtime=874 maxiter=8
+12587  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 11 observations and 399 variables.
+NOTE: The data set WORK._ANFIT has 20 observations and 36 variables.
+12588  ;
+12589  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 39.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           12.43 seconds
+      cpu time            12.38 seconds
+      
+
+12590  *;
+12591  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+12592  var _iter_ _aic_ _averr_ _misc_
+12593  _vaverr_ _vmisc_
+12594  ;
+12595  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 40.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12596  *------------------------------------------------------------*;
+12597  * Extract best iteration;
+12598  ;
+12599  *------------------------------------------------------------*;
+12600  %global _iter;
+12601  data _null_;
+12602  set _anfit(where=(_NAME_ eq 'OVERALL'));
+12603  retain _min 1e+64;
+12604  if _VMISC_ < _min then do;
+12605  _min = _VMISC_;
+12606  call symput('_iter',put(_ITER_, 6.));
+12607  end;
+12608  run;
+
+NOTE: There were 10 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12609  *;
+
+12610  data EMWS1.AutoNeural_ESTDS;
+12611  set _anest;
+12612  if _ITER_ eq 0 then do;
+12613  output;
+12614  stop;
+12615  end;
+12616  run;
+
+NOTE: There were 1 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 399 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12617  *;
+12618  data EMWS1.AutoNeural_OUTFIT;
+12619  set _anfit;
+12620  if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+12621  output;
+12622  stop;
+12623  end;
+12624  run;
+
+NOTE: There were 2 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12625  *;
+12626  title9 " ";
+12627  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+12627! NOQUOTE, _VMISC_))";
+12628  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+12629  var _iter_ _aic_ _averr_ _misc_
+12630  _vaverr_ _vmisc_
+12631  ;
+12632  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 41.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12633  title9;
+12634  title10;
+
+12635  data work.tmp_outfit;
+12636  set EMWS1.AutoNeural_OUTFIT;
+12637  if _NAME_ = 'OVERALL';
+12638  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12639  data work.tmp_outfit;
+12640  set EMWS1.AutoNeural_OUTFIT;
+12641  if _NAME_ = 'OVERALL';
+12642  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12643  * Accumulate history;
+12644  ;
+12645  data EMWS1.AutoNeural_OUTFIT;
+12646  set EMWS1.AutoNeural_OUTFIT;
+12647  length _func_ _status_ _step_ $16 _index_ 8;
+12648  _func_ = "SINE";
+12649  _status_ = "reject";
+12650  _step_ = "SINGLE LAYER 4";
+12651  _index_ = 4;
+12652  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12653  data EMWS1.AutoNeural_HISTORY;
+12654  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+12655  run;
+
+NOTE: There were 16 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 17 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12656  data EMWS1.AutoNeural_ESTDS;
+12657  set WORK.SAVEDS_AUTONEUR_198E6PY;
+12658  run;
+
+NOTE: There were 1 observations read from the data set 
+      WORK.SAVEDS_AUTONEUR_198E6PY.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12659  *;
+12660  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+12661  validdata=EMWS1.Part_VALIDATE
+12662  ;
+12663  *;
+12664  nloptions noprint;
+12665  performance alldetails noutilfile;
+12666  input %INTINPUTS / level=interval id=interval;
+12667  input %NOMINPUTS / level=nominal id=nominal;
+12668  target RESPOND / level=NOMINAL id=RESPOND
+12669  ;
+12670  *------------------------------------------------------------*;
+12671  * Direct connection;
+12672  ;
+12673  *------------------------------------------------------------*;
+12674  connect interval RESPOND;
+12675  connect nominal RESPOND;
+12676  *------------------------------------------------------------*;
+12677  * Layer #1;
+12678  ;
+12679  *------------------------------------------------------------*;
+12680  Hidden 2 / id = H1x1_ act=GAUSS;
+12681  connect interval H1x1_;
+12682  connect nominal H1x1_;
+12683  connect H1x1_ RESPOND;
+12684  Hidden 2 / id = H1x2_ act=GAUSS;
+12685  connect interval H1x2_;
+12686  connect nominal H1x2_;
+12687  connect H1x2_ RESPOND;
+12688  *;
+12689  netoptions ranscale = 1;
+12690  *;
+12691  initial
+12692  inest = EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12693  ;
+12694  *;
+12695  title9 " ";
+12696  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Final
+12696!  Training))";
+12697  prelim 8 outest=_anpre pretime=108 preiter=8
+12698  tech = Default
+12699  inest = EMWS1.AutoNeural_ESTDS bylabel
+12700  ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 8 iterations or 2147483647 function calls.
+The prelim will run only once. Use the randbias or randout option on the target 
+layer.
+NOTE: The data set WORK._ANPRE has 3 observations and 289 variables.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12701  *;
+12702  title9 " ";
+12703  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Final
+12703! Training))";
+12704  train estiter=1 outest=_anest outfit=_anfit maxtime=870 maxiter=5
+12705  tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 5 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 8 observations and 289 variables.
+NOTE: The data set WORK._ANFIT has 14 observations and 36 variables.
+12706  ;
+12707  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 42.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           2.07 seconds
+      cpu time            2.06 seconds
+      
+
+12708  *;
+12709  proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+12710  var _iter_ _aic_ _averr_ _misc_
+12711  _vaverr_ _vmisc_
+12712  ;
+12713  run;
+
+NOTE: There were 7 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 43.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12714  *------------------------------------------------------------*;
+12715  * Extract best iteration;
+12716  ;
+12717  *------------------------------------------------------------*;
+12718  %global _iter;
+12719  data _null_;
+12720  set _anfit(where=(_NAME_ eq 'OVERALL'));
+12721  retain _min 1e+64;
+12722  if _VMISC_ < _min then do;
+12723  _min = _VMISC_;
+12724  call symput('_iter',put(_ITER_, 6.));
+12725  end;
+12726  run;
+
+NOTE: There were 7 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+12727  *;
+
+12728  data EMWS1.AutoNeural_ESTDS;
+12729  set _anest;
+12730  if _ITER_ eq 3 then do;
+12731  output;
+12732  stop;
+12733  end;
+12734  run;
+
+NOTE: There were 4 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12735  *;
+12736  data EMWS1.AutoNeural_OUTFIT;
+12737  set _anfit;
+12738  if _ITER_ eq 3 and _NAME_ eq "OVERALL" then do;
+12739  output;
+12740  stop;
+12741  end;
+12742  run;
+
+NOTE: There were 8 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12743  *;
+12744  title9 " ";
+12745  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  ,
+12745! NOQUOTE, _VMISC_))";
+12746  proc print data=EMWS1.AutoNeural_OUTFIT noobs;
+12747  var _iter_ _aic_ _averr_ _misc_
+12748  _vaverr_ _vmisc_
+12749  ;
+12750  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 44.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12751  title9;
+12752  title10;
+
+12753  * Accumulate history;
+12754  ;
+12755  data EMWS1.AutoNeural_OUTFIT;
+12756  set EMWS1.AutoNeural_OUTFIT;
+12757  length _func_ _status_ _step_ $16 _index_ 8;
+12758  _func_ = "";
+12759  _status_ = "Final";
+12760  _step_ = "";
+12761  _index_ = 4;
+12762  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12763  data EMWS1.AutoNeural_HISTORY;
+12764  set EMWS1.AutoNeural_HISTORY EMWS1.AutoNeural_OUTFIT;
+12765  run;
+
+NOTE: There were 17 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_OUTFIT.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 18 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12766  title9 " ";
+12767  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_finaltrainhistory_title  ,
+12767! NOQUOTE))";
+12768  proc print data=EMWS1.AutoNeural_HISTORY noobs;
+12769  var _step_ _func_ _status_ _iter_ _averr_ _misc_ _aic_
+12770  _vaverr_ _vmisc_
+12771  ;
+12772  run;
+
+NOTE: There were 18 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: The PROCEDURE PRINT printed page 45.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12773  data work.keep_history;
+12774  set EMWS1.AutoNeural_HISTORY;
+12775  if _status_='keep';
+12776  if _func_='DIRECT' then neurons=0;
+12777  else neurons=2;
+12778  label neurons="%sysfunc(sasmsg(sashelp.dmine, rpt_numberneurons_vlabel  ,
+12778!  NOQUOTE))";
+12779  run;
+
+NOTE: There were 18 observations read from the data set 
+      EMWS1.AUTONEURAL_HISTORY.
+NOTE: The data set WORK.KEEP_HISTORY has 3 observations and 41 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12780  title8 " ";
+12781  title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_finalmodel_title  , NOQUOTE))"
+12781! ;
+12782  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_stopping_title  , NOQUOTE,
+12782! %nrbquote(Termination criteria were satisfied: overfitting based on
+12782! _VMISC_)))";
+12783  proc print data=work.keep_history noobs;
+12784  var _func_ _averr_
+12785  _vaverr_
+12786  neurons;
+12787  sum neurons;
+12788  run;
+
+NOTE: There were 3 observations read from the data set WORK.KEEP_HISTORY.
+NOTE: The PROCEDURE PRINT printed page 46.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12789  title8;
+12790  title9;
+12791  title10;
+
+12792  *------------------------------------------------------------*;
+12793  * AutoNeural Final Network;
+12794  ;
+12795  *------------------------------------------------------------*;
+12796  *;
+12797  proc neural data=EM_AutoNeural dmdbcat=WORK.AutoNeural_DMDB
+12798  validdata=EMWS1.Part_VALIDATE
+12799  ;
+12800  *;
+12801  nloptions noprint;
+12802  performance alldetails noutilfile;
+12803  input %INTINPUTS / level=interval id=interval;
+12804  input %NOMINPUTS / level=nominal id=nominal;
+12805  target RESPOND / level=NOMINAL id=RESPOND
+12806  ;
+12807  *------------------------------------------------------------*;
+12808  * Layer #1;
+12809  ;
+12810  *------------------------------------------------------------*;
+12811  Hidden 2 / id = H1x1_ act=GAUSS;
+12812  connect interval H1x1_;
+12813  connect nominal H1x1_;
+12814  connect H1x1_ RESPOND;
+12815  Hidden 2 / id = H1x2_ act=GAUSS;
+12816  connect interval H1x2_;
+12817  connect nominal H1x2_;
+12818  connect H1x2_ RESPOND;
+12819  *;
+12820  initial inest= EMWS1.AutoNeural_ESTDS bylabel;
+NOTE: The data set EMWS1.AUTONEURAL_ESTDS has 1 observations and 289 variables.
+12821  train tech=none;
+NOTE: No optimization performed.
+12822  code file="C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS
+12822! 458H\Example\Workspaces\EMWS1\AutoNeural\SCORECODE.sas"
+12823  group=AutoNeural
+12824  ;
+NOTE: External file C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 
+      458H\Example\Workspaces\EMWS1\AutoNeural\SCORECODE.sas opened.
+12825  ;
+12826  code file="C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS
+12826! 458H\Example\Workspaces\EMWS1\AutoNeural\RESIDUALSCORECODE.sas"
+12827  group=AutoNeural
+12828  residual
+12829  ;
+NOTE: External file C:\Users\Intern Three\Documents\Thi Duong\SPRING 16\BUS 
+      458H\Example\Workspaces\EMWS1\AutoNeural\RESIDUALSCORECODE.sas opened.
+12830  ;
+12831  score data=EMWS1.Part_TRAIN out=_NULL_
+12832  outfit=WORK.FIT1
+12833  role=TRAIN
+12834  outkey=EMWS1.AutoNeural_OUTKEY;
+NOTE: The data set EMWS1.AUTONEURAL_OUTKEY has 69 observations and 8 variables.
+NOTE: The data set EMWS1.PART_TRAIN has 16474 observations and 22 variables.
+NOTE: The data set WORK.FIT1 has 2 observations and 23 variables.
+12835  score data=EMWS1.Part_VALIDATE out=_NULL_
+12836  outfit=WORK.FIT2
+12837  outkey=EMWS1.AutoNeural_OUTKEY;
+NOTE: The data set EMWS1.AUTONEURAL_OUTKEY has 69 observations and 8 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: The data set WORK.FIT2 has 2 observations and 15 variables.
+12838  score data=EMWS1.Part_TEST out=_NULL_
+12839  outfit=WORK.FIT3
+12840  role=TEST
+12841  outkey=EMWS1.AutoNeural_OUTKEY;
+NOTE: The data set EMWS1.AUTONEURAL_OUTKEY has 69 observations and 8 variables.
+NOTE: The data set EMWS1.PART_TEST has 12358 observations and 22 variables.
+NOTE: The data set WORK.FIT3 has 2 observations and 17 variables.
+12842  run;
+
+NOTE: The data set WORK.EM_AUTONEURAL has 16474 observations and 21 variables.
+NOTE: The data set EMWS1.PART_VALIDATE has 12356 observations and 22 variables.
+NOTE: Closing the Neural Application.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           0.31 seconds
+      cpu time            0.24 seconds
+      
+
+12843  data EMWS1.AutoNeural_OUTFIT;
+12844  merge WORK.FIT1 WORK.FIT2 WORK.FIT3;
+12845  run;
+
+NOTE: There were 2 observations read from the data set WORK.FIT1.
+NOTE: There were 2 observations read from the data set WORK.FIT2.
+NOTE: There were 2 observations read from the data set WORK.FIT3.
+NOTE: The data set EMWS1.AUTONEURAL_OUTFIT has 2 observations and 51 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+12846  *------------------------------------------------------------*;
+12847  * Generate Weights Plotting data set;
+12848  *------------------------------------------------------------*;
+12849  data tempweight ( drop = _tech_ _decay_ _seed_ _nobj_ _obj_ _objerr_
+12849! _averr_ _p_num_ where= (_type_ eq "PARMS"));
+12850  set EMWS1.AutoNeural_ESTDS;
+12851  run;
+
+NOTE: There were 1 observations read from the data set EMWS1.AUTONEURAL_ESTDS.
+NOTE: The data set WORK.TEMPWEIGHT has 1 observations and 281 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+12852  proc sort;
+12853  by _name_;
+12854  run;
+
+NOTE: There were 1 observations read from the data set WORK.TEMPWEIGHT.
+NOTE: The data set WORK.TEMPWEIGHT has 1 observations and 281 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+12855  proc transpose data=tempweight out=EMWS1.AutoNeural_WEIGHTS;
+12856  by _name_;
+12857  run;
+
+NOTE: There were 1 observations read from the data set WORK.TEMPWEIGHT.
+NOTE: The data set EMWS1.AUTONEURAL_WEIGHTS has 279 observations and 3 
+      variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12858  data EMWS1.AutoNeural_WEIGHTS;
+12859  set EMWS1.AutoNeural_WEIGHTS;
+12860  FROM = ktrim(kleft(kscan(_LABEL_, 1, '-->')));
+12861  TO = ktrim(kleft(kscan(_LABEL_, 2, '>')));
+12862  WEIGHT = COL1;
+12863  if (TO eq '') or (FROM eq '') then delete;
+12864  label _LABEL_ ="%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel  ,
+12864! NOQUOTE))" FROM = "%sysfunc(sasmsg(sashelp.dmine, rpt_from_vlabel  ,
+12864! NOQUOTE))" TO = "%sysfunc(sasmsg(sashelp.dmine, rpt_into_vlabel  ,
+12864! NOQUOTE))" WEIGHT =
+12865     "%sysfunc(sasmsg(sashelp.dmine, rpt_weight_vlabel  , NOQUOTE))";
+12866  keep FROM TO WEIGHT _LABEL_;
+12867  run;
+
+NOTE: There were 279 observations read from the data set 
+      EMWS1.AUTONEURAL_WEIGHTS.
+NOTE: The data set EMWS1.AUTONEURAL_WEIGHTS has 274 observations and 4 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12868  * restore printing options;
+12869  ;
+12870  title10;
+12871  options linesize=256;
+12872  options pagesize=999;
+12873  options nonumber;
+12874  options nocenter;
+12875  options nodate;
+12876  *;
+12877  proc datasets lib=work nolist;
+12878  delete EM_AutoNeural;
+12879  run;
+
+NOTE: Deleting WORK.EM_AUTONEURAL (memtype=DATA).
+12880  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12881  data EMWS1.AutoNeural_HISTORY;
+12882  set EMWS1.AutoNeural_HISTORY;
+12883  label _T_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_trainstep_vlabel  , NOQUOTE))";
+12884  label _iter_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_trainiterations_vlabel  , NOQUOTE))";
+12885  _T_ = _N_ -1;
+12886  run;
+
+NOTE: There were 18 observations read from the data set EMWS1.AUTONEURAL_HISTORY.
+NOTE: The data set EMWS1.AUTONEURAL_HISTORY has 18 observations and 41 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+

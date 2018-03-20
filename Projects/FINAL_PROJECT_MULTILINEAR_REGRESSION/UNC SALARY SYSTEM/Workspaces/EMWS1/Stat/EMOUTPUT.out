@@ -1,0 +1,91 @@
+*------------------------------------------------------------*
+User:                Intern Three
+Date:                April 21, 2016
+Time:                05:40:22
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+Role         Level         Count
+ 
+ID         NOMINAL           1
+INPUT      BINARY            1
+INPUT      INTERVAL          4
+INPUT      NOMINAL           6
+INPUT      ORDINAL           1
+TARGET     INTERVAL          1
+ 
+ 
+ 
+Variable Levels Summary
+(maximum 500 observations printed)
+ 
+                    Frequency
+Variable    Role      Count
+ 
+  name       ID       12270
+ 
+ 
+ 
+Class Variable Summary Statistics
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN
+ 
+                              Number
+Data     Variable               of                                                      Mode                                  Mode2
+Role       Name      Role     Levels    Missing    Mode                              Percentage    Mode2                    Percentage
+ 
+TRAIN    Gender      INPUT        2        0       F                                   53.97       M                          46.03
+TRAIN    dept        INPUT      304        0       Medicine                             4.17       Housekeeping Services       3.43
+TRAIN    employed    INPUT        2        0       12                                  87.89       9                          12.11
+TRAIN    exempt2     INPUT        3        0       Subject to State Personnel Act      51.74       Exempt                     45.91
+TRAIN    fte         INPUT        2        0       1                                   93.13       0                           6.87
+TRAIN    position    INPUT       51        0       Other                               24.17       Building                    6.23
+TRAIN    status      INPUT        5        0       Permanent                           50.48       Continuing                 26.13
+ 
+ 
+ 
+Interval Variable Summary Statistics
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN
+ 
+                                  Standard          Non
+Variable     Role         Mean    Deviation     Missing     Missing     Minimum      Median     Maximum    Skewness    Kurtosis
+ 
+age         INPUT     46.31586    11.81713        12287           0          21          46          89    0.124622    -0.69236
+nonstsal    INPUT     49566.56    64497.25        12287           0           0       38239      625686    2.881321    13.15028
+statesal    INPUT     31371.67    44774.56        12287           0           0        2696      520000    2.219333    8.321291
+stservyr    INPUT     10.68178    9.177637        12287           0           0           9          57    1.197197    1.369815
+totalsal    TARGET    80938.23    65607.73        12287           0        3000       59342      819069    2.883863    12.78721
+ 
+ 
+ 
+Correlation Statistics
+(maximum 500 observations printed)
+ 
+Data Role=TRAIN Type=PEARSON Target=totalsal
+ 
+Input       Correlation
+ 
+nonstsal      0.76326
+statesal      0.36582
+age           0.23551
+stservyr      0.15376
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
